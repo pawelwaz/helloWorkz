@@ -5,7 +5,10 @@ import static javafx.application.Application.launch;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
+import org.pawelwaz.helloworkz.util.HibernateUtil;
 
 
 public class MainApp extends Application {
@@ -18,6 +21,20 @@ public class MainApp extends Application {
         stage.setResizable(false);
         stage.setScene(scene);
         stage.show();
+    }
+    
+    @Override
+    public void stop() {
+        HibernateUtil.shutdown();
+        try {
+            super.stop();
+        }
+        catch(Exception ex) {
+            Alert a = new Alert(AlertType.ERROR, "Wystąpił błąd aplikacji i zostanie ona zamknięta");
+            a.setTitle("");
+            a.setHeaderText("Błąd");
+            a.showAndWait();
+        }
     }
 
     /**
