@@ -5,16 +5,15 @@ import static javafx.application.Application.launch;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
-import org.pawelwaz.helloworkz.util.HibernateUtil;
+import org.pawelwaz.helloworkz.util.JpaUtil;
 
 
 public class MainApp extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
+        JpaUtil.buildFactory();
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/Login.fxml"));
         Scene scene = new Scene(root);
         stage.setTitle("logowanie");
@@ -25,16 +24,7 @@ public class MainApp extends Application {
     
     @Override
     public void stop() {
-        HibernateUtil.shutdown();
-        try {
-            super.stop();
-        }
-        catch(Exception ex) {
-            Alert a = new Alert(AlertType.ERROR, "Wystąpił błąd aplikacji i zostanie ona zamknięta");
-            a.setTitle("");
-            a.setHeaderText("Błąd");
-            a.showAndWait();
-        }
+        JpaUtil.shutdown();
     }
 
     /**

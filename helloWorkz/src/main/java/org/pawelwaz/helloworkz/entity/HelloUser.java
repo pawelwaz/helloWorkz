@@ -1,19 +1,31 @@
 package org.pawelwaz.helloworkz.entity;
 
-import javax.persistence.*;
+import javax.persistence.Basic;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
-@Table
+@Table(name = "hellouser")
 public class HelloUser {
     
-    @Id
-    @GeneratedValue
-    private Integer id;
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    @Basic
     private String login;
+    @Basic
     private String password;
     
     public HelloUser() {
         super();
+    }
+    
+    public HelloUser(Long id, String login, String password) {
+        this.id = id;
+        this.login = login;
+        this.password = password;
     }
     
     public HelloUser(String login, String password) {
@@ -24,14 +36,14 @@ public class HelloUser {
     /**
      * @return the id
      */
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
     /**
      * @param id the id to set
      */
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

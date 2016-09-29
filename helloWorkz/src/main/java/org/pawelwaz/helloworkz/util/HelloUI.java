@@ -21,13 +21,14 @@ public class HelloUI implements Initializable {
     
     @FXML protected AnchorPane ap;
     
-    public void goToPopup(String fxml) {
+    public void goToPopup(String fxml, String title) {
         try {
             Parent root = FXMLLoader.load(getClass().getResource("/fxml/" + fxml + ".fxml"));
             Scene scene = new Scene(root);
             Stage stage = new Stage();
             stage.setResizable(false);
             stage.setScene(scene);
+            stage.setTitle(title);
             stage.show(); 
             Stage thisWindow = (Stage) ap.getScene().getWindow();
             thisWindow.close();
@@ -44,6 +45,15 @@ public class HelloUI implements Initializable {
         a.initModality(Modality.APPLICATION_MODAL);
         a.initOwner(ap.getScene().getWindow());
         a.setHeaderText("Błąd");
+        a.showAndWait();
+    }
+    
+    public void showInfo(String content) {
+        Alert a = new Alert(AlertType.INFORMATION, content);
+        a.setTitle("");
+        a.setHeaderText("Informacja");
+        a.initModality(Modality.APPLICATION_MODAL);
+        a.initOwner(ap.getScene().getWindow());
         a.showAndWait();
     }
     

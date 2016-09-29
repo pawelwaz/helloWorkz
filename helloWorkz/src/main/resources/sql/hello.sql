@@ -1,4 +1,4 @@
-create if not exists database hello;
+create database if not exists hello;
 create user if not exists 'hello'@'%' identified by 'hello';
 create user if not exists 'hello'@'localhost' identified by 'hello';
 grant all privileges on hello.* to 'hello'@'%' identified by 'hello';
