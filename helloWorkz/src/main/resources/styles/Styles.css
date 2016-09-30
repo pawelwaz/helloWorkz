@@ -1,3 +1,10 @@
-.button {
+.blueLabel {
     -fx-font-weight: bold;
+    -fx-font-family: System;
+    -fx-font-size: 16px;
+    -fx-text-fill: rgb(35, 84, 105);
+}
+
+.topStripe {
+    -fx-background-color: rgb(35, 84, 105);
 }

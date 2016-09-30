@@ -23,6 +23,10 @@ public class FormField {
         switch(this.fieldType) {
             case PASSWORD: this.max = 16; break;
             case LOGIN: this.max = 16; break;
+            case TINYFIELD: this.max = 16; break;
+            case SHORTFIELD: this.max = 32; break;
+            case MEDIUMFIELD: this.max = 64; break;
+            case LONGFIELD: this.max = 128; break;
             default: this.max = 16;
         }
     }

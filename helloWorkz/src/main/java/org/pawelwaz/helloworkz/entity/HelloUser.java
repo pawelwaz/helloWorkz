@@ -19,6 +19,7 @@ public class HelloUser {
     private String email = null;
     private String organisation = null;
     private String phone = null;
+    private String job = null;
     
     public HelloUser() {
         super();
@@ -145,6 +146,20 @@ public class HelloUser {
      */
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    /**
+     * @return the job
+     */
+    public String getJob() {
+        return job;
+    }
+
+    /**
+     * @param job the job to set
+     */
+    public void setJob(String job) {
+        this.job = job;
     }
     
 }

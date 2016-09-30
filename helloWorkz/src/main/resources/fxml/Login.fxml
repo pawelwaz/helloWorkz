@@ -10,29 +10,29 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" fx:id="ap" prefHeight="292.0" prefWidth="382.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.60" fx:controller="org.pawelwaz.helloworkz.controller.LoginController">
+<AnchorPane id="AnchorPane" fx:id="ap" prefHeight="292.0" prefWidth="382.0" stylesheets="@../styles/Styles.css" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.pawelwaz.helloworkz.controller.LoginController">
     <children>
-      <AnchorPane layoutX="77.0" layoutY="22.0" prefHeight="102.0" prefWidth="382.0" style="-fx-background-color: #235469;" AnchorPane.bottomAnchor="256.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <AnchorPane layoutX="77.0" layoutY="22.0" prefHeight="102.0" prefWidth="382.0" styleClass="topStripe" AnchorPane.bottomAnchor="256.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <ImageView fitHeight="72.0" fitWidth="375.0" layoutX="10.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="9.1199951171875" AnchorPane.topAnchor="15.0">
                <image>
-                  <Image url="/img/logo.png" />
+                  <Image url="@../img/logo.png" />
                </image>
             </ImageView>
          </children>
       </AnchorPane>
-      <Label layoutX="152.0" layoutY="112.0" text="logowanie" textFill="#235469">
+      <Label layoutX="152.0" layoutY="112.0" styleClass="blueLabel" text="logowanie" textFill="#235469">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>
       </Label>
-      <Label layoutX="170.0" layoutY="157.0" text="login:" textFill="#235469">
+      <Label layoutX="170.0" layoutY="157.0" styleClass="blueLabel" text="login:" textFill="#235469">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>
       </Label>
       <TextField fx:id="login" layoutX="117.0" layoutY="188.0" />
-      <Label layoutX="169.0" layoutY="213.0" text="hasło:" textFill="#235469">
+      <Label layoutX="169.0" layoutY="213.0" styleClass="blueLabel" text="hasło:" textFill="#235469">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>

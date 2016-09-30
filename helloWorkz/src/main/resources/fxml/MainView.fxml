@@ -9,9 +9,9 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" fx:id="ap" prefHeight="660.0" prefWidth="1051.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.pawelwaz.helloworkz.controller.MainViewController">
+<AnchorPane id="AnchorPane" fx:id="ap" prefHeight="660.0" prefWidth="1051.0" stylesheets="@../styles/Styles.css" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.pawelwaz.helloworkz.controller.MainViewController">
    <children>
-      <AnchorPane layoutX="255.0" layoutY="24.0" prefHeight="120.0" prefWidth="200.0" style="-fx-background-color: #235469;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <AnchorPane layoutX="255.0" layoutY="24.0" prefHeight="120.0" prefWidth="200.0" styleClass="topStripe" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <ImageView fitHeight="54.0" fitWidth="72.0" layoutX="14.0" layoutY="29.0" pickOnBounds="true" preserveRatio="true">
                <image>
