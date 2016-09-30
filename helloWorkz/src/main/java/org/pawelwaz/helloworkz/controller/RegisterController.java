@@ -8,6 +8,9 @@ import javafx.scene.control.TextField;
 import javax.persistence.*;
 import org.jasypt.util.password.StrongPasswordEncryptor;
 import org.pawelwaz.helloworkz.entity.HelloUser;
+import static org.pawelwaz.helloworkz.util.FieldType.*;
+import org.pawelwaz.helloworkz.util.FormField;
+import org.pawelwaz.helloworkz.util.HelloForm;
 import org.pawelwaz.helloworkz.util.JpaUtil;
 
 /**
@@ -25,13 +28,17 @@ public class RegisterController extends HelloUI {
     }
     
     @FXML private void registerAction() {
-        if(login.getText().equals("") || password.getText().equals("") || retype.getText().equals("")) {
-            this.showError("Wszystkie pola muszą być wypełnione");
-        }
-        else if(!password.getText().equals(retype.getText())) {
+        FormField[] fields = {
+            new FormField("login", LOGIN, login.getText(), true),
+            new FormField("hasło", PASSWORD, password.getText(), true),
+            new FormField("powtórz hasło", PASSWORD, retype.getText(), true)
+        };
+        HelloForm form = new HelloForm(fields);
+        
+        if(!password.getText().equals(retype.getText())) {
             this.showError("Podane hasła różnią się");
         }
-        else {
+        else if(form.isValid()) {
             EntityManager em = JpaUtil.getFactory().createEntityManager();
             Query query = em.createQuery("select user from HelloUser user where user.login = '" + login.getText() + "'");
             query.setMaxResults(1);

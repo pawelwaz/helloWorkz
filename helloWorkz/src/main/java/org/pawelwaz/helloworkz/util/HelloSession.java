@@ -15,6 +15,11 @@ public class HelloSession {
         HelloSession.user.setId(user.getId());
         HelloSession.user.setLogin(user.getLogin());
         HelloSession.user.setPassword(user.getPassword());
+        HelloSession.user.setEmail(user.getEmail());
+        HelloSession.user.setName(user.getName());
+        HelloSession.user.setSurname(user.getSurname());
+        HelloSession.user.setOrganisation(user.getOrganisation());
+        HelloSession.user.setPhone(user.getPhone());
     }
     
     public static HelloUser getUser() {

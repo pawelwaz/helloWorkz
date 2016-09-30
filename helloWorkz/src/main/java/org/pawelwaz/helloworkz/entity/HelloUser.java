@@ -1,6 +1,5 @@
 package org.pawelwaz.helloworkz.entity;
 
-import javax.persistence.Basic;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,10 +12,13 @@ public class HelloUser {
     
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Basic
     private String login;
-    @Basic
     private String password;
+    private String name = null;
+    private String surname = null;
+    private String email = null;
+    private String organisation = null;
+    private String phone = null;
     
     public HelloUser() {
         super();
@@ -73,6 +75,76 @@ public class HelloUser {
      */
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    /**
+     * @return the name
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * @param name the name to set
+     */
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    /**
+     * @return the surname
+     */
+    public String getSurname() {
+        return surname;
+    }
+
+    /**
+     * @param surname the surname to set
+     */
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
+
+    /**
+     * @return the email
+     */
+    public String getEmail() {
+        return email;
+    }
+
+    /**
+     * @param email the email to set
+     */
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    /**
+     * @return the organisation
+     */
+    public String getOrganisation() {
+        return organisation;
+    }
+
+    /**
+     * @param organisation the organisation to set
+     */
+    public void setOrganisation(String organisation) {
+        this.organisation = organisation;
+    }
+
+    /**
+     * @return the phone
+     */
+    public String getPhone() {
+        return phone;
+    }
+
+    /**
+     * @param phone the phone to set
+     */
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
     
 }

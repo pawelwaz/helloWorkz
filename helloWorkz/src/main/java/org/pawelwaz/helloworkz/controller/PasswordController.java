@@ -5,6 +5,9 @@ import javafx.scene.control.PasswordField;
 import javax.persistence.EntityManager;
 import org.jasypt.util.password.StrongPasswordEncryptor;
 import org.pawelwaz.helloworkz.entity.HelloUser;
+import static org.pawelwaz.helloworkz.util.FieldType.PASSWORD;
+import org.pawelwaz.helloworkz.util.FormField;
+import org.pawelwaz.helloworkz.util.HelloForm;
 import org.pawelwaz.helloworkz.util.HelloSession;
 import org.pawelwaz.helloworkz.util.HelloUI;
 import org.pawelwaz.helloworkz.util.JpaUtil;
@@ -21,13 +24,17 @@ public class PasswordController extends HelloUI {
     
     @FXML
     private void passwordAction() {
-        if(old.getText().length() == 0 || newPass.getText().length() == 0 || retype.getText().length() == 0) {
-            this.showError("Wszystkie pola musza być wypełnione");
-        }
-        else if(!newPass.getText().equals(retype.getText())) {
+        FormField[] fields = {
+            new FormField("stare hasło", PASSWORD, old.getText(), true),
+            new FormField("nowe hasło", PASSWORD, newPass.getText(), true),
+            new FormField("powtórz nowe hasło", PASSWORD, retype.getText(), true)
+        };
+        HelloForm form = new HelloForm(fields);
+        
+        if(!newPass.getText().equals(retype.getText())) {
             this.showError("Nowe hasło zostało przepisane niepoprawnie");
         }
-        else {
+        else if(form.isValid()) {
             StrongPasswordEncryptor encryptor = new StrongPasswordEncryptor();
             if(encryptor.checkPassword(old.getText(), HelloSession.getUser().getPassword())) {
                 HelloSession.getUser().setPassword(encryptor.encryptPassword(newPass.getText()));

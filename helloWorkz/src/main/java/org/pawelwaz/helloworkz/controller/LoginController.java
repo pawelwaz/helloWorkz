@@ -8,6 +8,9 @@ import javafx.scene.control.TextField;
 import javax.persistence.*;
 import org.jasypt.util.password.StrongPasswordEncryptor;
 import org.pawelwaz.helloworkz.entity.HelloUser;
+import static org.pawelwaz.helloworkz.util.FieldType.*;
+import org.pawelwaz.helloworkz.util.FormField;
+import org.pawelwaz.helloworkz.util.HelloForm;
 import org.pawelwaz.helloworkz.util.HelloSession;
 import org.pawelwaz.helloworkz.util.JpaUtil;
 
@@ -21,10 +24,13 @@ public class LoginController extends HelloUI {
     @FXML private PasswordField password;
     
     @FXML private void loginAction() {
-        if(login.getText().length() == 0 || password.getText().length() == 0) {
-            this.showError("Pola logowania muszą być wypełnione");
-        }
-        else {
+        FormField[] fields = {
+            new FormField("login", LOGIN, login.getText(), true),
+            new FormField("hasło", PASSWORD, password.getText(), true)
+        };
+        HelloForm form = new HelloForm(fields);
+        
+        if(form.isValid()) {
             EntityManager em = JpaUtil.getFactory().createEntityManager();
             Query q = em.createQuery("Select u from HelloUser u where u.login = '" + login.getText() + "'");
             q.setMaxResults(1);
