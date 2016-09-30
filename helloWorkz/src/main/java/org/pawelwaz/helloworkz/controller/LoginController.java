@@ -8,6 +8,7 @@ import javafx.scene.control.TextField;
 import javax.persistence.*;
 import org.jasypt.util.password.StrongPasswordEncryptor;
 import org.pawelwaz.helloworkz.entity.HelloUser;
+import org.pawelwaz.helloworkz.util.HelloSession;
 import org.pawelwaz.helloworkz.util.JpaUtil;
 
 /**
@@ -32,7 +33,10 @@ public class LoginController extends HelloUI {
                 StrongPasswordEncryptor encryptor = new StrongPasswordEncryptor();
                 HelloUser checkPass = check.get(0);
                 if(encryptor.checkPassword(password.getText(), checkPass.getPassword())) {
-                    this.showInfo("zajebiste dane logowania. YOU IN, NIGGA!");
+                    em.close();
+                    HelloSession.setUser(checkPass);
+                    this.goTo("MainView", "helloWorkz");
+                    return;
                 }
             }
             this.showError("Błędne dane logowania");

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" fx:id="ap" prefHeight="660.0" prefWidth="1051.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.pawelwaz.helloworkz.controller.MainViewController">
+   <children>
+      <AnchorPane layoutX="255.0" layoutY="24.0" prefHeight="120.0" prefWidth="200.0" style="-fx-background-color: #235469;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <ImageView fitHeight="54.0" fitWidth="72.0" layoutX="14.0" layoutY="29.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../img/logosm.png" />
+               </image>
+            </ImageView>
+            <Label fx:id="loginLabel" layoutX="14.0" layoutY="85.0" text="login" textFill="WHITE" AnchorPane.topAnchor="85.0">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+      <MenuBar AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <menus>
+            <Menu mnemonicParsing="false" text="Kontakty">
+              <items>
+                <MenuItem mnemonicParsing="false" onAction="#goSearchContacts" text="Szukaj kontaktów" />
+              </items>
+            </Menu>
+          <Menu mnemonicParsing="false" text="Konto">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Dane konta" />
+                  <MenuItem mnemonicParsing="false" onAction="#goPassword" text="Zmiana hasła" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Pomoc">
+            <items>
+              <MenuItem mnemonicParsing="false" onAction="#showAbout" text="helloWorkz" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+   </children>
+</AnchorPane>
