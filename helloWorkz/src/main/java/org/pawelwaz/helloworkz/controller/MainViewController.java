@@ -21,6 +21,14 @@ public class MainViewController extends HelloUI {
         
     }
     
+    @FXML private void goAvatar() {
+        this.openPopup("Avatar", "zmiana awatara");
+    }
+    
+    @FXML private void goLoginChange() {
+        this.openPopup("LoginChange", "zmiana loginu");
+    }
+    
     @FXML private void goAccount() {
         this.openPopup("Account", "Dane dodatkowe konta");
     }

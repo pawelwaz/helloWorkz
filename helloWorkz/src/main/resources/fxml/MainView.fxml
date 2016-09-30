@@ -35,6 +35,8 @@
           <Menu mnemonicParsing="false" text="Konto">
             <items>
               <MenuItem mnemonicParsing="false" onAction="#goAccount" text="Dane konta" />
+                  <MenuItem mnemonicParsing="false" onAction="#goAvatar" text="Zmiana awatara" />
+                  <MenuItem mnemonicParsing="false" onAction="#goLoginChange" text="Zmiana loginu" />
                   <MenuItem mnemonicParsing="false" onAction="#goPassword" text="Zmiana hasła" />
             </items>
           </Menu>
