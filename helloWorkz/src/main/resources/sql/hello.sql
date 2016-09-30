@@ -16,5 +16,6 @@ create table HelloUser (
     phone varchar(64) default null,
     organisation varchar(128) default null,
     job varchar(128) default null,
+    avatar blob,
     primary key(id)
 );

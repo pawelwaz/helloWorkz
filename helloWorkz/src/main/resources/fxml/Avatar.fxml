@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.pawelwaz.helloworkz.controller.AvatarController">
-    
+<AnchorPane id="AnchorPane" fx:id="ap" prefHeight="400.0" prefWidth="600.0" stylesheets="@../styles/Styles.css" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.pawelwaz.helloworkz.controller.AvatarController">
+   <children>
+      <Button layoutX="274.0" layoutY="338.0" mnemonicParsing="false" onAction="#chooseFile" text="Button" />
+      <ImageView fx:id="avatar" fitHeight="150.0" fitWidth="200.0" layoutX="200.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true" />
+   </children>
 </AnchorPane>
