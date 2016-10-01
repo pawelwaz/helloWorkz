@@ -8,7 +8,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
@@ -79,21 +78,17 @@ public class HelloUI implements Initializable {
         thisWindow.close();
     }
     
-    public void showError(String content) {
-        Alert a = new Alert(AlertType.ERROR, content);
+    public static void showError(String content) {
+        Alert a = new Alert(Alert.AlertType.ERROR, content);
         a.setTitle("");
-        a.initModality(Modality.APPLICATION_MODAL);
-        a.initOwner(ap.getScene().getWindow());
         a.setHeaderText("Błąd");
         a.showAndWait();
     }
     
-    public void showInfo(String content) {
-        Alert a = new Alert(AlertType.INFORMATION, content);
+    public static void showInfo(String content) {
+        Alert a = new Alert(Alert.AlertType.INFORMATION, content);
         a.setTitle("");
         a.setHeaderText("Informacja");
-        a.initModality(Modality.APPLICATION_MODAL);
-        a.initOwner(ap.getScene().getWindow());
         a.showAndWait();
     }
     

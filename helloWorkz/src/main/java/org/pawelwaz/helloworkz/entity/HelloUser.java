@@ -1,10 +1,19 @@
 package org.pawelwaz.helloworkz.entity;
 
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javax.imageio.ImageIO;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+import org.pawelwaz.helloworkz.util.HelloUI;
 
 @Entity
 @Table(name = "hellouser")
@@ -20,6 +29,9 @@ public class HelloUser {
     private String organisation = null;
     private String phone = null;
     private String job = null;
+    private byte[] avatar = null;
+    @Transient
+    private BufferedImage readyAvatar = null;
     
     public HelloUser() {
         super();
@@ -34,6 +46,32 @@ public class HelloUser {
     public HelloUser(String login, String password) {
         this.login = login;
         this.password = password;
+    }
+    
+    public void prepareAvatar() {
+        try {
+            ByteArrayInputStream stream = new ByteArrayInputStream(this.avatar);
+            this.readyAvatar = ImageIO.read(stream);
+        }
+        catch(Exception ex) {
+            HelloUI.showError("Problem z działaniem aplikacji, zostanie ona zamknięta");
+            System.exit(1);
+        }
+    }
+    
+    public void setDefaultAvatar() {
+        try {
+            File file = new File("classes/img/avatar.png");
+            BufferedImage bufferedImage = ImageIO.read(file);
+            ByteArrayOutputStream stream = new ByteArrayOutputStream(262144);
+            ImageIO.write(bufferedImage, "png", stream);
+            stream.flush();
+            this.avatar = stream.toByteArray();
+        }
+        catch(Exception ex) {
+            HelloUI.showError("Brak części plików aplikacji. Zostanie ona zamknięta");
+            System.exit(1);
+        }
     }
 
     /**
@@ -160,6 +198,34 @@ public class HelloUser {
      */
     public void setJob(String job) {
         this.job = job;
+    }
+
+    /**
+     * @return the avatar
+     */
+    public byte[] getAvatar() {
+        return avatar;
+    }
+
+    /**
+     * @param avatar the avatar to set
+     */
+    public void setAvatar(byte[] avatar) {
+        this.avatar = avatar;
+    }
+
+    /**
+     * @return the readyAvatar
+     */
+    public BufferedImage getReadyAvatar() {
+        return readyAvatar;
+    }
+
+    /**
+     * @param readyAvatar the readyAvatar to set
+     */
+    public void setReadyAvatar(BufferedImage readyAvatar) {
+        this.readyAvatar = readyAvatar;
     }
     
 }

@@ -46,6 +46,7 @@ public class RegisterController extends HelloUI {
             if(check.isEmpty()) {
                 StrongPasswordEncryptor encryptor = new StrongPasswordEncryptor();
                 HelloUser newUser = new HelloUser(login.getText(), encryptor.encryptPassword(password.getText()));
+                newUser.setDefaultAvatar();
                 em.getTransaction().begin();
                 em.persist(newUser);
                 em.getTransaction().commit();

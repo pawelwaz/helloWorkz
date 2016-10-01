@@ -13,12 +13,12 @@
    <children>
       <AnchorPane layoutX="255.0" layoutY="24.0" prefHeight="120.0" prefWidth="200.0" styleClass="topStripe" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <ImageView fitHeight="54.0" fitWidth="72.0" layoutX="14.0" layoutY="29.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="avatar" fitHeight="80.0" fitWidth="80.0" layoutX="14.0" layoutY="29.0" onMouseClicked="#goAvatar" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../img/logosm.png" />
                </image>
             </ImageView>
-            <Label fx:id="loginLabel" layoutX="14.0" layoutY="85.0" text="login" textFill="WHITE" AnchorPane.topAnchor="85.0">
+            <Label fx:id="loginLabel" layoutX="14.0" layoutY="110.0" text="login" textFill="WHITE" AnchorPane.topAnchor="110.0">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>

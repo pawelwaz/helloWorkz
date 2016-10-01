@@ -2,10 +2,12 @@ package org.pawelwaz.helloworkz.controller;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 import org.pawelwaz.helloworkz.util.HelloSession;
 import org.pawelwaz.helloworkz.util.HelloUI;
 
@@ -16,6 +18,11 @@ import org.pawelwaz.helloworkz.util.HelloUI;
 public class MainViewController extends HelloUI {
     
     @FXML private Label loginLabel;
+    @FXML private ImageView avatar;
+    
+    private void refreshAvatar() {
+        avatar.setImage(SwingFXUtils.toFXImage(HelloSession.getUser().getReadyAvatar(), null));
+    }
     
     @FXML private void goSearchContacts() {
         
@@ -48,6 +55,7 @@ public class MainViewController extends HelloUI {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         loginLabel.setText(HelloSession.getUser().getLogin());
+        this.refreshAvatar();
     }
     
 }

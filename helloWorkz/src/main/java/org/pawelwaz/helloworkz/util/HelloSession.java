@@ -20,6 +20,8 @@ public class HelloSession {
         HelloSession.user.setSurname(user.getSurname());
         HelloSession.user.setOrganisation(user.getOrganisation());
         HelloSession.user.setPhone(user.getPhone());
+        HelloSession.user.setAvatar(user.getAvatar());
+        HelloSession.user.setReadyAvatar(user.getReadyAvatar());
     }
     
     public static HelloUser getUser() {

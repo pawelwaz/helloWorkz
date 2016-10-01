@@ -40,6 +40,7 @@ public class LoginController extends HelloUI {
                 HelloUser checkPass = check.get(0);
                 if(encryptor.checkPassword(password.getText(), checkPass.getPassword())) {
                     em.close();
+                    checkPass.prepareAvatar();
                     HelloSession.setUser(checkPass);
                     this.goTo("MainView", "helloWorkz");
                     return;

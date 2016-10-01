@@ -1,8 +1,5 @@
 package org.pawelwaz.helloworkz.util;
 
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
-
 /**
  *
  * @author pawelwaz
@@ -33,21 +30,14 @@ public class FormField {
     
     public boolean isValid() {
         if(this.obligatory && content.length() == 0) {
-            this.showError("Pole '" + this.name + "' nie może być puste");
+            HelloUI.showError("Pole '" + this.name + "' nie może być puste");
             return false;
         }
         else if(this.content.length() > this.max) {
-            this.showError("Wartość pola '" + this.name + "' jest zbyt długa. Maksymalna ilość znaków to " + this.max);
+            HelloUI.showError("Wartość pola '" + this.name + "' jest zbyt długa. Maksymalna ilość znaków to " + this.max);
             return false;
         }
         else return true;
-    }
-    
-    public void showError(String content) {
-        Alert a = new Alert(AlertType.ERROR, content);
-        a.setTitle("");
-        a.setHeaderText("Błąd formularza");
-        a.showAndWait();
     }
     
 }
