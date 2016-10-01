@@ -20,6 +20,7 @@ public class HelloSession {
         HelloSession.user.setSurname(user.getSurname());
         HelloSession.user.setOrganisation(user.getOrganisation());
         HelloSession.user.setPhone(user.getPhone());
+        HelloSession.user.setJob(user.getJob());
         HelloSession.user.setAvatar(user.getAvatar());
         HelloSession.user.setReadyAvatar(user.getReadyAvatar());
     }

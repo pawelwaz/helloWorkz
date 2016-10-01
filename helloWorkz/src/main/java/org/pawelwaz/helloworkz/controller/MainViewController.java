@@ -8,6 +8,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import org.pawelwaz.helloworkz.util.HelloSession;
 import org.pawelwaz.helloworkz.util.HelloUI;
 
@@ -19,9 +20,14 @@ public class MainViewController extends HelloUI {
     
     @FXML private Label loginLabel;
     @FXML private ImageView avatar;
+    @FXML private AnchorPane subAp;
     
     private void refreshAvatar() {
         avatar.setImage(SwingFXUtils.toFXImage(HelloSession.getUser().getReadyAvatar(), null));
+    }
+    
+    private void refreshLogin() {
+        loginLabel.setText(HelloSession.getUser().getLogin());
     }
     
     @FXML private void goSearchContacts() {
@@ -30,10 +36,12 @@ public class MainViewController extends HelloUI {
     
     @FXML private void goAvatar() {
         this.openPopup("Avatar", "zmiana awatara");
+        this.refreshAvatar();
     }
     
     @FXML private void goLoginChange() {
         this.openPopup("LoginChange", "zmiana loginu");
+        this.refreshLogin();
     }
     
     @FXML private void goAccount() {
@@ -54,7 +62,7 @@ public class MainViewController extends HelloUI {
     
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        loginLabel.setText(HelloSession.getUser().getLogin());
+        this.refreshLogin();
         this.refreshAvatar();
     }
     

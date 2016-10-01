@@ -48,7 +48,7 @@ public class HelloUI implements Initializable {
             stage.initOwner(ap.getScene().getWindow());
             stage.setScene(scene);
             stage.setTitle(title);
-            stage.show(); 
+            stage.showAndWait();
         }
         catch(Exception e) {
             this.showError("Wystąpił błąd działania programu i nastąpi jego zamknięcie. Treść błędu: " + e.getMessage());

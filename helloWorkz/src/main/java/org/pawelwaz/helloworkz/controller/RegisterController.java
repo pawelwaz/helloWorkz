@@ -38,7 +38,7 @@ public class RegisterController extends HelloUI {
         if(!password.getText().equals(retype.getText())) {
             this.showError("Podane hasła różnią się");
         }
-        else if(form.isValid()) {
+        else if(form.isValid() && this.verifyLogin(login.getText())) {
             EntityManager em = JpaUtil.getFactory().createEntityManager();
             Query query = em.createQuery("select user from HelloUser user where user.login = '" + login.getText() + "'");
             query.setMaxResults(1);
@@ -59,6 +59,21 @@ public class RegisterController extends HelloUI {
                 em.close();
             }
         }
+    }
+    
+    private boolean verifyLogin(String input) {
+        for(int i = 0; i < input.length(); i++) {
+            char check = input.charAt(i);
+            if(check == 32) {}
+            else if(check >= 48 && check <= 57) {}
+            else if(check >= 65 && check <= 90) {}
+            else if(check >= 97 && check <= 122) {}
+            else {
+                this.showError("Pole 'login' zawiera niedozwolone znaki. Login może składać się z liter (bez polskich znaków) i cyfr. Może również zawierać spacje.");
+                return false;
+            }
+        }
+        return true;
     }
     
 }
