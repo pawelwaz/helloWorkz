@@ -4,8 +4,6 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javax.imageio.ImageIO;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

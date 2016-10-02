@@ -1,17 +1,27 @@
 package org.pawelwaz.helloworkz.controller;
 
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import javafx.scene.image.WritableImage;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javax.imageio.ImageIO;
 import javax.persistence.*;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.ParameterExpression;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 import org.pawelwaz.helloworkz.entity.HelloUser;
 import org.pawelwaz.helloworkz.util.HelloUI;
 import org.pawelwaz.helloworkz.util.JpaUtil;
@@ -27,11 +37,15 @@ public class SearchContactsController extends HelloUI {
     @FXML private TextField surname;
     @FXML private TextField organisation;
     @FXML private TextField job;
+    @FXML private TextField phone;
+    @FXML private ChoiceBox sortBy;
     @FXML private AnchorPane searchResults;
+    private WritableImage messageButton;
+    private WritableImage addToContactsButton;
     
     @FXML private void searchContactsAction() {
         EntityManager em = JpaUtil.getFactory().createEntityManager();
-        Query q = em.createQuery("select u from HelloUser u");
+        Query q = this.prepareQuery(em);
         List<HelloUser> users = q.getResultList();
         this.searchResults.getChildren().clear();
         VBox vb = new VBox();
@@ -40,11 +54,22 @@ public class SearchContactsController extends HelloUI {
             AnchorPane rowPane = new AnchorPane();
             AnchorPane.setLeftAnchor(rowPane, 0.0);
             AnchorPane.setRightAnchor(rowPane, 0.0);
-            rowPane.getStyleClass().add("rowPane");
             if(i % 2 == 0) rowPane.getStyleClass().add("searchResultEven");
             else rowPane.getStyleClass().add("searchResultOdd");
             HBox row = this.prepareRow(user);
             rowPane.getChildren().add(row);
+            ImageView sendMsgBtn = new ImageView();
+            sendMsgBtn.setImage(this.messageButton);
+            AnchorPane.setRightAnchor(sendMsgBtn, 15.0);
+            AnchorPane.setTopAnchor(sendMsgBtn, 15.0);
+            rowPane.getChildren().add(sendMsgBtn);
+            
+            ImageView addBtn = new ImageView();
+            addBtn.setImage(this.addToContactsButton);
+            AnchorPane.setRightAnchor(addBtn, 80.0);
+            AnchorPane.setTopAnchor(addBtn, 15.0);
+            rowPane.getChildren().add(addBtn);
+            
             vb.getChildren().add(rowPane);
             i++;
         }
@@ -54,11 +79,42 @@ public class SearchContactsController extends HelloUI {
         em.close();
     }
     
+    private Query prepareQuery(EntityManager em) {
+        boolean criteriaUsed = false;
+        CriteriaBuilder builder = em.getCriteriaBuilder();
+        CriteriaQuery q = builder.createQuery();
+        Root<HelloUser> user = q.from(HelloUser.class);
+        q.select(user);
+        if(this.login.getText().length() > 0) {
+            Predicate pred = builder.like(user.<String>get("login"), this.login.getText());
+            q.where(pred);
+        }
+        return em.createQuery(q);
+    }
+    
     private HBox prepareRow(HelloUser user) {
         HBox row = new HBox();
         row.getChildren().add(this.prepareAvatar(user));
         row.getChildren().add(this.prepareDescription(user));
+        AnchorPane.setLeftAnchor(row, 5.0);
+        AnchorPane.setTopAnchor(row, 5.0);
+        AnchorPane.setBottomAnchor(row, 5.0);
         return row;
+    }
+    
+    private void prepareButtons() {
+        try {
+            File file = new File("classes/img/messageButton.png");
+            BufferedImage bufferedImage = ImageIO.read(file);
+            this.messageButton = SwingFXUtils.toFXImage(bufferedImage, null);
+            file = new File("classes/img/add.png");
+            bufferedImage = ImageIO.read(file);
+            this.addToContactsButton = SwingFXUtils.toFXImage(bufferedImage, null);
+        }
+        catch(Exception ex) {
+            this.showError("Brak części plików aplikacji. Zostanie ona zamknięta");
+            System.exit(1);
+        }
     }
     
     private VBox prepareDescription(HelloUser user) {
@@ -101,7 +157,7 @@ public class SearchContactsController extends HelloUI {
     
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        //AnchorPane.setRightAnchor(this.ap, 0.0);
+        this.prepareButtons();
     }
     
 }

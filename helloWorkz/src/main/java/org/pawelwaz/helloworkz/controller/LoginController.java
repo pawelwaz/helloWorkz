@@ -31,23 +31,28 @@ public class LoginController extends HelloUI {
         HelloForm form = new HelloForm(fields);
         
         if(form.isValid()) {
-            EntityManager em = JpaUtil.getFactory().createEntityManager();
-            Query q = em.createQuery("Select u from HelloUser u where u.login = '" + login.getText() + "'");
-            q.setMaxResults(1);
-            List<HelloUser> check = q.getResultList();
-            if(!check.isEmpty()) {
-                StrongPasswordEncryptor encryptor = new StrongPasswordEncryptor();
-                HelloUser checkPass = check.get(0);
-                if(encryptor.checkPassword(password.getText(), checkPass.getPassword())) {
-                    em.close();
-                    checkPass.prepareAvatar();
-                    HelloSession.setUser(checkPass);
-                    this.goTo("MainView", "helloWorkz");
-                    return;
+            try {
+                EntityManager em = JpaUtil.getFactory().createEntityManager();
+                Query q = em.createQuery("Select u from HelloUser u where u.login = '" + login.getText() + "'");
+                q.setMaxResults(1);
+                List<HelloUser> check = q.getResultList();
+                if(!check.isEmpty()) {
+                    StrongPasswordEncryptor encryptor = new StrongPasswordEncryptor();
+                    HelloUser checkPass = check.get(0);
+                    if(encryptor.checkPassword(password.getText(), checkPass.getPassword())) {
+                        em.close();
+                        checkPass.prepareAvatar();
+                        HelloSession.setUser(checkPass);
+                        this.goTo("MainView", "helloWorkz");
+                        return;
+                    }
                 }
+                this.showError("Błędne dane logowania");
+                em.close();
             }
-            this.showError("Błędne dane logowania");
-            em.close();
+            catch(Exception e) {
+                this.showError("Błąd połączenia z bazą danych");
+            }
         }
     }
     
