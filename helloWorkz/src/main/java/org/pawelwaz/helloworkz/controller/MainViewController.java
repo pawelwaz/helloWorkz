@@ -4,6 +4,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Label;
@@ -30,8 +31,19 @@ public class MainViewController extends HelloUI {
         loginLabel.setText(HelloSession.getUser().getLogin());
     }
     
+    private void openSub(String fxml) {
+        try {
+            this.subAp.getChildren().clear();
+            this.subAp.getChildren().add((AnchorPane) FXMLLoader.load(this.getClass().getResource("/fxml/" + fxml + ".fxml")));
+        }
+        catch(Exception e) {
+            this.showError("Wystąpił problem z działaniem aplikacji i zostanie ona zamknięta");
+            System.exit(1);
+        }
+    }
+    
     @FXML private void goSearchContacts() {
-        
+        this.openSub("SearchContacts");
     }
     
     @FXML private void goAvatar() {

@@ -212,6 +212,7 @@ public class HelloUser {
      */
     public void setAvatar(byte[] avatar) {
         this.avatar = avatar;
+        this.prepareAvatar();
     }
 
     /**
@@ -226,6 +227,7 @@ public class HelloUser {
      */
     public void setReadyAvatar(BufferedImage readyAvatar) {
         this.readyAvatar = readyAvatar;
+        this.prepareAvatar();
     }
     
 }

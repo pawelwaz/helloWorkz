@@ -5,6 +5,31 @@
     -fx-text-fill: rgb(35, 84, 105);
 }
 
+.blueLabelSm {
+    -fx-font-weight: bold;
+    -fx-font-family: System;
+    -fx-font-size: 14px;
+    -fx-text-fill: rgb(35, 84, 105);
+}
+
 .topStripe {
     -fx-background-color: rgb(35, 84, 105);
+}
+
+.searchResultOdd {
+    -fx-background-color: rgb(202, 213, 215);
+    -fx-padding: 10 10 10 10;
+}
+
+.searchResultEven {
+    -fx-background-color: rgb(191, 204, 206);
+    -fx-padding: 10 10 10 10;
+}
+
+.smallHeader {
+    -fx-font-weight: bold;
+    -fx-font-family: System;
+    -fx-font-size: 12px;
+    -fx-text-fill: rgb(0, 0, 0);
+    -fx-padding: 0 5 5 5;
 }
