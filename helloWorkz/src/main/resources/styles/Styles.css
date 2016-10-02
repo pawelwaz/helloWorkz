@@ -18,12 +18,10 @@
 
 .searchResultOdd {
     -fx-background-color: rgb(202, 213, 215);
-    -fx-padding: 10 10 10 10;
 }
 
 .searchResultEven {
     -fx-background-color: rgb(191, 204, 206);
-    -fx-padding: 10 10 10 10;
 }
 
 .smallHeader {
@@ -31,5 +29,16 @@
     -fx-font-family: System;
     -fx-font-size: 12px;
     -fx-text-fill: rgb(0, 0, 0);
-    -fx-padding: 0 5 5 5;
+    -fx-padding: 0 5 0 5;
+}
+
+.description {
+    -fx-font-family: System;
+    -fx-font-size: 12px;
+    -fx-text-fill: rgb(0, 0, 0);
+    -fx-padding: 0 5 0 5;
+}
+
+.rowPane {
+    -fx-padding: 10 10 10 10;
 }

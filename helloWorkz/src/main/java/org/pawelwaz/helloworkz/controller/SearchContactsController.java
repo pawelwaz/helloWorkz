@@ -37,26 +37,66 @@ public class SearchContactsController extends HelloUI {
         VBox vb = new VBox();
         int i = 0;
         for( HelloUser user : users ) {
-            HBox row = new HBox();
-            if(i % 2 == 0) row.getStyleClass().add("searchResultEven");
-            else row.getStyleClass().add("searchResultOdd");
-            AnchorPane.setLeftAnchor(row, 0.0);
-            AnchorPane.setRightAnchor(row, 0.0);
-            ImageView userAvatar = new ImageView();
-            user.prepareAvatar();
-            userAvatar.setImage(SwingFXUtils.toFXImage(user.getReadyAvatar(), null));
-            userAvatar.setFitWidth(60.0);
-            userAvatar.setFitHeight(60.0);
-            Label userLabel = new Label(user.getLogin());
-            userLabel.getStyleClass().add("smallHeader");
-            row.getChildren().addAll(userAvatar, userLabel);
-            vb.getChildren().add(row);
+            AnchorPane rowPane = new AnchorPane();
+            AnchorPane.setLeftAnchor(rowPane, 0.0);
+            AnchorPane.setRightAnchor(rowPane, 0.0);
+            rowPane.getStyleClass().add("rowPane");
+            if(i % 2 == 0) rowPane.getStyleClass().add("searchResultEven");
+            else rowPane.getStyleClass().add("searchResultOdd");
+            HBox row = this.prepareRow(user);
+            rowPane.getChildren().add(row);
+            vb.getChildren().add(rowPane);
             i++;
         }
         this.searchResults.getChildren().add(vb);
         AnchorPane.setLeftAnchor(vb, 0.0);
         AnchorPane.setRightAnchor(vb, 0.0);
         em.close();
+    }
+    
+    private HBox prepareRow(HelloUser user) {
+        HBox row = new HBox();
+        row.getChildren().add(this.prepareAvatar(user));
+        row.getChildren().add(this.prepareDescription(user));
+        return row;
+    }
+    
+    private VBox prepareDescription(HelloUser user) {
+        VBox desc = new VBox();
+        Label userLabel = new Label(user.getLogin());
+        userLabel.getStyleClass().add("smallHeader");
+        desc.getChildren().add(userLabel);
+        if(user.getName() != null || user.getSurname() != null) {
+            Label nameSurname = new Label("");
+            if(user.getName() != null) nameSurname.setText(user.getName() + " ");
+            if(user.getSurname() != null) nameSurname.setText(nameSurname.getText() + user.getSurname());
+            nameSurname.getStyleClass().add("description");
+            desc.getChildren().add(nameSurname);
+        }
+        if(user.getPhone() != null || user.getEmail() != null) {
+            Label phoneEmail = new Label("");
+            if(user.getPhone() != null) phoneEmail.setText("tel. " + user.getPhone() + " ");
+            if(user.getEmail() != null) phoneEmail.setText(phoneEmail.getText() + "e-mail: " + user.getEmail());
+            phoneEmail.getStyleClass().add("description");
+            desc.getChildren().add(phoneEmail);
+        }
+        if(user.getOrganisation() != null || user.getJob() != null) {
+            Label orgJob = new Label("");
+            if(user.getOrganisation() != null) orgJob.setText("organizacja: " + user.getOrganisation() + " ");
+            if(user.getJob() != null) orgJob.setText(orgJob.getText() + "stanowisko: " + user.getJob());
+            orgJob.getStyleClass().add("description");
+            desc.getChildren().add(orgJob);
+        }
+        return desc;
+    }
+    
+    private ImageView prepareAvatar(HelloUser user) {
+        ImageView userAvatar = new ImageView();
+        user.prepareAvatar();
+        userAvatar.setImage(SwingFXUtils.toFXImage(user.getReadyAvatar(), null));
+        userAvatar.setFitWidth(70.0);
+        userAvatar.setFitHeight(70.0);
+        return userAvatar;
     }
     
     @Override
