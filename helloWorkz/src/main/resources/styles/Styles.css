@@ -16,11 +16,11 @@
     -fx-background-color: rgb(35, 84, 105);
 }
 
-.searchResultOdd {
+.stripeOdd {
     -fx-background-color: rgb(202, 213, 215);
 }
 
-.searchResultEven {
+.stripeEven {
     -fx-background-color: rgb(191, 204, 206);
 }
 

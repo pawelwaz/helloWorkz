@@ -5,6 +5,7 @@ import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -54,6 +55,13 @@ public class HelloUI implements Initializable {
             this.showError("Wystąpił błąd działania programu i nastąpi jego zamknięcie. Treść błędu: " + e.getMessage());
             System.exit(1);
         }
+    }
+    
+    public static void setAnchors(Node node, double value) {
+        AnchorPane.setBottomAnchor(node, value);
+        AnchorPane.setTopAnchor(node, value);
+        AnchorPane.setLeftAnchor(node, value);
+        AnchorPane.setRightAnchor(node, value);
     }
     
     public void goTo(String fxml, String title) {
