@@ -19,3 +19,13 @@ create table HelloUser (
     avatar blob,
     primary key(id)
 );
+
+create table Message(
+    id int unsigned not null auto_increment,
+    content text,
+    sender int unsigned not null,
+    receiver int unsigned not null,
+    foreign key(sender) references HelloUser(id),
+    foreign key(receiver) references HelloUser(id),
+    primary key(id)
+);

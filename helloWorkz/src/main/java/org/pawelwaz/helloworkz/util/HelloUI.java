@@ -2,6 +2,8 @@ package org.pawelwaz.helloworkz.util;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -12,6 +14,7 @@ import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
+import javafx.stage.WindowEvent;
 
 /**
  *
@@ -20,6 +23,7 @@ import javafx.stage.Modality;
 public class HelloUI implements Initializable {
     
     @FXML protected AnchorPane ap;
+    
     
     public void goToPopup(String fxml, String title) {
         try {
@@ -72,6 +76,14 @@ public class HelloUI implements Initializable {
             stage.setScene(scene);
             stage.setTitle(title);
             stage.show(); 
+            if(fxml.equals("MainView")) {
+                stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+                    @Override
+                    public void handle(WindowEvent event) {
+                        Platform.exit();
+                    }
+                });
+            }
             Stage thisWindow = (Stage) ap.getScene().getWindow();
             thisWindow.close();
         }

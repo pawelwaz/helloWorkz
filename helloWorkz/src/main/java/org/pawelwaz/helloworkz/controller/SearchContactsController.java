@@ -8,18 +8,25 @@ import java.util.List;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.embed.swing.SwingFXUtils;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Cursor;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import javafx.stage.Window;
 import javax.imageio.ImageIO;
 import javax.persistence.*;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -29,6 +36,7 @@ import javax.persistence.criteria.Root;
 import org.pawelwaz.helloworkz.entity.HelloUser;
 import org.pawelwaz.helloworkz.util.HelloUI;
 import org.pawelwaz.helloworkz.util.JpaUtil;
+import org.pawelwaz.helloworkz.util.MessageButton;
 
 /**
  *
@@ -71,9 +79,29 @@ public class SearchContactsController extends HelloUI {
         em.close();
     }
     
-    private AnchorPane insertButton(WritableImage btn, String evenOdd) {
-        ImageView img = new ImageView();
-        img.setImage(btn);
+    private AnchorPane insertMessageButton(String evenOdd, Long userId) {
+        MessageWindowController controller = null;
+        Parent messageRoot = null;
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/MessageWindow.fxml"));
+            messageRoot = loader.load();
+            controller = (MessageWindowController) loader.getController();
+            controller.setUserId(userId);
+        }
+        catch(Exception ex) {
+            this.showError("Wystąpił błąd podczas działania aplikacji i zostanie ona zamknięta");
+            System.exit(1);
+        }
+        Window window = this.ap.getScene().getWindow();
+        MessageButton img = new MessageButton(this.messageButton, messageRoot, window);
+        img.setCursor(Cursor.HAND);
+        Tooltip.install(img, new Tooltip("wyślij wiadomość"));
+        img.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                ((MessageButton)(event.getSource())).openMessageWindow();
+            }
+        });
         AnchorPane result = this.wrapNode(img, evenOdd, 15.0);
         AnchorPane.setLeftAnchor(img, 0.0);
         return result;
@@ -102,8 +130,7 @@ public class SearchContactsController extends HelloUI {
         grid.add(this.prepareAvatar(user, evenOdd), 0, i);
         grid.add(this.prepareDescription(user, evenOdd), 1, i);
         grid.add(this.insertEmpty(evenOdd), 2, i);
-        grid.add(this.insertButton(this.addToContactsButton, evenOdd), 3, i);
-        grid.add(this.insertButton(this.messageButton, evenOdd), 4, i);
+        grid.add(this.insertMessageButton(evenOdd, user.getId()), 3, i);
     }
     
     private AnchorPane prepareDescription(HelloUser user, String evenOdd) {

@@ -8,6 +8,7 @@
         <provider>org.apache.openjpa.persistence.PersistenceProviderImpl</provider>
         
         <class>org.pawelwaz.helloworkz.entity.HelloUser</class>
+        <class>org.pawelwaz.helloworkz.entity.Message</class>
 
         <properties>
                
