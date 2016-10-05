@@ -1,5 +1,7 @@
 package org.pawelwaz.helloworkz.controller;
 
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.embed.swing.SwingFXUtils;
@@ -10,6 +12,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javax.imageio.ImageIO;
 import org.pawelwaz.helloworkz.util.HelloSession;
 import org.pawelwaz.helloworkz.util.HelloUI;
 
@@ -72,10 +75,23 @@ public class MainViewController extends HelloUI {
         a.showAndWait();
     }
     
+    private void prepareButtons() {
+        try {
+            File file = new File("classes/img/messageButton.png");
+            BufferedImage bufferedImage = ImageIO.read(file);
+            MainViewController.messageButton = SwingFXUtils.toFXImage(bufferedImage, null);
+        }
+        catch(Exception ex) {
+            MainViewController.showError("Brak części plików aplikacji. Zostanie ona zamknięta");
+            System.exit(1);
+        }
+    }
+    
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         this.refreshLogin();
         this.refreshAvatar();
+        this.prepareButtons();
     }
     
 }

@@ -3,18 +3,30 @@ package org.pawelwaz.helloworkz.util;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Label;
+import javafx.scene.control.Tooltip;
+import javafx.scene.image.ImageView;
+import javafx.scene.image.WritableImage;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
+import javafx.stage.Window;
 import javafx.stage.WindowEvent;
+import org.pawelwaz.helloworkz.controller.MessageWindowController;
+import org.pawelwaz.helloworkz.entity.HelloUser;
 
 /**
  *
@@ -23,6 +35,7 @@ import javafx.stage.WindowEvent;
 public class HelloUI implements Initializable {
     
     @FXML protected AnchorPane ap;
+    protected static WritableImage messageButton;
     
     
     public void goToPopup(String fxml, String title) {
@@ -61,11 +74,106 @@ public class HelloUI implements Initializable {
         }
     }
     
+    public static HBox prepareUserDescription(HelloUser user) {
+        HBox result = new HBox();
+        result.getChildren().add(HelloUI.prepareUserAvatar(user));
+        VBox desc = new VBox();
+        Label userLabel = new Label(user.getLogin());
+        userLabel.getStyleClass().add("smallHeader");
+        desc.getChildren().add(userLabel);
+        if(user.getName() != null || user.getSurname() != null) {
+            Label nameSurname = new Label("");
+            if(user.getName() != null) nameSurname.setText(user.getName() + " ");
+            if(user.getSurname() != null) nameSurname.setText(nameSurname.getText() + user.getSurname());
+            nameSurname.getStyleClass().add("description");
+            desc.getChildren().add(nameSurname);
+        }
+        if(user.getPhone() != null || user.getEmail() != null) {
+            Label phoneEmail = new Label("");
+            if(user.getPhone() != null) phoneEmail.setText("tel. " + user.getPhone() + " ");
+            if(user.getEmail() != null) phoneEmail.setText(phoneEmail.getText() + "e-mail: " + user.getEmail());
+            phoneEmail.getStyleClass().add("description");
+            desc.getChildren().add(phoneEmail);
+        }
+        if(user.getOrganisation() != null || user.getJob() != null) {
+            Label orgJob = new Label("");
+            if(user.getOrganisation() != null) orgJob.setText("organizacja: " + user.getOrganisation() + " ");
+            if(user.getJob() != null) orgJob.setText(orgJob.getText() + "stanowisko: " + user.getJob());
+            orgJob.getStyleClass().add("description");
+            desc.getChildren().add(orgJob);
+        }
+        result.getChildren().add(HelloUI.wrapNode(desc, null, 0.0));
+        return result;
+    }
+    
+    public static AnchorPane prepareUserAvatar(HelloUser user) {
+        ImageView userAvatar = new ImageView();
+        user.prepareAvatar();
+        userAvatar.setImage(SwingFXUtils.toFXImage(user.getReadyAvatar(), null));
+        userAvatar.setFitWidth(70.0);
+        userAvatar.setFitHeight(70.0);
+        return HelloUI.wrapNode(userAvatar, null, 5.0);
+    }
+    
+    protected AnchorPane insertMessageButton(String styleClass, HelloUser user) {
+        MessageWindowController controller = null;
+        Parent messageRoot = null;
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/MessageWindow.fxml"));
+            messageRoot = loader.load();
+            controller = (MessageWindowController) loader.getController();
+            controller.setUser(user);
+            controller.addHeader();
+        }
+        catch(Exception ex) {
+            this.showError("Wystąpił błąd podczas działania aplikacji i zostanie ona zamknięta");
+            System.exit(1);
+        }
+        Window window = this.ap.getScene().getWindow();
+        MessageButton img = new MessageButton(this.messageButton, messageRoot, window);
+        img.setCursor(Cursor.HAND);
+        Tooltip.install(img, new Tooltip("wyślij wiadomość"));
+        img.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                ((MessageButton)(event.getSource())).openMessageWindow();
+            }
+        });
+        AnchorPane result = this.wrapNode(img, styleClass, 15.0, 15.0, 0.0, 5.0);
+        AnchorPane.setLeftAnchor(img, 0.0);
+        return result;
+    }
+    
+    public static AnchorPane wrapNode(Node node, String styleClass, double anchors) {
+        AnchorPane container = new AnchorPane();
+        if(styleClass != null) container.getStyleClass().add(styleClass);
+        container.getChildren().add(node);
+        HelloUI.setAnchors(node, anchors);
+        HelloUI.setAnchors(container, 0.0);
+        return container;
+    }
+    
+    public static AnchorPane wrapNode(Node node, String styleClass, double top, double bottom, double left, double right) {
+        AnchorPane container = new AnchorPane();
+        if(styleClass != null) container.getStyleClass().add(styleClass);
+        container.getChildren().add(node);
+        HelloUI.setAnchors(node, top, bottom, left, right);
+        HelloUI.setAnchors(container, 0.0);
+        return container;
+    }
+    
     public static void setAnchors(Node node, double value) {
         AnchorPane.setBottomAnchor(node, value);
         AnchorPane.setTopAnchor(node, value);
         AnchorPane.setLeftAnchor(node, value);
         AnchorPane.setRightAnchor(node, value);
+    }
+    
+    public static void setAnchors(Node node, double top, double bottom, double left, double right) {
+        AnchorPane.setBottomAnchor(node, bottom);
+        AnchorPane.setTopAnchor(node, top);
+        AnchorPane.setLeftAnchor(node, left);
+        AnchorPane.setRightAnchor(node, right);
     }
     
     public void goTo(String fxml, String title) {
