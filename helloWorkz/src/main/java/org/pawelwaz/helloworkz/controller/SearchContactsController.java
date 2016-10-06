@@ -82,7 +82,7 @@ public class SearchContactsController extends HelloUI {
     private void prepareRow(HelloUser user, GridPane grid, int i) {
         String styleClass = "stripeOdd";
         if(i % 2 == 0) styleClass = "stripeEven";
-        grid.add(HelloUI.wrapNode(HelloUI.prepareUserDescription(user), styleClass, 0.0), 0, i);
+        grid.add(HelloUI.wrapNode(HelloUI.prepareUserDescription(user, null), styleClass, 0.0), 0, i);
         grid.add(this.insertEmpty(styleClass), 1, i);
         grid.add(this.insertMessageButton(styleClass, user), 2, i);
     }

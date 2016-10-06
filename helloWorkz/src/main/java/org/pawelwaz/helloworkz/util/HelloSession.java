@@ -1,5 +1,8 @@
 package org.pawelwaz.helloworkz.util;
 
+import java.util.ArrayList;
+import java.util.List;
+import org.pawelwaz.helloworkz.controller.MessageWindowController;
 import org.pawelwaz.helloworkz.entity.HelloUser;
 
 /**
@@ -9,6 +12,7 @@ import org.pawelwaz.helloworkz.entity.HelloUser;
 public class HelloSession {
     
     private static HelloUser user;
+    private static List<MessageWindowController> mesgWindows = new ArrayList();
     
     public static void setUser(HelloUser user) {
         HelloSession.user = new HelloUser();
@@ -27,6 +31,10 @@ public class HelloSession {
     
     public static HelloUser getUser() {
         return user;
+    }
+    
+    public static List<MessageWindowController> getMsgWindows() {
+        return HelloSession.mesgWindows;
     }
     
 }

@@ -23,7 +23,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
-import javafx.stage.Window;
 import javafx.stage.WindowEvent;
 import org.pawelwaz.helloworkz.controller.MessageWindowController;
 import org.pawelwaz.helloworkz.entity.HelloUser;
@@ -74,15 +73,17 @@ public class HelloUI implements Initializable {
         }
     }
     
-    public static HBox prepareUserDescription(HelloUser user) {
+    public static HBox prepareUserDescription(HelloUser user, String color) {
         HBox result = new HBox();
         result.getChildren().add(HelloUI.prepareUserAvatar(user));
         VBox desc = new VBox();
         Label userLabel = new Label(user.getLogin());
         userLabel.getStyleClass().add("smallHeader");
+        if(color != null) userLabel.setStyle("-fx-text-fill: " + color);
         desc.getChildren().add(userLabel);
         if(user.getName() != null || user.getSurname() != null) {
             Label nameSurname = new Label("");
+            if(color != null) nameSurname.setStyle("-fx-text-fill: " + color);
             if(user.getName() != null) nameSurname.setText(user.getName() + " ");
             if(user.getSurname() != null) nameSurname.setText(nameSurname.getText() + user.getSurname());
             nameSurname.getStyleClass().add("description");
@@ -90,6 +91,7 @@ public class HelloUI implements Initializable {
         }
         if(user.getPhone() != null || user.getEmail() != null) {
             Label phoneEmail = new Label("");
+            if(color != null) phoneEmail.setStyle("-fx-text-fill: " + color);
             if(user.getPhone() != null) phoneEmail.setText("tel. " + user.getPhone() + " ");
             if(user.getEmail() != null) phoneEmail.setText(phoneEmail.getText() + "e-mail: " + user.getEmail());
             phoneEmail.getStyleClass().add("description");
@@ -97,6 +99,7 @@ public class HelloUI implements Initializable {
         }
         if(user.getOrganisation() != null || user.getJob() != null) {
             Label orgJob = new Label("");
+            if(color != null) orgJob.setStyle("-fx-text-fill: " + color);
             if(user.getOrganisation() != null) orgJob.setText("organizacja: " + user.getOrganisation() + " ");
             if(user.getJob() != null) orgJob.setText(orgJob.getText() + "stanowisko: " + user.getJob());
             orgJob.getStyleClass().add("description");
@@ -116,21 +119,7 @@ public class HelloUI implements Initializable {
     }
     
     protected AnchorPane insertMessageButton(String styleClass, HelloUser user) {
-        MessageWindowController controller = null;
-        Parent messageRoot = null;
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/MessageWindow.fxml"));
-            messageRoot = loader.load();
-            controller = (MessageWindowController) loader.getController();
-            controller.setUser(user);
-            controller.addHeader();
-        }
-        catch(Exception ex) {
-            this.showError("Wystąpił błąd podczas działania aplikacji i zostanie ona zamknięta");
-            System.exit(1);
-        }
-        Window window = this.ap.getScene().getWindow();
-        MessageButton img = new MessageButton(this.messageButton, messageRoot, window);
+        MessageButton img = new MessageButton(HelloUI.messageButton, this, user);
         img.setCursor(Cursor.HAND);
         Tooltip.install(img, new Tooltip("wyślij wiadomość"));
         img.setOnMouseClicked(new EventHandler<MouseEvent>() {
