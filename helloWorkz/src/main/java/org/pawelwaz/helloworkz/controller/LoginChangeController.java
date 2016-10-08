@@ -35,6 +35,8 @@ public class LoginChangeController extends HelloUI {
                 HelloUser user = em.find(HelloUser.class, HelloSession.getUser().getId());
                 em.getTransaction().begin();
                 user.setLogin(login.getText());
+                user.prepareAvatar();
+                HelloUI.saveTmpImage(user.getReadyAvatar(), user.getLogin());
                 em.getTransaction().commit();
                 HelloSession.setUser(user);
                 em.close();

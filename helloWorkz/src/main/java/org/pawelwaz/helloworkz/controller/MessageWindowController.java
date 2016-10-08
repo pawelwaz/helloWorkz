@@ -1,14 +1,18 @@
 package org.pawelwaz.helloworkz.controller;
 
+import java.io.File;
+import java.net.URI;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ResourceBundle;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.web.WebView;
 import javax.persistence.EntityManager;
 import org.pawelwaz.helloworkz.entity.HelloUser;
 import org.pawelwaz.helloworkz.entity.Message;
@@ -23,10 +27,12 @@ import javafx.stage.Stage;
  */
 public class MessageWindowController extends HelloUI {
     
-    @FXML private VBox messageBox;
     @FXML private TextArea input;
     @FXML private AnchorPane userHeader;
+    @FXML private WebView web;
     private HelloUser user;
+    private String htmlCode = "";
+    private int msgNumber = 0;
     
     @FXML private void sendMessage(KeyEvent event) {
         if(input.getText().length() > 0 && event.getCode().equals(KeyCode.ENTER)) {
@@ -42,15 +48,23 @@ public class MessageWindowController extends HelloUI {
             em.close();
             em = JpaUtil.getFactory().createEntityManager();
             msg = em.find(Message.class, msg.getId());
-            this.showMessage(msg);
+            this.showMessage(msg, HelloSession.getUser(), HelloSession.getHtmlAvatar());
             em.close();
             input.setText("");
             event.consume();
         }
     }
     
-    @FXML public void showMessage(Message msg) {
-        
+    @FXML public void showMessage(Message msg, HelloUser user, URI htmlAvatar) {
+        String color = "#BFCCCE";
+        if(this.msgNumber % 2 == 1) color = "#CAD5D7";
+        StringBuilder output = new StringBuilder("<body style=\"font-family: System; margin: 0px;\"><table cellpadding=\"5\" cellspacing=\"0\" style=\"font-size: 12px; width: 100%; border: 0px;\">");
+        this.htmlCode = this.htmlCode + HelloUI.prepareMessageStripe(user, msg.getContent(), new SimpleDateFormat("yyyy-MM-dd HH:mm").format(msg.getSendTime()), color, htmlAvatar);
+        output.append(this.htmlCode);
+        output.append("</table>");
+        output.append("</body>");
+        this.web.getEngine().loadContent(output.toString());
+        this.msgNumber++;
     }
     
     public void addHeader() {
@@ -75,6 +89,12 @@ public class MessageWindowController extends HelloUI {
     
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        this.web.getEngine().getLoadWorker().stateProperty().addListener(new ChangeListener() {
+            @Override
+            public void changed(ObservableValue observable, Object oldValue, Object newValue) {
+                web.getEngine().executeScript("window.scrollTo(0, document.body.scrollHeight)");
+            }
+        });
     }
     
 }

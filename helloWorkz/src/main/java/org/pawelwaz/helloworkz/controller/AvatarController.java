@@ -60,6 +60,7 @@ public class AvatarController extends HelloUI {
             user.setAvatar(this.byteImage);
             user.setReadyAvatar(this.readyToUse);
             em.getTransaction().commit();
+            HelloUI.saveTmpImage(readyToUse, user.getLogin());
             HelloSession.setUser(user);
             em.close();
             this.closeWindow();

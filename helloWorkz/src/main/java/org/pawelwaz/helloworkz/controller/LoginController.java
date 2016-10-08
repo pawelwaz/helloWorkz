@@ -43,6 +43,7 @@ public class LoginController extends HelloUI {
                         em.close();
                         checkPass.prepareAvatar();
                         HelloSession.setUser(checkPass);
+                        HelloUI.saveTmpImage(HelloSession.getUser().getReadyAvatar(), HelloSession.getUser().getLogin());
                         this.goTo("MainView", "helloWorkz");
                         return;
                     }

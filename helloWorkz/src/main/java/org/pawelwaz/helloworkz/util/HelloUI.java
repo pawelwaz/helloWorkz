@@ -1,5 +1,8 @@
 package org.pawelwaz.helloworkz.util;
 
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.net.URI;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
@@ -24,7 +27,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.WindowEvent;
-import org.pawelwaz.helloworkz.controller.MessageWindowController;
+import javax.imageio.ImageIO;
 import org.pawelwaz.helloworkz.entity.HelloUser;
 
 /**
@@ -131,6 +134,25 @@ public class HelloUI implements Initializable {
         AnchorPane result = this.wrapNode(img, styleClass, 15.0, 15.0, 0.0, 5.0);
         AnchorPane.setLeftAnchor(img, 0.0);
         return result;
+    }
+    
+    public static String prepareMessageStripe(HelloUser user, String content, String time, String color, URI avatar) {
+        StringBuilder result = new StringBuilder("<tr style = \"background-color: " + color + "; margin: 0px;\">");
+        result.append("<td valign=\"top\" width=\"50\"><img src=\"" + avatar + "\" width=\"50\" height=\"50\" /></td>");
+        result.append("<td><b>" + user.getLogin() + "</b> (" + time + ")<br />" + content + "</td>");
+        result.append("</tr>");
+        return result.toString();
+    }
+    
+    public static void saveTmpImage(BufferedImage img, String name) {
+        try {
+            File file = new File("tmp/" + name + ".png");
+            file.mkdirs();
+            ImageIO.write(img, "png", file);
+        }
+        catch(Exception ex) {
+            HelloUI.showError("Wystąpił błąd działania aplikacji. Kod błędu: " + ex.getMessage());
+        }
     }
     
     public static AnchorPane wrapNode(Node node, String styleClass, double anchors) {

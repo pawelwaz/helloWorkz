@@ -1,5 +1,6 @@
 package org.pawelwaz.helloworkz;
 
+import java.io.File;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
 import javafx.fxml.FXMLLoader;
@@ -25,6 +26,10 @@ public class MainApp extends Application {
     @Override
     public void stop() {
         JpaUtil.shutdown();
+        File tmp = new File("tmp");
+        File[] files = tmp.listFiles();
+        for(int i = 0; i < files.length; i++) files[i].delete();
+        tmp.delete();
     }
 
     /**

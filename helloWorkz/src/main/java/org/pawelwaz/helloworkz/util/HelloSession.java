@@ -1,5 +1,7 @@
 package org.pawelwaz.helloworkz.util;
 
+import java.io.File;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 import org.pawelwaz.helloworkz.controller.MessageWindowController;
@@ -12,6 +14,7 @@ import org.pawelwaz.helloworkz.entity.HelloUser;
 public class HelloSession {
     
     private static HelloUser user;
+    private static URI htmlAvatar;
     private static List<MessageWindowController> mesgWindows = new ArrayList();
     
     public static void setUser(HelloUser user) {
@@ -27,6 +30,12 @@ public class HelloSession {
         HelloSession.user.setJob(user.getJob());
         HelloSession.user.setAvatar(user.getAvatar());
         HelloSession.user.setReadyAvatar(user.getReadyAvatar());
+        File tmpAvatar = new File("tmp/" + user.getLogin() + ".png");
+        htmlAvatar = tmpAvatar.toURI();
+    }
+    
+    public static URI getHtmlAvatar() {
+        return htmlAvatar;
     }
     
     public static HelloUser getUser() {
