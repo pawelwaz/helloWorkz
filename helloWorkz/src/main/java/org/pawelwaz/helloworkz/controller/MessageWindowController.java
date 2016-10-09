@@ -4,6 +4,7 @@ import java.io.File;
 import java.net.URI;
 import java.net.URL;
 import java.text.SimpleDateFormat;
+import java.util.Objects;
 import java.util.ResourceBundle;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -20,6 +21,7 @@ import org.pawelwaz.helloworkz.util.HelloSession;
 import org.pawelwaz.helloworkz.util.HelloUI;
 import org.pawelwaz.helloworkz.util.JpaUtil;
 import javafx.stage.Stage;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -33,6 +35,7 @@ public class MessageWindowController extends HelloUI {
     private HelloUser user;
     private String htmlCode = "";
     private int msgNumber = 0;
+    private URI htmlAvatar = null;
     
     @FXML private void sendMessage(KeyEvent event) {
         if(input.getText().length() > 0 && event.getCode().equals(KeyCode.ENTER)) {
@@ -73,10 +76,18 @@ public class MessageWindowController extends HelloUI {
     
     public void setUser(HelloUser user) {
         this.user = user;
+        this.user.prepareAvatar();
+        HelloUI.saveTmpImage(this.user.getReadyAvatar(), this.user.getLogin());
+        File file = new File("tmp/" + this.user.getLogin() + ".png");
+        this.htmlAvatar = file.toURI();
     }
     
-    public HelloUser getUserId() {
+    public HelloUser getUser() {
         return this.user;
+    }
+    
+    public URI getHtmlAvatar() {
+        return this.htmlAvatar;
     }
     
     public void toFront() {

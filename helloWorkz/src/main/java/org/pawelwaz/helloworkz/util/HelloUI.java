@@ -195,14 +195,6 @@ public class HelloUI implements Initializable {
             stage.setScene(scene);
             stage.setTitle(title);
             stage.show(); 
-            if(fxml.equals("MainView")) {
-                stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
-                    @Override
-                    public void handle(WindowEvent event) {
-                        Platform.exit();
-                    }
-                });
-            }
             Stage thisWindow = (Stage) ap.getScene().getWindow();
             thisWindow.close();
         }

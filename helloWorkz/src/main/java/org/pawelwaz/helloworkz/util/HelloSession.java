@@ -4,6 +4,7 @@ import java.io.File;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
+import org.pawelwaz.helloworkz.controller.MainViewController;
 import org.pawelwaz.helloworkz.controller.MessageWindowController;
 import org.pawelwaz.helloworkz.entity.HelloUser;
 
@@ -16,6 +17,8 @@ public class HelloSession {
     private static HelloUser user;
     private static URI htmlAvatar;
     private static List<MessageWindowController> mesgWindows = new ArrayList();
+    private static List<Long> mesgWindowsIds = new ArrayList();
+    private static MainViewController mainController = null;
     
     public static void setUser(HelloUser user) {
         HelloSession.user = new HelloUser();
@@ -44,6 +47,24 @@ public class HelloSession {
     
     public static List<MessageWindowController> getMsgWindows() {
         return HelloSession.mesgWindows;
+    }
+    
+    public static List<Long> getMsgWindowsIds() {
+        return HelloSession.mesgWindowsIds;
+    }
+
+    /**
+     * @return the mainController
+     */
+    public static MainViewController getMainController() {
+        return mainController;
+    }
+
+    /**
+     * @param aMainController the mainController to set
+     */
+    public static void setMainController(MainViewController aMainController) {
+        mainController = aMainController;
     }
     
 }

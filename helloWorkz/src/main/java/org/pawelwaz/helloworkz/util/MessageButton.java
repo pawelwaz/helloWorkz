@@ -43,11 +43,13 @@ public class MessageButton extends ImageView {
                 stage.setTitle(this.user.getLogin());
                 stage.setScene(scene);
                 HelloSession.getMsgWindows().add(this.controller);
+                HelloSession.getMsgWindowsIds().add(this.user.getId());
                 stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
                     @Override
                     public void handle(WindowEvent event) {
                         MsgStage stg = ((MsgStage) event.getSource());
                         HelloSession.getMsgWindows().remove(stg.getController());
+                        HelloSession.getMsgWindowsIds().remove(user.getId());
                         stg.getController().closeWindow();
                     }
                 });

@@ -24,7 +24,7 @@ create table Message(
     id int unsigned not null auto_increment,
     content text,
     seen int,
-    sendtime datetime,
+    sendtime datetime default now(),
     sender int unsigned not null,
     receiver int unsigned not null,
     foreign key(sender) references HelloUser(id),
