@@ -14,11 +14,19 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
+import javafx.scene.Cursor;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.ColumnConstraints;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 import javax.imageio.ImageIO;
 import javax.persistence.EntityManager;
@@ -26,10 +34,12 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import org.pawelwaz.helloworkz.entity.HelloUser;
 import org.pawelwaz.helloworkz.entity.Message;
 import org.pawelwaz.helloworkz.util.HelloSession;
 import org.pawelwaz.helloworkz.util.HelloUI;
 import org.pawelwaz.helloworkz.util.JpaUtil;
+import org.pawelwaz.helloworkz.util.MessageButton;
 
 /**
  *
@@ -40,6 +50,45 @@ public class MainViewController extends HelloUI {
     @FXML private Label loginLabel;
     @FXML private ImageView avatar;
     @FXML private AnchorPane subAp;
+    @FXML private AnchorPane msgNotificationBox;
+    private boolean msgNotificationExists = false;
+    private HelloUser msgNotificationSender = null;
+    
+    public void showMsgNotification(HelloUser user) {
+        this.setMsgNotificationSender(user);
+        HBox hb = new HBox();
+        hb.setCursor(Cursor.HAND);
+        hb.setStyle("-fx-background-color: rgb(255, 255, 255); -fx-padding: 10 10 10 10;");
+        ImageView msgIcon = new ImageView();
+        msgIcon.setImage(HelloUI.messageButton);
+        hb.getChildren().add(msgIcon);
+        VBox vb = new VBox();
+        Label l1 = new Label("nowa wiadomość od: ");
+        vb.getChildren().add(l1);
+        Label l2 = new Label(user.getLogin());
+        l2.getStyleClass().add("blueLabel");
+        l2.setStyle("-fx-text-fill: rgb(0, 0, 0);");
+        vb.getChildren().add(l2);
+        vb.setAlignment(Pos.CENTER);
+        hb.getChildren().add(vb);
+        AnchorPane.setTopAnchor(hb, 12.0);
+        AnchorPane.setRightAnchor(hb, 15.0);
+        this.msgNotificationBox.getChildren().add(hb);
+        this.msgNotificationExists = true;
+        hb.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                MessageButton tmp = new MessageButton(HelloUI.messageButton, HelloSession.getMainController(), getMsgNotificationSender());
+                tmp.openMessageWindow();
+            }
+        });
+    }
+    
+    public void removeMsgNotification() {
+        this.msgNotificationBox.getChildren().clear();
+        this.msgNotificationExists = false;
+        this.setMsgNotificationSender(null);
+    }
     
     private void checkMessages() {
         EntityManager em = JpaUtil.getFactory().createEntityManager();
@@ -61,10 +110,23 @@ public class MainViewController extends HelloUI {
                     em.getTransaction().begin();
                     msg.setSeen(1);
                     em.getTransaction().commit();
+                    controller.blink();
+                }
+                else if(!this.hasMsgNotification()) {
+                    HelloUser sender = em.find(HelloUser.class, msg.getSender());
+                    this.showMsgNotification(sender);
                 }
             }
         }
         em.close();
+    }
+    
+    public void setMsgNotifiactionExists(boolean msgNotificationExists) {
+        this.msgNotificationExists = msgNotificationExists;
+    }
+    
+    public boolean hasMsgNotification() {
+        return this.msgNotificationExists;
     }
     
     private void refreshAvatar() {
@@ -141,6 +203,20 @@ public class MainViewController extends HelloUI {
         }));
         msgTimeline.setCycleCount(Animation.INDEFINITE);
         msgTimeline.play();
+    }
+
+    /**
+     * @return the msgNotificationSender
+     */
+    public HelloUser getMsgNotificationSender() {
+        return msgNotificationSender;
+    }
+
+    /**
+     * @param msgNotificationSender the msgNotificationSender to set
+     */
+    public void setMsgNotificationSender(HelloUser msgNotificationSender) {
+        this.msgNotificationSender = msgNotificationSender;
     }
     
 }

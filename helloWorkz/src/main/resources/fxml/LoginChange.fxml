@@ -8,7 +8,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="AnchorPane" fx:id="ap" prefHeight="240.0" prefWidth="369.0" styleClass="mainFxmlClass" stylesheets="@../styles/Styles.css" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.60" fx:controller="org.pawelwaz.helloworkz.controller.LoginChangeController">
+<AnchorPane id="AnchorPane" fx:id="ap" prefHeight="240.0" prefWidth="369.0" styleClass="mainFxmlClass" stylesheets="@../styles/Styles.css" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.pawelwaz.helloworkz.controller.LoginChangeController">
    <children>
       <AnchorPane layoutX="106.0" layoutY="28.0" prefWidth="200.0" styleClass="topStripe" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -25,7 +25,7 @@
       <Label layoutX="131.0" layoutY="62.0" styleClass="blueLabel" text="zmiana loginu" />
       <Label fx:id="header" alignment="CENTER" layoutX="121.0" layoutY="87.0" styleClass="blueLabel" text="obecny login to: " textAlignment="CENTER" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
       <Label layoutX="140.0" layoutY="123.0" styleClass="blueLabel" text="nowy login:" />
-      <TextField fx:id="login" layoutX="110.0" layoutY="148.0" />
+      <TextField fx:id="login" layoutX="110.0" layoutY="148.0" onAction="#loginChangeAction" />
       <Button layoutX="123.0" layoutY="185.0" mnemonicParsing="false" onAction="#loginChangeAction" text="zapisz" />
       <Button layoutX="198.0" layoutY="185.0" mnemonicParsing="false" onAction="#cancel" text="anuluj" />
    </children>

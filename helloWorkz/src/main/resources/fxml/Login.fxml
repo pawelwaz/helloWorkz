@@ -31,13 +31,13 @@
             <Font name="System Bold" size="16.0" />
          </font>
       </Label>
-      <TextField fx:id="login" layoutX="117.0" layoutY="141.0" />
+      <TextField fx:id="login" layoutX="117.0" layoutY="141.0" onAction="#loginAction" />
       <Label layoutX="169.0" layoutY="166.0" styleClass="blueLabel" text="hasło:" textFill="#235469">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>
       </Label>
-      <PasswordField fx:id="password" layoutX="117.0" layoutY="191.0" />
+      <PasswordField fx:id="password" layoutX="117.0" layoutY="191.0" onAction="#loginAction" />
       <Button layoutX="164.0" layoutY="222.0" mnemonicParsing="false" onAction="#loginAction" text="zaloguj" />
       <Label layoutX="141.0" layoutY="254.0" onMouseClicked="#goRegister" text="utwórz konto" textFill="#235469" underline="true">
          <font>

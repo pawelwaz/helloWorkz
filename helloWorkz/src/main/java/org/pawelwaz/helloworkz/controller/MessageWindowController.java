@@ -98,6 +98,12 @@ public class MessageWindowController extends HelloUI {
         thisStage.toFront();
     }
     
+    public void blink() {
+        Stage thisStage = (Stage) this.ap.getScene().getWindow();
+        if(thisStage.isIconified()) thisStage.toFront();
+        else if(!thisStage.isFocused()) thisStage.requestFocus();
+    }
+    
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         this.web.getEngine().getLoadWorker().stateProperty().addListener(new ChangeListener() {

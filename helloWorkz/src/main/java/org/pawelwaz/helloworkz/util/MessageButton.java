@@ -30,7 +30,11 @@ public class MessageButton extends ImageView {
     }
     
     public void openMessageWindow() {
-        if(this.controller == null || !HelloSession.getMsgWindows().contains(this.controller)) {
+        int index = HelloSession.getMsgWindowsIds().indexOf(this.user.getId());
+        if(index != -1) {
+            HelloSession.getMsgWindows().get(index).toFront();
+        }
+        else if(this.controller == null || index == -1) {
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/MessageWindow.fxml"));
                 Parent messageRoot = loader.load();
@@ -54,15 +58,17 @@ public class MessageButton extends ImageView {
                     }
                 });
                 stage.show();
+                if(HelloSession.getMainController().hasMsgNotification()) {
+                    if(this.user.getId().equals(HelloSession.getMainController().getMsgNotificationSender().getId())) {
+                        HelloSession.getMainController().removeMsgNotification();
+                    }
+                }
             }
             catch(Exception e) {
                 HelloUI.showError("Wystąpił błąd działania aplikacji i zostanie ona zamknięta");
                 System.exit(1);
             }
             
-        }
-        else if(HelloSession.getMsgWindows().contains(this.controller)) {
-            this.controller.toFront();
         }
     }
     

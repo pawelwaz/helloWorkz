@@ -23,18 +23,18 @@
          </padding>
       </AnchorPane>
       <Label layoutX="112.0" layoutY="71.0" styleClass="blueLabel" text="dane opcjonalne konta" />
-      <TextField fx:id="name" layoutX="16.0" layoutY="124.0" prefHeight="25.0" prefWidth="172.0" />
-      <TextField fx:id="surname" layoutX="209.0" layoutY="124.0" prefHeight="25.0" prefWidth="172.0" />
-      <TextField fx:id="email" layoutX="54.0" layoutY="178.0" prefHeight="25.0" prefWidth="291.0" />
-      <TextField fx:id="phone" layoutX="114.0" layoutY="237.0" prefHeight="25.0" prefWidth="172.0" />
-      <TextField fx:id="organisation" layoutX="52.0" layoutY="294.0" prefHeight="25.0" prefWidth="291.0" />
+      <TextField fx:id="name" layoutX="16.0" layoutY="124.0" onAction="#accountAction" prefHeight="25.0" prefWidth="172.0" />
+      <TextField fx:id="surname" layoutX="209.0" layoutY="124.0" onAction="#accountAction" prefHeight="25.0" prefWidth="172.0" />
+      <TextField fx:id="email" layoutX="54.0" layoutY="178.0" onAction="#accountAction" prefHeight="25.0" prefWidth="291.0" />
+      <TextField fx:id="phone" layoutX="114.0" layoutY="237.0" onAction="#accountAction" prefHeight="25.0" prefWidth="172.0" />
+      <TextField fx:id="organisation" layoutX="52.0" layoutY="294.0" onAction="#accountAction" prefHeight="25.0" prefWidth="291.0" />
       <Label layoutX="84.0" layoutY="96.0" styleClass="blueLabel" text="imię:" />
       <Label layoutX="259.0" layoutY="96.0" styleClass="blueLabel" text="nazwisko:" />
       <Label layoutX="150.0" layoutY="153.0" styleClass="blueLabel" text="adres e-mail:" />
       <Label layoutX="156.0" layoutY="209.0" styleClass="blueLabel" text="nr telefonu:" />
       <Label layoutX="152.0" layoutY="269.0" styleClass="blueLabel" text="organizacja:" />
       <Label layoutX="153.0" layoutY="319.0" styleClass="blueLabel" text="stanowisko:" />
-      <TextField fx:id="job" layoutX="52.0" layoutY="344.0" prefHeight="25.0" prefWidth="291.0" />
+      <TextField fx:id="job" layoutX="52.0" layoutY="344.0" onAction="#accountAction" prefHeight="25.0" prefWidth="291.0" />
       <Button layoutX="138.0" layoutY="379.0" mnemonicParsing="false" onAction="#accountAction" text="zapisz" />
       <Button layoutX="209.0" layoutY="379.0" mnemonicParsing="false" onAction="#cancel" text="anuluj" />
    </children>

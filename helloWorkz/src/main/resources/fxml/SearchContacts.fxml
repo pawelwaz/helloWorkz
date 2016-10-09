@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane fx:id="ap" id="AnchorPane" prefHeight="400.0" prefWidth="790.0" stylesheets="@../styles/Styles.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.pawelwaz.helloworkz.controller.SearchContactsController">
+<AnchorPane id="AnchorPane" fx:id="ap" prefHeight="400.0" prefWidth="790.0" stylesheets="@../styles/Styles.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.pawelwaz.helloworkz.controller.SearchContactsController">
    <children>
       <Label alignment="CENTER" layoutX="14.0" layoutY="14.0" styleClass="blueLabel" text="Wyszukiwanie kontaktów" textAlignment="CENTER" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
       <VBox fx:id="mainBox" alignment="CENTER" layoutX="78.0" layoutY="40.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="40.0">
@@ -21,7 +21,7 @@
                   <HBox>
                      <children>
                         <Label styleClass="blueLabelSm" text="login:" />
-                        <TextField fx:id="login" />
+                        <TextField fx:id="login" onAction="#searchContactsAction" />
                      </children>
                      <padding>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -30,7 +30,7 @@
                   <HBox>
                      <children>
                         <Label styleClass="blueLabelSm" text="imię:" />
-                        <TextField fx:id="name" />
+                        <TextField fx:id="name" onAction="#searchContactsAction" />
                      </children>
                      <padding>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -39,7 +39,7 @@
                   <HBox>
                      <children>
                         <Label styleClass="blueLabelSm" text="nazwisko:" />
-                        <TextField fx:id="surname" />
+                        <TextField fx:id="surname" onAction="#searchContactsAction" />
                      </children>
                      <padding>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -48,7 +48,7 @@
                   <HBox>
                      <children>
                         <Label styleClass="blueLabelSm" text="organizacja:" />
-                        <TextField fx:id="organisation" prefHeight="25.0" prefWidth="240.0" />
+                        <TextField fx:id="organisation" onAction="#searchContactsAction" prefHeight="25.0" prefWidth="240.0" />
                      </children>
                      <padding>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -57,7 +57,7 @@
                   <HBox>
                      <children>
                         <Label styleClass="blueLabelSm" text="stanowisko:" />
-                        <TextField fx:id="job" prefHeight="25.0" prefWidth="240.0">
+                        <TextField fx:id="job" onAction="#searchContactsAction" prefHeight="25.0" prefWidth="240.0">
                            <HBox.margin>
                               <Insets />
                            </HBox.margin>
@@ -70,7 +70,7 @@
                   <HBox>
                      <children>
                         <Label styleClass="blueLabelSm" text="telefon:" />
-                        <TextField fx:id="phone" />
+                        <TextField fx:id="phone" onAction="#searchContactsAction" />
                      </children>
                      <padding>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
