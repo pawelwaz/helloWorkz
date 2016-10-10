@@ -9,6 +9,7 @@
         
         <class>org.pawelwaz.helloworkz.entity.HelloUser</class>
         <class>org.pawelwaz.helloworkz.entity.Message</class>
+        <class>org.pawelwaz.helloworkz.entity.Contact</class>
 
         <properties>
                

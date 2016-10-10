@@ -20,7 +20,7 @@ create table HelloUser (
     primary key(id)
 );
 
-create table Message(
+create table Message (
     id int unsigned not null auto_increment,
     content text,
     seen int,
@@ -29,5 +29,14 @@ create table Message(
     receiver int unsigned not null,
     foreign key(sender) references HelloUser(id),
     foreign key(receiver) references HelloUser(id),
+    primary key(id)
+);
+
+create table Contact (
+    id int unsigned not null auto_increment,
+    owner int unsigned not null,
+    person int unsigned not null,
+    foreign key(owner) references HelloUser(id),
+    foreign key(person) references HelloUser(id),
     primary key(id)
 );

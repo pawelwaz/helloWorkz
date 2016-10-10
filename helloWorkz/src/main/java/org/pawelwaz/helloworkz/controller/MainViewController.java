@@ -183,6 +183,12 @@ public class MainViewController extends HelloUI {
             File file = new File("classes/img/messageButton.png");
             BufferedImage bufferedImage = ImageIO.read(file);
             MainViewController.messageButton = SwingFXUtils.toFXImage(bufferedImage, null);
+            file = new File("classes/img/addContact.png");
+            bufferedImage = ImageIO.read(file);
+            MainViewController.addContactButton = SwingFXUtils.toFXImage(bufferedImage, null);
+            file = new File("classes/img/removeContact.png");
+            bufferedImage = ImageIO.read(file);
+            MainViewController.removeContactButton = SwingFXUtils.toFXImage(bufferedImage, null);
         }
         catch(Exception ex) {
             MainViewController.showError("Brak części plików aplikacji. Zostanie ona zamknięta");

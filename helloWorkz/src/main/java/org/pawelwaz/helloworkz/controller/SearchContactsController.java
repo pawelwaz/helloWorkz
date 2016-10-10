@@ -20,6 +20,8 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import org.pawelwaz.helloworkz.entity.HelloUser;
+import org.pawelwaz.helloworkz.util.ContactButton;
+import org.pawelwaz.helloworkz.util.HelloSession;
 import org.pawelwaz.helloworkz.util.HelloUI;
 import org.pawelwaz.helloworkz.util.JpaUtil;
 
@@ -84,7 +86,15 @@ public class SearchContactsController extends HelloUI {
         if(i % 2 == 0) styleClass = "stripeEven";
         grid.add(HelloUI.wrapNode(HelloUI.prepareUserDescription(user, null), styleClass, 0.0), 0, i);
         grid.add(this.insertEmpty(styleClass), 1, i);
-        grid.add(this.insertMessageButton(styleClass, user), 2, i);
+        if(user.getId().equals(HelloSession.getUser().getId())) {
+            grid.add(this.insertEmpty(styleClass), 2, i);
+            grid.add(this.insertEmpty(styleClass), 3, i);
+        }
+        else {
+            if(HelloSession.getUserContacts().contains(user.getId())) grid.add(this.insertContactButton(styleClass, user, false, true), 2, i);
+            else grid.add(this.insertContactButton(styleClass, user, true, true), 2, i);
+            grid.add(this.insertMessageButton(styleClass, user), 3, i);
+        }
     }
     
     private CriteriaQuery prepareOrder(CriteriaQuery q, CriteriaBuilder builder, Root<HelloUser> user) {

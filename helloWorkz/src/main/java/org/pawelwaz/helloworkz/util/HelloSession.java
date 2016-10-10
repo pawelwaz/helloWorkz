@@ -4,8 +4,14 @@ import java.io.File;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 import org.pawelwaz.helloworkz.controller.MainViewController;
 import org.pawelwaz.helloworkz.controller.MessageWindowController;
+import org.pawelwaz.helloworkz.entity.Contact;
 import org.pawelwaz.helloworkz.entity.HelloUser;
 
 /**
@@ -19,6 +25,7 @@ public class HelloSession {
     private static List<MessageWindowController> mesgWindows = new ArrayList();
     private static List<Long> mesgWindowsIds = new ArrayList();
     private static MainViewController mainController = null;
+    private static List<Long> userContacts = new ArrayList();
     
     public static void setUser(HelloUser user) {
         HelloSession.user = new HelloUser();
@@ -35,6 +42,26 @@ public class HelloSession {
         HelloSession.user.setReadyAvatar(user.getReadyAvatar());
         File tmpAvatar = new File("tmp/" + user.getLogin() + ".png");
         htmlAvatar = tmpAvatar.toURI();
+    }
+    
+    public static List<Long> getUserContacts() {
+        return HelloSession.userContacts;
+    }
+    
+    public static void loadContacts() {
+        EntityManager em = JpaUtil.getFactory().createEntityManager();
+        CriteriaBuilder builder = em.getCriteriaBuilder();
+        CriteriaQuery q = builder.createQuery();
+        Root<Contact> root = q.from(Contact.class);
+        q.select(root);
+        List<Predicate> preds = new ArrayList();
+        preds.add(builder.equal(root.get("owner"), HelloSession.getUser().getId()));
+        q.where(preds.toArray(new Predicate[preds.size()]));
+        List<Contact> contacts = em.createQuery(q).getResultList();
+        for(Contact contact : contacts) {
+            HelloSession.userContacts.add(contact.getPerson());
+        }
+        em.close();
     }
     
     public static URI getHtmlAvatar() {

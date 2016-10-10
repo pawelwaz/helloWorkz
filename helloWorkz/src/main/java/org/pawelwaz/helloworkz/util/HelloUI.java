@@ -4,6 +4,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.net.URI;
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
 import javafx.embed.swing.SwingFXUtils;
@@ -16,6 +17,9 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonBar.ButtonData;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
@@ -38,6 +42,8 @@ public class HelloUI implements Initializable {
     
     @FXML protected AnchorPane ap;
     protected static WritableImage messageButton;
+    protected static WritableImage addContactButton;
+    protected static WritableImage removeContactButton;
     
     
     public void goToPopup(String fxml, String title) {
@@ -132,7 +138,22 @@ public class HelloUI implements Initializable {
             }
         });
         AnchorPane result = this.wrapNode(img, styleClass, 15.0, 15.0, 0.0, 5.0);
-        AnchorPane.setLeftAnchor(img, 0.0);
+        return result;
+    }
+    
+    protected AnchorPane insertContactButton(String styleClass, HelloUser user, boolean add, boolean swap) {
+        ContactButton img = new ContactButton(user, add, swap);
+        img.setCursor(Cursor.HAND);
+        if(add) Tooltip.install(img, new Tooltip("dodaj do kontaktów"));
+        else Tooltip.install(img, new Tooltip("usuń z kontaktów"));
+        img.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                ContactButton parent = (ContactButton) event.getSource();
+                parent.handleContact();
+            }
+        });
+        AnchorPane result = this.wrapNode(img, styleClass, 15.0, 15.0, 0.0, 5.0);
         return result;
     }
     
@@ -221,6 +242,19 @@ public class HelloUI implements Initializable {
         a.setTitle("");
         a.setHeaderText("Informacja");
         a.showAndWait();
+    }
+    
+    public static boolean showConfirmation(String content) {
+        Alert alert = new Alert(AlertType.CONFIRMATION);
+        alert.setTitle("");
+        alert.setHeaderText("Potwierdzenie");
+        alert.setContentText(content);
+        ButtonType buttonTypeOk = new ButtonType("OK", ButtonData.OK_DONE);
+        ButtonType buttonTypeCancel = new ButtonType("Anuluj", ButtonData.CANCEL_CLOSE);
+        alert.getButtonTypes().setAll(buttonTypeOk, buttonTypeCancel);
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == buttonTypeOk) return true;
+        else return false;
     }
     
     @Override
