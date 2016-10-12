@@ -64,6 +64,13 @@ public class HelloUI implements Initializable {
         }
     }
     
+    public static AnchorPane insertEmptyCell(String styleClass) {
+        AnchorPane result = new AnchorPane();
+        HelloUI.setAnchors(result, 0.0);
+        result.getStyleClass().add(styleClass);
+        return result;
+    }
+    
     public void openPopup(String fxml, String title) {
         try {
             Parent root = FXMLLoader.load(getClass().getResource("/fxml/" + fxml + ".fxml"));

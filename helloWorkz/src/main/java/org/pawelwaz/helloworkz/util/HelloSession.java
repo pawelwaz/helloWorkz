@@ -5,6 +5,7 @@ import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
@@ -25,7 +26,8 @@ public class HelloSession {
     private static List<MessageWindowController> mesgWindows = new ArrayList();
     private static List<Long> mesgWindowsIds = new ArrayList();
     private static MainViewController mainController = null;
-    private static List<Long> userContacts = new ArrayList();
+    private static List<Long> userContacts;
+    private static List<HelloUser> userContactPersons;
     
     public static void setUser(HelloUser user) {
         HelloSession.user = new HelloUser();
@@ -44,22 +46,24 @@ public class HelloSession {
         htmlAvatar = tmpAvatar.toURI();
     }
     
+    public static List<HelloUser> getUserContactPersons() {
+        return HelloSession.userContactPersons;
+    }
+    
     public static List<Long> getUserContacts() {
         return HelloSession.userContacts;
     }
     
     public static void loadContacts() {
+        HelloSession.userContacts = new ArrayList();
+        HelloSession.userContactPersons = new ArrayList();
         EntityManager em = JpaUtil.getFactory().createEntityManager();
-        CriteriaBuilder builder = em.getCriteriaBuilder();
-        CriteriaQuery q = builder.createQuery();
-        Root<Contact> root = q.from(Contact.class);
-        q.select(root);
-        List<Predicate> preds = new ArrayList();
-        preds.add(builder.equal(root.get("owner"), HelloSession.getUser().getId()));
-        q.where(preds.toArray(new Predicate[preds.size()]));
-        List<Contact> contacts = em.createQuery(q).getResultList();
-        for(Contact contact : contacts) {
-            HelloSession.userContacts.add(contact.getPerson());
+        Query q = em.createQuery("select p from Contact c inner join c.contactPerson p where c.owner = :owner order by p.login");
+        q.setParameter("owner", HelloSession.getUser().getId());
+        List<HelloUser> contacts = q.getResultList();
+        for(HelloUser contact : contacts) {
+            HelloSession.userContacts.add(contact.getId());
+            HelloSession.userContactPersons.add(contact);
         }
         em.close();
     }

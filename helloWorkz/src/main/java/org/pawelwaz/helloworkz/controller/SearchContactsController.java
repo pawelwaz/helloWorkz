@@ -20,7 +20,6 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import org.pawelwaz.helloworkz.entity.HelloUser;
-import org.pawelwaz.helloworkz.util.ContactButton;
 import org.pawelwaz.helloworkz.util.HelloSession;
 import org.pawelwaz.helloworkz.util.HelloUI;
 import org.pawelwaz.helloworkz.util.JpaUtil;
@@ -64,13 +63,6 @@ public class SearchContactsController extends HelloUI {
         em.close();
     }
     
-    private AnchorPane insertEmpty(String styleClass) {
-        AnchorPane result = new AnchorPane();
-        HelloUI.setAnchors(result, 0.0);
-        result.getStyleClass().add(styleClass);
-        return result;
-    }
-    
     private void showHeader(int results) {
         if(this.done) mainBox.getChildren().remove(2);
         else this.done = true;
@@ -85,10 +77,10 @@ public class SearchContactsController extends HelloUI {
         String styleClass = "stripeOdd";
         if(i % 2 == 0) styleClass = "stripeEven";
         grid.add(HelloUI.wrapNode(HelloUI.prepareUserDescription(user, null), styleClass, 0.0), 0, i);
-        grid.add(this.insertEmpty(styleClass), 1, i);
+        grid.add(HelloUI.insertEmptyCell(styleClass), 1, i);
         if(user.getId().equals(HelloSession.getUser().getId())) {
-            grid.add(this.insertEmpty(styleClass), 2, i);
-            grid.add(this.insertEmpty(styleClass), 3, i);
+            grid.add(HelloUI.insertEmptyCell(styleClass), 2, i);
+            grid.add(HelloUI.insertEmptyCell(styleClass), 3, i);
         }
         else {
             if(HelloSession.getUserContacts().contains(user.getId())) grid.add(this.insertContactButton(styleClass, user, false, true), 2, i);

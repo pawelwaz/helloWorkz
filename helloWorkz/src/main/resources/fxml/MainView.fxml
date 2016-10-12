@@ -58,6 +58,7 @@
         <menus>
             <Menu mnemonicParsing="false" text="Kontakty">
               <items>
+                  <MenuItem mnemonicParsing="false" onAction="#goContacts" text="Moje kontakty" />
                 <MenuItem mnemonicParsing="false" onAction="#goSearchContacts" text="Szukaj kontaktów" />
               </items>
             </Menu>

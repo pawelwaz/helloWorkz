@@ -143,12 +143,16 @@ public class MainViewController extends HelloUI {
             this.subAp.getChildren().add((AnchorPane) FXMLLoader.load(this.getClass().getResource("/fxml/" + fxml + ".fxml")));
         }
         catch(Exception e) {
-            this.showError("Wystąpił problem z działaniem aplikacji i zostanie ona zamknięta");
+            MainViewController.showError("Wystąpił problem z działaniem aplikacji i zostanie ona zamknięta");
             System.exit(1);
         }
     }
     
-    @FXML private void goSearchContacts() {
+    @FXML public void goContacts() {
+        this.openSub("Contacts");
+    }
+    
+    @FXML public void goSearchContacts() {
         this.openSub("SearchContacts");
     }
     

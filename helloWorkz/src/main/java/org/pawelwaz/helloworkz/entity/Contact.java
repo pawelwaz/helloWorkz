@@ -4,6 +4,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -14,6 +16,10 @@ public class Contact {
     private Long id;
     private Long owner;
     private Long person;
+    
+    @OneToOne
+    @JoinColumn(name = "person")
+    private HelloUser contactPerson;
 
     /**
      * @return the id
@@ -55,6 +61,20 @@ public class Contact {
      */
     public void setPerson(Long person) {
         this.person = person;
+    }
+
+    /**
+     * @return the contactPerson
+     */
+    public HelloUser getContactPerson() {
+        return contactPerson;
+    }
+
+    /**
+     * @param contactPerson the contactPerson to set
+     */
+    public void setContactPerson(HelloUser contactPerson) {
+        this.contactPerson = contactPerson;
     }
     
 }
