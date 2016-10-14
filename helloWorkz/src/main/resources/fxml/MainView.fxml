@@ -62,6 +62,11 @@
                 <MenuItem mnemonicParsing="false" onAction="#goSearchContacts" text="Szukaj kontaktów" />
               </items>
             </Menu>
+            <Menu mnemonicParsing="false" text="Wiadomości">
+              <items>
+                <MenuItem mnemonicParsing="false" onAction="#goMessages" text="Archiwum rozmów" />
+              </items>
+            </Menu>
           <Menu mnemonicParsing="false" text="Konto">
             <items>
               <MenuItem mnemonicParsing="false" onAction="#goAccount" text="Dane konta" />

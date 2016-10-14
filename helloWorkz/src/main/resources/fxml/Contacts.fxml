@@ -14,15 +14,7 @@
    <children>
       <ScrollPane fitToWidth="true" hbarPolicy="NEVER" layoutX="60.0" layoutY="34.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="60.0">
          <content>
-            <VBox fx:id="content">
-               <children>
-                  <Label styleClass="blueLabel" text="Prywatne kontakty">
-                     <padding>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                     </padding>
-                  </Label>
-               </children>
-            </VBox>
+            <VBox fx:id="content" />
          </content>
       </ScrollPane>
       <HBox alignment="CENTER" layoutX="202.0" onMouseClicked="#goSearchContacts" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">

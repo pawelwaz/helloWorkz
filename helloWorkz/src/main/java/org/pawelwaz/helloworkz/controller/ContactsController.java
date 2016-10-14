@@ -27,6 +27,7 @@ public class ContactsController extends HelloUI {
     }
     
     private void showContacts() {
+        this.addHeader("Prywatne kontakty");
         if(HelloSession.getUserContacts().isEmpty()) {
             Label noResults = new Label("(brak kontaktów do wyświetlenia)");
             noResults.setPadding(new Insets(0, 0, 0, 5));
@@ -50,6 +51,13 @@ public class ContactsController extends HelloUI {
         }
     }
     
+    private void addHeader(String text) {
+        Label header = new Label(text);
+        header.setPadding(new Insets(5, 5, 5, 5));
+        header.getStyleClass().add("blueLabel");
+        this.content.getChildren().add(header);
+    }
+    
     private void prepareRow(HelloUser user, GridPane grid, int i) {
         String styleClass = "stripeOdd";
         if(i % 2 == 0) styleClass = "stripeEven";
@@ -57,6 +65,12 @@ public class ContactsController extends HelloUI {
         grid.add(HelloUI.insertEmptyCell(styleClass), 1, i);
         grid.add(this.insertContactButton(styleClass, user, false, false), 2, i);
         grid.add(this.insertMessageButton(styleClass, user), 3, i);
+    }
+    
+    @Override
+    public void refresh() {
+        this.content.getChildren().clear();
+        this.showContacts();
     }
     
     @Override

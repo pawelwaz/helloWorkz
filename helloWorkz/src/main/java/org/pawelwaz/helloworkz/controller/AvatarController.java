@@ -40,7 +40,7 @@ public class AvatarController extends HelloUI {
                 ImageIO.write(this.readyToUse, "jpg", out);
                 out.flush();
                 this.byteImage = out.toByteArray();
-                this.refresh();
+                this.refreshImage();
             }
             catch(IOException ex) {
                 this.showError("Wystąpił problem z wczytaniem obrazu");
@@ -48,7 +48,7 @@ public class AvatarController extends HelloUI {
         }
     }
     
-    private void refresh() {
+    private void refreshImage() {
         this.avatar.setImage(SwingFXUtils.toFXImage(this.readyToUse, null));
     }
     
@@ -78,7 +78,7 @@ public class AvatarController extends HelloUI {
     public void initialize(URL location, ResourceBundle resources) {
         this.readyToUse = HelloSession.getUser().getReadyAvatar();
         this.byteImage = HelloSession.getUser().getAvatar();
-        this.refresh();
+        this.refreshImage();
     }
     
 }

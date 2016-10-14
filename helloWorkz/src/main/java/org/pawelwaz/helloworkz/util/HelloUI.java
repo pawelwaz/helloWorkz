@@ -264,6 +264,10 @@ public class HelloUI implements Initializable {
         else return false;
     }
     
+    public void refresh() {
+        
+    }
+    
     @Override
     public void initialize(URL location, ResourceBundle resources) {
     }

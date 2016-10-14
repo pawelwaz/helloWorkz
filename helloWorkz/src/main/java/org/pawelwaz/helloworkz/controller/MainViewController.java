@@ -16,6 +16,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
+import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Label;
@@ -139,13 +140,20 @@ public class MainViewController extends HelloUI {
     
     private void openSub(String fxml) {
         try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/" + fxml + ".fxml"));
+            Parent root = loader.load();
+            HelloSession.setSubController((HelloUI) loader.getController());
             this.subAp.getChildren().clear();
-            this.subAp.getChildren().add((AnchorPane) FXMLLoader.load(this.getClass().getResource("/fxml/" + fxml + ".fxml")));
+            this.subAp.getChildren().add((AnchorPane) root);
         }
         catch(Exception e) {
             MainViewController.showError("Wystąpił problem z działaniem aplikacji i zostanie ona zamknięta");
             System.exit(1);
         }
+    }
+    
+    @FXML public void goMessages() {
+        this.openSub("Messages");
     }
     
     @FXML public void goContacts() {

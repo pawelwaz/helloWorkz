@@ -76,9 +76,7 @@ public class ContactButton extends ImageView {
                     Tooltip.install(this, new Tooltip("dodaj do kontaktów"));
                 }
                 else {
-                    AnchorPane ap = (AnchorPane) this.getParent();
-                    GridPane grid = (GridPane) ap.getParent();
-                    
+                    HelloSession.getSubController().refresh();
                 }
             }
         }

@@ -26,6 +26,7 @@ public class HelloSession {
     private static List<MessageWindowController> mesgWindows = new ArrayList();
     private static List<Long> mesgWindowsIds = new ArrayList();
     private static MainViewController mainController = null;
+    private static HelloUI subController = null;
     private static List<Long> userContacts;
     private static List<HelloUser> userContactPersons;
     
@@ -96,6 +97,20 @@ public class HelloSession {
      */
     public static void setMainController(MainViewController aMainController) {
         mainController = aMainController;
+    }
+
+    /**
+     * @return the subController
+     */
+    public static HelloUI getSubController() {
+        return subController;
+    }
+
+    /**
+     * @param aSubController the subController to set
+     */
+    public static void setSubController(HelloUI aSubController) {
+        subController = aSubController;
     }
     
 }
