@@ -32,6 +32,15 @@ create table Message (
     primary key(id)
 );
 
+create table Conversation (
+    id int unsigned not null auto_increment,
+    owner int unsigned not null,
+    person int unsigned not null,
+    foreign key(owner) references HelloUser(id),
+    foreign key(person) references HelloUser(id),
+    primary key(id)
+);
+
 create table Contact (
     id int unsigned not null auto_increment,
     owner int unsigned not null,

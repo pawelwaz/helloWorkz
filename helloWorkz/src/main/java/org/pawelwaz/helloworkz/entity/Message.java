@@ -7,6 +7,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import java.sql.Timestamp;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -24,7 +26,15 @@ public class Message {
     @Temporal(TemporalType.TIMESTAMP)
     private Timestamp sendTime;
     private String content;
-
+    
+    @ManyToOne
+    @JoinColumn(name="sender")
+    private HelloUser senderUser;
+    
+    @ManyToOne
+    @JoinColumn(name="receiver")
+    private HelloUser receiverUser;
+    
     @PrePersist
     protected void onCreate() {
         this.sendTime = new Timestamp(0);
@@ -112,6 +122,20 @@ public class Message {
      */
     public void setSendTime(Timestamp sendTime) {
         this.sendTime = sendTime;
+    }
+
+    /**
+     * @return the senderUser
+     */
+    public HelloUser getSenderUser() {
+        return senderUser;
+    }
+
+    /**
+     * @param senderUser the senderUser to set
+     */
+    public void setSenderUser(HelloUser senderUser) {
+        this.senderUser = senderUser;
     }
     
 }

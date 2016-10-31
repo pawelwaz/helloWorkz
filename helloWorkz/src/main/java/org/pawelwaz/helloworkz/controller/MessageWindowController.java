@@ -4,7 +4,6 @@ import java.io.File;
 import java.net.URI;
 import java.net.URL;
 import java.text.SimpleDateFormat;
-import java.util.Objects;
 import java.util.ResourceBundle;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -21,7 +20,6 @@ import org.pawelwaz.helloworkz.util.HelloSession;
 import org.pawelwaz.helloworkz.util.HelloUI;
 import org.pawelwaz.helloworkz.util.JpaUtil;
 import javafx.stage.Stage;
-import javax.swing.JOptionPane;
 
 /**
  *

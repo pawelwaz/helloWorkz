@@ -6,13 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
 import org.pawelwaz.helloworkz.controller.MainViewController;
 import org.pawelwaz.helloworkz.controller.MessageWindowController;
-import org.pawelwaz.helloworkz.entity.Contact;
 import org.pawelwaz.helloworkz.entity.HelloUser;
 
 /**

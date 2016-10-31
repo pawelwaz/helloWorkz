@@ -75,7 +75,7 @@ public class LoginController extends HelloUI {
                 em.close();
             }
             catch(Exception e) {
-                this.showError("Błąd połączenia z bazą danych");
+                this.showError("Błąd połączenia z bazą danych" + e.getMessage());
             }
         }
     }
