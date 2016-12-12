@@ -15,14 +15,18 @@ import javafx.beans.value.ObservableValue;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.Cursor;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.web.WebView;
+import javafx.stage.WindowEvent;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import org.pawelwaz.helloworkz.entity.HelloUser;
@@ -30,6 +34,7 @@ import org.pawelwaz.helloworkz.entity.Message;
 import org.pawelwaz.helloworkz.util.HelloSession;
 import org.pawelwaz.helloworkz.util.HelloUI;
 import org.pawelwaz.helloworkz.util.JpaUtil;
+import org.pawelwaz.helloworkz.util.MsgStage;
 
 /**
  *
@@ -43,6 +48,51 @@ public class MessagesController extends HelloUI {
     private HelloUser msgPerson = null;
     private StringBuilder messagesHtml = new StringBuilder("");
     private URI htmlAvatar = null;
+    
+    @FXML private void openChat() {
+        if(this.msgPerson != null) {
+            /*int index = HelloSession.getMsgWindowsIds().indexOf(this.msgPerson.getId());
+            if(index != -1) {
+                HelloSession.getMsgWindows().get(index).toFront();
+            }
+            else if(this.controller == null || index == -1) {
+                try {
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/MessageWindow.fxml"));
+                    Parent messageRoot = loader.load();
+                    this.controller = (MessageWindowController) loader.getController();
+                    this.controller.setUser(this.user);
+                    this.controller.addHeader();
+                    Scene scene = new Scene(messageRoot);
+                    MsgStage stage = new MsgStage();
+                    stage.setController(this.controller);
+                    stage.setTitle(this.user.getLogin());
+                    stage.setScene(scene);
+                    HelloSession.getMsgWindows().add(this.controller);
+                    HelloSession.getMsgWindowsIds().add(this.user.getId());
+                    stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+                        @Override
+                        public void handle(WindowEvent event) {
+                            MsgStage stg = ((MsgStage) event.getSource());
+                            HelloSession.getMsgWindows().remove(stg.getController());
+                            HelloSession.getMsgWindowsIds().remove(user.getId());
+                            stg.getController().closeWindow();
+                        }
+                    });
+                    stage.show();
+                    if(HelloSession.getMainController().hasMsgNotification()) {
+                        if(this.user.getId().equals(HelloSession.getMainController().getMsgNotificationSender().getId())) {
+                            HelloSession.getMainController().removeMsgNotification();
+                        }
+                    }
+                }
+                catch(Exception e) {
+                    HelloUI.showError("Wystąpił błąd działania aplikacji i zostanie ona zamknięta");
+                    System.exit(1);
+                }
+
+            }*/
+        }
+    }
     
     private List<HelloUser> getConversations() {
         List<HelloUser> persons = new ArrayList();
@@ -138,7 +188,7 @@ public class MessagesController extends HelloUI {
                         HelloUI.saveTmpImage(msgPerson.getReadyAvatar(), msgPerson.getLogin());
                         File file = new File("tmp/" + msgPerson.getLogin() + ".png");
                         htmlAvatar = file.toURI();
-                        header.setText("Rozmowa z użytkownikiem " + msgPerson.getLogin());
+                        header.setText("Rozmowa z użytkownikiem " + msgPerson.getLogin() + " (kliknij, aby otworzyć czat)");
                         showMessages();
                     }
                 });
