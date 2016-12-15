@@ -9,27 +9,17 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane id="AnchorPane" fx:id="ap" prefHeight="660.0" prefWidth="1051.0" stylesheets="@../styles/Styles.css" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.pawelwaz.helloworkz.controller.MainViewController">
    <children>
-      <AnchorPane layoutX="255.0" layoutY="24.0" prefHeight="105.0" prefWidth="200.0" styleClass="topStripe" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="25.0">
+      <AnchorPane layoutX="255.0" layoutY="24.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="105.0" prefWidth="200.0" styleClass="topStripe" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="25.0">
          <children>
-            <GridPane AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-              <columnConstraints>
-                <ColumnConstraints hgrow="NEVER" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="ALWAYS" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
-              </columnConstraints>
-              <rowConstraints>
-                <RowConstraints minHeight="10.0" valignment="CENTER" vgrow="SOMETIMES" />
-              </rowConstraints>
+            <HBox>
                <children>
-                  <VBox prefWidth="100.0" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                  <VBox prefWidth="100.0">
                      <children>
                         <ImageView fx:id="avatar" fitHeight="80.0" fitWidth="80.0" onMouseClicked="#goAvatar" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -49,9 +39,74 @@
                         <Insets left="5.0" top="5.0" />
                      </padding>
                   </VBox>
-                  <AnchorPane fx:id="msgNotificationBox" GridPane.columnIndex="2" GridPane.hgrow="SOMETIMES" GridPane.valignment="CENTER" />
+                  <VBox alignment="CENTER">
+                     <children>
+                        <ImageView fitHeight="69.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../img/clock.png" />
+                           </image>
+                           <VBox.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </VBox.margin>
+                        </ImageView>
+                        <Label styleClass="whiteLabel" stylesheets="@../styles/Styles.css" text="Powiadomienia" />
+                     </children>
+                  </VBox>
+                  <VBox alignment="CENTER">
+                     <children>
+                        <ImageView fitHeight="69.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../img/smiles.png" />
+                           </image>
+                           <VBox.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </VBox.margin>
+                        </ImageView>
+                        <Label styleClass="whiteLabel" stylesheets="@../styles/Styles.css" text="Kontakty" />
+                     </children>
+                  </VBox>
+                  <VBox alignment="CENTER">
+                     <children>
+                        <ImageView fitHeight="69.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../img/messages.png" />
+                           </image>
+                           <VBox.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </VBox.margin>
+                        </ImageView>
+                        <Label styleClass="whiteLabel" stylesheets="@../styles/Styles.css" text="Wiadomości" />
+                     </children>
+                  </VBox>
+                  <VBox alignment="CENTER">
+                     <children>
+                        <ImageView fitHeight="69.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../img/slenders.png" />
+                           </image>
+                           <VBox.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </VBox.margin>
+                        </ImageView>
+                        <Label styleClass="whiteLabel" stylesheets="@../styles/Styles.css" text="Grupy" />
+                     </children>
+                  </VBox>
+                  <VBox alignment="CENTER">
+                     <children>
+                        <ImageView fitHeight="69.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../img/done.png" />
+                           </image>
+                           <VBox.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </VBox.margin>
+                        </ImageView>
+                        <Label styleClass="whiteLabel" stylesheets="@../styles/Styles.css" text="Zadania" />
+                     </children>
+                  </VBox>
+                  <AnchorPane fx:id="msgNotificationBox" />
                </children>
-            </GridPane>
+            </HBox>
          </children>
       </AnchorPane>
       <MenuBar AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">

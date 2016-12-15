@@ -51,24 +51,25 @@ public class MessagesController extends HelloUI {
     
     @FXML private void openChat() {
         if(this.msgPerson != null) {
-            /*int index = HelloSession.getMsgWindowsIds().indexOf(this.msgPerson.getId());
+            int index = HelloSession.getMsgWindowsIds().indexOf(this.msgPerson.getId());
             if(index != -1) {
                 HelloSession.getMsgWindows().get(index).toFront();
             }
-            else if(this.controller == null || index == -1) {
+            else if(index == -1) {
                 try {
+                    final HelloUser user = msgPerson;
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/MessageWindow.fxml"));
                     Parent messageRoot = loader.load();
-                    this.controller = (MessageWindowController) loader.getController();
-                    this.controller.setUser(this.user);
-                    this.controller.addHeader();
+                    final MessageWindowController controller = (MessageWindowController) loader.getController();
+                    controller.setUser(user);
+                    controller.addHeader();
                     Scene scene = new Scene(messageRoot);
                     MsgStage stage = new MsgStage();
-                    stage.setController(this.controller);
-                    stage.setTitle(this.user.getLogin());
+                    stage.setController(controller);
+                    stage.setTitle(user.getLogin());
                     stage.setScene(scene);
-                    HelloSession.getMsgWindows().add(this.controller);
-                    HelloSession.getMsgWindowsIds().add(this.user.getId());
+                    HelloSession.getMsgWindows().add(controller);
+                    HelloSession.getMsgWindowsIds().add(user.getId());
                     stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
                         @Override
                         public void handle(WindowEvent event) {
@@ -80,7 +81,7 @@ public class MessagesController extends HelloUI {
                     });
                     stage.show();
                     if(HelloSession.getMainController().hasMsgNotification()) {
-                        if(this.user.getId().equals(HelloSession.getMainController().getMsgNotificationSender().getId())) {
+                        if(user.getId().equals(HelloSession.getMainController().getMsgNotificationSender().getId())) {
                             HelloSession.getMainController().removeMsgNotification();
                         }
                     }
@@ -90,7 +91,7 @@ public class MessagesController extends HelloUI {
                     System.exit(1);
                 }
 
-            }*/
+            }
         }
     }
     
@@ -194,9 +195,6 @@ public class MessagesController extends HelloUI {
                 });
                 this.leftVB.getChildren().add(row);
                 n++;
-            }
-            if(this.msgPerson == null) {
-                this.msgPerson = persons.get(0);
             }
         }
         this.rightView.getEngine().getLoadWorker().stateProperty().addListener(new ChangeListener() {
