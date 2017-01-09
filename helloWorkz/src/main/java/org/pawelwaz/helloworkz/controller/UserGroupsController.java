@@ -6,7 +6,9 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.embed.swing.SwingFXUtils;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.Cursor;
 import javafx.scene.layout.VBox;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -17,12 +19,12 @@ import org.pawelwaz.helloworkz.util.JpaUtil;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javax.imageio.ImageIO;
-import org.pawelwaz.helloworkz.entity.HelloUser;
 
 /**
  *
@@ -73,12 +75,21 @@ public class UserGroupsController extends HelloUI {
         if(i % 2 == 0) styleClass = "stripeEven";
         grid.add(HelloUI.wrapNode(this.prepareGroupDescription(mbm), styleClass, 0.0), 0, i);
         grid.add(HelloUI.insertEmptyCell(styleClass), 1, i);
-        grid.add(this.insertViewButton(styleClass), 2, i);
+        grid.add(this.insertViewButton(styleClass, mbm.getMemberGroup().getId()), 2, i);
     }
     
-    private AnchorPane insertViewButton(String styleClass) {
+    private AnchorPane insertViewButton(String styleClass, Long groupId) {
+        final Long gid = groupId;
         ImageView result = new ImageView();
         result.setImage(viewIcon);
+        result.setCursor(Cursor.HAND);
+        result.setOnMouseClicked(new EventHandler<MouseEvent> () {
+            @Override
+            public void handle(MouseEvent event) {
+                HelloSession.setGroupView(gid);
+                HelloSession.getMainController().goGroupView();
+            }
+        });
         return this.wrapNode(result, styleClass, 15.0, 15.0, 0.0, 5.0);
     }
     

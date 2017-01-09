@@ -25,6 +25,7 @@ public class HelloSession {
     private static List<Long> userContacts;
     private static List<HelloUser> userContactPersons;
     private static Long groupId = null;
+    private static Long groupView = null;
     
     public static void setUser(HelloUser user) {
         HelloSession.user = new HelloUser();
@@ -121,6 +122,20 @@ public class HelloSession {
      */
     public static void setGroupId(Long aGroupId) {
         groupId = aGroupId;
+    }
+
+    /**
+     * @return the groupView
+     */
+    public static Long getGroupView() {
+        return groupView;
+    }
+
+    /**
+     * @param aGroupView the groupView to set
+     */
+    public static void setGroupView(Long aGroupView) {
+        groupView = aGroupView;
     }
     
 }
