@@ -56,3 +56,14 @@ create table workgroup (
     description text,
     primary key(id)
 );
+
+create table membership (
+    id int unsigned not null auto_increment,
+    workgroup int unsigned not null,
+    hellouser int unsigned not null,
+    title text,
+    description text,
+    foreign key(workgroup) references workgroup(id),
+    foreign key(hellouser) references hellouser(id),
+    primary key(id)
+);

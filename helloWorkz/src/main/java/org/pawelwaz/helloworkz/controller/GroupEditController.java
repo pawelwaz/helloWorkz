@@ -6,9 +6,8 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
-import org.jasypt.util.password.StrongPasswordEncryptor;
 import org.pawelwaz.helloworkz.entity.Group;
-import org.pawelwaz.helloworkz.entity.HelloUser;
+import org.pawelwaz.helloworkz.entity.Membership;
 import org.pawelwaz.helloworkz.util.HelloSession;
 import org.pawelwaz.helloworkz.util.HelloUI;
 import org.pawelwaz.helloworkz.util.JpaUtil;
@@ -31,10 +30,13 @@ public class GroupEditController extends HelloUI {
             query.setMaxResults(1);
             List<Group> check = query.getResultList();
             if(check.isEmpty()) {
-                
                 Group gr = new Group(this.groupName.getText(), this.description.getText());
                 em.getTransaction().begin();
                 em.persist(gr);
+                em.getTransaction().commit();
+                Membership member = new Membership(gr.getId(), HelloSession.getUser().getId(), "Właściciel", "Właściciel grupy");
+                em.getTransaction().begin();
+                em.persist(member);
                 em.getTransaction().commit();
                 em.close();
                 this.showInfo("Grupa została utworzona. Przejdź do swoich grup, aby zarządzać utworzoną grupą.");

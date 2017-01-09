@@ -124,6 +124,7 @@
             </Menu>
             <Menu mnemonicParsing="false" text="Grupy">
               <items>
+                  <MenuItem mnemonicParsing="false" onAction="#goUserGroups" text="Moje grupy" />
                 <MenuItem mnemonicParsing="false" onAction="#goGroupEdit" text="Utwórz grupę" />
               </items>
             </Menu>

@@ -11,7 +11,7 @@
       <Label layoutX="184.0" layoutY="14.0" styleClass="blueLabel" stylesheets="@../styles/Styles.css" text="nazwa grupy:" />
       <TextField fx:id="groupName" layoutX="101.0" layoutY="46.0" prefHeight="25.0" prefWidth="267.0" />
       <Label layoutX="217.0" layoutY="79.0" styleClass="blueLabel" stylesheets="@../styles/Styles.css" text="opis:" />
-      <TextArea fx:id="description" layoutX="35.0" layoutY="104.0" prefHeight="159.0" prefWidth="401.0" />
+      <TextArea fx:id="description" layoutX="35.0" layoutY="104.0" prefHeight="159.0" prefWidth="401.0" wrapText="true" />
       <Button layoutX="176.0" layoutY="277.0" mnemonicParsing="false" onAction="#saveGroup" text="zapisz" />
       <Button layoutX="245.0" layoutY="277.0" mnemonicParsing="false" onAction="#cancel" text="anuluj" />
    </children>

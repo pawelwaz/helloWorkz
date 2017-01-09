@@ -157,6 +157,10 @@ public class MainViewController extends HelloUI {
         this.openSub("Contacts");
     }
     
+    @FXML public void goUserGroups() {
+        this.openSub("UserGroups");
+    }
+    
     @FXML public void goSearchContacts() {
         this.openSub("SearchContacts");
     }
