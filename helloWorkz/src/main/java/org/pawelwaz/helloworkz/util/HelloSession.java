@@ -24,6 +24,7 @@ public class HelloSession {
     private static HelloUI subController = null;
     private static List<Long> userContacts;
     private static List<HelloUser> userContactPersons;
+    private static Long groupId = null;
     
     public static void setUser(HelloUser user) {
         HelloSession.user = new HelloUser();
@@ -106,6 +107,20 @@ public class HelloSession {
      */
     public static void setSubController(HelloUI aSubController) {
         subController = aSubController;
+    }
+
+    /**
+     * @return the groupId
+     */
+    public static Long getGroupId() {
+        return groupId;
+    }
+
+    /**
+     * @param aGroupId the groupId to set
+     */
+    public static void setGroupId(Long aGroupId) {
+        groupId = aGroupId;
     }
     
 }

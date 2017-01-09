@@ -122,6 +122,11 @@
                 <MenuItem mnemonicParsing="false" onAction="#goMessages" text="Archiwum rozmów" />
               </items>
             </Menu>
+            <Menu mnemonicParsing="false" text="Grupy">
+              <items>
+                <MenuItem mnemonicParsing="false" onAction="#goGroupEdit" text="Utwórz grupę" />
+              </items>
+            </Menu>
           <Menu mnemonicParsing="false" text="Konto">
             <items>
               <MenuItem mnemonicParsing="false" onAction="#goAccount" text="Dane konta" />

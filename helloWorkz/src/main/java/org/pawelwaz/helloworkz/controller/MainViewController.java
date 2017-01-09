@@ -175,6 +175,10 @@ public class MainViewController extends HelloUI {
         this.openPopup("Account", "Dane dodatkowe konta");
     }
     
+    @FXML private void goGroupEdit() {
+        this.openPopup("GroupEdit", "Tworzenie grupy roboczej");
+    }
+    
     @FXML private void goPassword() {
         this.openPopup("Password", "Zmiana hasła");
     }

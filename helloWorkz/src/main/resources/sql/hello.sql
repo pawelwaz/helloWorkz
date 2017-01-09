@@ -49,3 +49,10 @@ create table Contact (
     foreign key(person) references HelloUser(id),
     primary key(id)
 );
+
+create table workgroup (
+    id int unsigned not null auto_increment,
+    group_name text,
+    description text,
+    primary key(id)
+);
