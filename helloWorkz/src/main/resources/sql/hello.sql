@@ -71,3 +71,12 @@ create table membership (
     foreign key(hellouser) references hellouser(id),
     primary key(id)
 );
+
+create table membershiprequest (
+    id int unsigned not null auto_increment,
+    workgroup int unsigned not null,
+    hellouser int unsigned not null,
+    foreign key(workgroup) references workgroup(id),
+    foreign key(hellouser) references hellouser(id),
+    primary key(id)
+);

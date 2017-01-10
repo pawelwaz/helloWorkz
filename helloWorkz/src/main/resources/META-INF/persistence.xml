@@ -7,6 +7,7 @@
     <class>org.pawelwaz.helloworkz.entity.Contact</class>
     <class>org.pawelwaz.helloworkz.entity.Group</class>
     <class>org.pawelwaz.helloworkz.entity.Membership</class>
+    <class>org.pawelwaz.helloworkz.entity.MembershipRequest</class>
     <properties>
       <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://127.0.0.1:3306/hello?useUnicode=yes&amp;characterEncoding=UTF-8"/>
