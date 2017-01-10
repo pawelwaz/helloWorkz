@@ -1,5 +1,6 @@
 package org.pawelwaz.helloworkz.entity;
 
+import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,7 +16,7 @@ import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "message")
-public class Message {
+public class Message implements Serializable {
     
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

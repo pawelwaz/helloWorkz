@@ -4,6 +4,7 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.Serializable;
 import javax.imageio.ImageIO;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,7 +16,7 @@ import org.pawelwaz.helloworkz.util.HelloUI;
 
 @Entity
 @Table(name = "hellouser")
-public class HelloUser {
+public class HelloUser implements Serializable {
     
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
@@ -10,8 +11,13 @@
          <children>
             <Label fx:id="header" styleClass="blueLabel" stylesheets="@../styles/Styles.css" text="Grupa " />
             <Label fx:id="groupDesc" styleClass="description" stylesheets="@../styles/Styles.css" text="opis grupy: " />
-            <Label fx:id="memberTitle" styleClass="blueLabelSm" stylesheets="@../styles/Styles.css" text="Twoje stanowisko: " />
+            <Label fx:id="memberTitle" styleClass="blueLabel" stylesheets="@../styles/Styles.css" text="Twoje stanowisko: " />
             <Label fx:id="memberDesc" styleClass="description" stylesheets="@../styles/Styles.css" text="Opis stanowiska: " />
+            <Label fx:id="membersHeader" onMouseClicked="#showHideMembers" styleClass="blueLabelSm" stylesheets="@../styles/Styles.css" text="Pokaż członków grupy" underline="true">
+               <VBox.margin>
+                  <Insets top="5.0" />
+               </VBox.margin>
+            </Label>
          </children>
       </VBox>
    </children>

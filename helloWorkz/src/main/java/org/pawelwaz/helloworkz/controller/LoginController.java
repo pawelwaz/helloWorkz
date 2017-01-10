@@ -14,6 +14,7 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import javax.persistence.*;
 import org.jasypt.util.password.StrongPasswordEncryptor;
+import org.pawelwaz.helloworkz.entity.Group;
 import org.pawelwaz.helloworkz.entity.HelloUser;
 import static org.pawelwaz.helloworkz.util.FieldType.*;
 import org.pawelwaz.helloworkz.util.FormField;
@@ -71,8 +72,10 @@ public class LoginController extends HelloUI {
                         return;
                     }
                 }
-                this.showError("Błędne dane logowania");
-                em.close();
+                else {
+                    this.showError("Błędne dane logowania");
+                    em.close();
+                }
             }
             catch(Exception e) {
                 this.showError("Błąd połączenia z bazą danych" + e.getMessage());

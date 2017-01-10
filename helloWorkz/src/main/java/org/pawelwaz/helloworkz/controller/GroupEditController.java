@@ -34,7 +34,7 @@ public class GroupEditController extends HelloUI {
                 em.getTransaction().begin();
                 em.persist(gr);
                 em.getTransaction().commit();
-                Membership member = new Membership(gr.getId(), HelloSession.getUser().getId(), "Właściciel", "Właściciel grupy");
+                Membership member = new Membership(gr.getId(), HelloSession.getUser().getId(), "Właściciel", "Właściciel grupy", 1, 1, 1, 1);
                 em.getTransaction().begin();
                 em.persist(member);
                 em.getTransaction().commit();

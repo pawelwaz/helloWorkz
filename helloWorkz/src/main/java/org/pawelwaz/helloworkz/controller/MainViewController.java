@@ -161,6 +161,10 @@ public class MainViewController extends HelloUI {
         this.openSub("UserGroups");
     }
     
+    @FXML public void goSearchGroups() {
+        this.openSub("SearchGroups");
+    }
+    
     @FXML public void goGroupView() {
         this.openSub("GroupView");
     }

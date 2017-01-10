@@ -63,6 +63,10 @@ create table membership (
     hellouser int unsigned not null,
     title text,
     description text,
+    managment int default 0,
+    users int default 0,
+    tasks int default 0,
+    discussions int default 0,
     foreign key(workgroup) references workgroup(id),
     foreign key(hellouser) references hellouser(id),
     primary key(id)

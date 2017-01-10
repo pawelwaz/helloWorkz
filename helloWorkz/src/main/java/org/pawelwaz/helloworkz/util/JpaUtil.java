@@ -12,7 +12,7 @@ public class JpaUtil {
     
     public static void buildFactory() {
         try {
-            factory = Persistence.createEntityManagerFactory("hello", System.getProperties());
+            factory = Persistence.createEntityManagerFactory("hello");
         }
         catch(Exception ex) {
             HelloUI.showError("Wystąpił błąd połączenia z bazą danych. Aplikacja zostanie zamknięta");
