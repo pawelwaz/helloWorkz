@@ -13,6 +13,7 @@
             <Label fx:id="groupDesc" styleClass="description" stylesheets="@../styles/Styles.css" text="opis grupy: " />
             <Label fx:id="memberTitle" styleClass="blueLabel" stylesheets="@../styles/Styles.css" text="Twoje stanowisko: " />
             <Label fx:id="memberDesc" styleClass="description" stylesheets="@../styles/Styles.css" text="Opis stanowiska: " />
+            <Label fx:id="editHeader" onMouseClicked="#editGroup" styleClass="blueLabelSm" stylesheets="@../styles/Styles.css" text="Edytuj grupę" underline="true" />
             <Label fx:id="membersHeader" onMouseClicked="#showHideMembers" styleClass="blueLabelSm" stylesheets="@../styles/Styles.css" text="Pokaż członków grupy" underline="true">
                <VBox.margin>
                   <Insets top="5.0" />

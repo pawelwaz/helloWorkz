@@ -1,9 +1,12 @@
 package org.pawelwaz.helloworkz.controller;
 
+import java.net.URL;
 import java.util.List;
+import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import org.pawelwaz.helloworkz.entity.Group;
@@ -48,9 +51,47 @@ public class GroupEditController extends HelloUI {
                 em.close();
             }
         }
+        else {
+            boolean success = false;
+            boolean check = false;
+            EntityManager em = JpaUtil.getFactory().createEntityManager();
+            Query q = em.createQuery("select g from Group g where g.id = " + HelloSession.getGroupId());
+            List<Group> result = q.getResultList();
+            Group g = result.get(0);
+            if(!g.getGroup_name().equals(this.groupName.getText())) {
+                q = em.createQuery("select g from Group g where g.group_name = '" + this.groupName.getText() + "'");
+                result = q.getResultList();
+                if(result.isEmpty()) check = true;
+            }
+            else check = true;
+            if(check == false) this.showError("Wybrana nazwa grupy jest już zajęta");
+            else {
+                em.getTransaction().begin();
+                g.setGroup_name(this.groupName.getText());
+                g.setDescription(this.description.getText());
+                em.getTransaction().commit();
+                success = true;
+                HelloUI.showInfo("Dane zostały zapisane");
+            }
+            em.close();
+            if(success) this.closeWindow();
+        }
     }
     
     @FXML private void cancel() {
         this.closeWindow();
+    }
+    
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        if(HelloSession.getGroupId() != null) {
+            EntityManager em = JpaUtil.getFactory().createEntityManager();
+            Query q = em.createQuery("select g from Group g where g.id = " + HelloSession.getGroupId());
+            List<Group> result = q.getResultList();
+            Group g = result.get(0);
+            this.groupName.setText(g.getGroup_name());
+            this.description.setText(g.getDescription());
+            em.close();
+        }
     }
 }

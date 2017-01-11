@@ -4,6 +4,7 @@ import java.util.List;
 import javafx.event.EventHandler;
 import org.pawelwaz.helloworkz.util.HelloUI;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -43,10 +44,14 @@ public class SearchGroupsController extends HelloUI {
             this.resultCount.setText("nie znaleziono grup spełniających kryteria");
         }
         else {
+            Query q = em.createQuery("select r.workgroup from MembershipRequest r where r.hellouser = " + HelloSession.getUser().getId());
+            List<Long> requestGroups = q.getResultList();
+            q = em.createQuery("select m.workgroup from Membership m where m.hellouser = " + HelloSession.getUser().getId());
+            List<Long> memberships = q.getResultList();
             this.resultCount.setText("ilość znalezionych grup: " + groups.size());
             GridPane results = new GridPane();
             int i = 0;
-            for(final Group g : groups) {
+            for(Group g : groups) {
                 String styleClass = "stripeOdd";
                 if(i % 2 == 0) styleClass = "stripeEven";
                 VBox groupDesc = new VBox();
@@ -59,23 +64,7 @@ public class SearchGroupsController extends HelloUI {
                 Label descLabel = new Label(desc);
                 descLabel.getStyleClass().add("description");
                 groupDesc.getChildren().add(descLabel);
-                Label groupOption = new Label("Dołącz");
-                groupOption.getStyleClass().add("smallHeader");
-                groupOption.setUnderline(true);
-                groupOption.setCursor(Cursor.HAND);
-                groupOption.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent event) {
-                        boolean result = sendRequest(g.getId(), g.getGroup_name());
-                        if(result == true) {
-                            Label source = (Label) event.getSource();
-                            source.setText("wysłałeś prośbę o dołączenie");
-                            source.setOnMouseClicked(null);
-                            source.setCursor(Cursor.DEFAULT);
-                        }
-                    }
-                });
-                
+                Label groupOption = this.prepareOption(g, requestGroups, memberships);
                 results.add(HelloUI.wrapNode(groupDesc, styleClass, 0.0), 0, i);
                 results.add(HelloUI.insertEmptyCell(styleClass), 1, i);
                 results.add(HelloUI.wrapNode(groupOption, styleClass, 0.0), 2, i);
@@ -90,6 +79,49 @@ public class SearchGroupsController extends HelloUI {
             AnchorPane.setRightAnchor(results, 0.0);
         }
         em.close();
+    }
+    
+    public Label prepareOption(final Group g, List<Long> requestGroups, List<Long> memberships) {
+        Label groupOption = new Label("Dołącz");
+        boolean requestSent = false;
+        boolean isMember = false;
+        if(memberships.contains(g.getId())) {
+            isMember = true;
+            groupOption.setText("Należysz do tej grupy (otwórz)");
+        }
+        else if(requestGroups.contains(g.getId())) {
+            requestSent = true;
+            groupOption.setText("wysłałeś prośbę o dołączenie");
+        }
+        groupOption.setAlignment(Pos.BASELINE_RIGHT);
+        groupOption.getStyleClass().add("smallHeader");
+        groupOption.setUnderline(true);
+        if(isMember) {
+            groupOption.setCursor(Cursor.HAND);
+            groupOption.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    HelloSession.setGroupView(g.getId());
+                    HelloSession.getMainController().goGroupView();
+                }
+            });
+        }
+        else if(!requestSent) {
+            groupOption.setCursor(Cursor.HAND);
+            groupOption.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    boolean result = sendRequest(g.getId(), g.getGroup_name());
+                    if(result == true) {
+                        Label source = (Label) event.getSource();
+                        source.setText("wysłałeś prośbę o dołączenie");
+                        source.setOnMouseClicked(null);
+                        source.setCursor(Cursor.DEFAULT);
+                    }
+                }
+            });
+        }
+        return groupOption;
     }
     
     public boolean sendRequest(Long groupId, String name) {

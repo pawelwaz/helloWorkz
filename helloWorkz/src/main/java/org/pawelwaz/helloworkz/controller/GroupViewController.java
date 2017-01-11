@@ -33,9 +33,23 @@ public class GroupViewController extends HelloUI {
     @FXML private Label memberDesc;
     @FXML private VBox vb;
     @FXML private Label membersHeader;
+    @FXML private Label editHeader;
     private GridPane membersGrid;
     private Group group;
     private Membership membership;
+    
+    @FXML private void editGroup() {
+        HelloSession.setGroupId(this.group.getId());
+        HelloSession.getMainController().goGroupEdit();
+        HelloSession.setGroupId(null);
+        EntityManager em = JpaUtil.getFactory().createEntityManager();
+        Query q = em.createQuery("select g from Group g where g.id = " + this.group.getId());
+        List<Group> result = q.getResultList();
+        this.group = result.get(0);
+        this.groupDesc.setText(this.group.getDescription());
+        this.header.setText("Grupa " + this.group.getGroup_name());
+        em.close();
+    }
     
     public void showHideMembers() {
         if(this.membersGrid.isVisible()) {
@@ -91,6 +105,7 @@ public class GroupViewController extends HelloUI {
     
     public void prepareHeaders() {
         this.membersHeader.setCursor(Cursor.HAND);
+        this.editHeader.setCursor(Cursor.HAND);
     }
     
     @Override

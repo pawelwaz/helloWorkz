@@ -187,8 +187,9 @@ public class MainViewController extends HelloUI {
         this.openPopup("Account", "Dane dodatkowe konta");
     }
     
-    @FXML private void goGroupEdit() {
-        this.openPopup("GroupEdit", "Tworzenie grupy roboczej");
+    @FXML public void goGroupEdit() {
+        if(HelloSession.getGroupId() == null) this.openPopup("GroupEdit", "Tworzenie grupy roboczej");
+        else this.openPopup("GroupEdit", "Edycja grupy roboczej");
     }
     
     @FXML private void goPassword() {
