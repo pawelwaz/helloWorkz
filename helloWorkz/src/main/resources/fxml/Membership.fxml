@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane id="AnchorPane" fx:id="ap" prefHeight="541.0" prefWidth="473.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.pawelwaz.helloworkz.controller.MembershipController">
+   <children>
+      <Label fx:id="header" alignment="CENTER" contentDisplay="CENTER" layoutX="217.0" layoutY="14.0" styleClass="blueLabel" stylesheets="@../styles/Styles.css" text="Label" textAlignment="CENTER" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+      <TextField fx:id="title" layoutX="96.0" layoutY="73.0" prefHeight="25.0" prefWidth="282.0" />
+      <TextArea fx:id="description" layoutX="39.0" layoutY="131.0" prefHeight="169.0" prefWidth="399.0" wrapText="true" />
+      <Label layoutX="189.0" layoutY="49.0" text="nazwa stanowiska:" />
+      <Label layoutX="195.0" layoutY="107.0" text="opis stanowiska:" />
+      <Label layoutX="205.0" layoutY="308.0" text="uprawnienia:" />
+      <CheckBox fx:id="managment" layoutX="39.0" layoutY="332.0" mnemonicParsing="false" text="zmiana nazwy grupy" />
+      <CheckBox fx:id="users" layoutX="39.0" layoutY="364.0" mnemonicParsing="false" text="zarządzanie członkami grupy" />
+      <CheckBox fx:id="discussions" layoutX="39.0" layoutY="399.0" mnemonicParsing="false" text="tworzenie dyskusji" />
+      <CheckBox fx:id="tasks" layoutX="39.0" layoutY="434.0" mnemonicParsing="false" text="zarządzanie zadaniami" />
+      <Button layoutX="170.0" layoutY="463.0" mnemonicParsing="false" onAction="#membershipAction" text="zapisz" />
+      <Button layoutX="254.0" layoutY="463.0" mnemonicParsing="false" onAction="#cancel" text="anuluj" />
+      <Button layoutX="194.0" layoutY="502.0" mnemonicParsing="false" onAction="#removeMembership" text="usuń z grupy" />
+   </children>
+</AnchorPane>

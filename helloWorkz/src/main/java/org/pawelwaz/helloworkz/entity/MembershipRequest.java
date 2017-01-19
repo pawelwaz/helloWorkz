@@ -5,6 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -14,6 +16,10 @@ public class MembershipRequest implements Serializable {
     private Long id;
     private Long workgroup;
     private Long hellouser;
+    
+    @OneToOne
+    @JoinColumn(name = "hellouser")
+    private HelloUser requestUser;
 
     public MembershipRequest() {
     }
@@ -22,7 +28,7 @@ public class MembershipRequest implements Serializable {
         this.workgroup = workgroup;
         this.hellouser = hellouser;
     }
-
+    
     /**
      * @return the id
      */
@@ -63,5 +69,19 @@ public class MembershipRequest implements Serializable {
      */
     public void setHellouser(Long hellouser) {
         this.hellouser = hellouser;
+    }
+
+    /**
+     * @return the requestUser
+     */
+    public HelloUser getRequestUser() {
+        return requestUser;
+    }
+
+    /**
+     * @param requestUser the requestUser to set
+     */
+    public void setRequestUser(HelloUser requestUser) {
+        this.requestUser = requestUser;
     }
 }

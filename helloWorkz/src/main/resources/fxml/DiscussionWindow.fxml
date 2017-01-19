@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.web.WebView?>
+
+<AnchorPane id="AnchorPane" fx:id="ap" prefHeight="413.0" prefWidth="471.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.pawelwaz.helloworkz.controller.DiscussionWindowController">
+   <children>
+      <TextArea fx:id="input" layoutX="142.0" layoutY="297.0" onKeyPressed="#sendPost" prefHeight="110.0" wrapText="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+      <WebView fx:id="web" layoutX="152.0" layoutY="49.0" prefHeight="304.0" prefWidth="-1.0" AnchorPane.bottomAnchor="110.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+   </children>
+</AnchorPane>

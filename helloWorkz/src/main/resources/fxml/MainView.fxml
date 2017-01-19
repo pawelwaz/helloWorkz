@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" fx:id="ap" prefHeight="660.0" prefWidth="1051.0" stylesheets="@../styles/Styles.css" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.pawelwaz.helloworkz.controller.MainViewController">
+<AnchorPane id="AnchorPane" fx:id="ap" prefHeight="660.0" prefWidth="1051.0" stylesheets="@../styles/Styles.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.pawelwaz.helloworkz.controller.MainViewController">
    <children>
       <AnchorPane layoutX="255.0" layoutY="24.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="105.0" prefWidth="200.0" styleClass="topStripe" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="25.0">
          <children>
@@ -41,67 +41,97 @@
                   </VBox>
                   <VBox alignment="CENTER">
                      <children>
-                        <ImageView fitHeight="69.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="69.0" onMouseClicked="#goNotifications" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../img/clock.png" />
                            </image>
                            <VBox.margin>
                               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                            </VBox.margin>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
                         </ImageView>
-                        <Label styleClass="whiteLabel" stylesheets="@../styles/Styles.css" text="Powiadomienia" />
+                        <Label onMouseClicked="#goNotifications" styleClass="whiteLabel" stylesheets="@../styles/Styles.css" text="Powiadomienia">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor></Label>
                      </children>
                   </VBox>
                   <VBox alignment="CENTER">
                      <children>
-                        <ImageView fitHeight="69.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView onMouseClicked="#goContacts" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../img/smiles.png" />
                            </image>
                            <VBox.margin>
                               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                            </VBox.margin>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
                         </ImageView>
-                        <Label styleClass="whiteLabel" stylesheets="@../styles/Styles.css" text="Kontakty" />
+                        <Label onMouseClicked="#goContacts" styleClass="whiteLabel" stylesheets="@../styles/Styles.css" text="Kontakty">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor></Label>
                      </children>
                   </VBox>
                   <VBox alignment="CENTER">
                      <children>
-                        <ImageView fitHeight="69.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView onMouseClicked="#goMessages" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../img/messages.png" />
                            </image>
                            <VBox.margin>
                               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                            </VBox.margin>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
                         </ImageView>
-                        <Label styleClass="whiteLabel" stylesheets="@../styles/Styles.css" text="Wiadomości" />
+                        <Label onMouseClicked="#goMessages" styleClass="whiteLabel" stylesheets="@../styles/Styles.css" text="Wiadomości">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor></Label>
                      </children>
                   </VBox>
                   <VBox alignment="CENTER">
                      <children>
-                        <ImageView fitHeight="69.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView onMouseClicked="#goUserGroups" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../img/slenders.png" />
                            </image>
                            <VBox.margin>
                               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                            </VBox.margin>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
                         </ImageView>
-                        <Label styleClass="whiteLabel" stylesheets="@../styles/Styles.css" text="Grupy" />
+                        <Label onMouseClicked="#goUserGroups" styleClass="whiteLabel" stylesheets="@../styles/Styles.css" text="Grupy">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor></Label>
                      </children>
                   </VBox>
                   <VBox alignment="CENTER">
                      <children>
-                        <ImageView fitHeight="69.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView onMouseClicked="#goUserTasks" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../img/done.png" />
                            </image>
                            <VBox.margin>
                               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                            </VBox.margin>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
                         </ImageView>
-                        <Label styleClass="whiteLabel" stylesheets="@../styles/Styles.css" text="Zadania" />
+                        <Label onMouseClicked="#goUserTasks" styleClass="whiteLabel" stylesheets="@../styles/Styles.css" text="Zadania">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor></Label>
                      </children>
                   </VBox>
                   <AnchorPane fx:id="msgNotificationBox" />
@@ -111,6 +141,16 @@
       </AnchorPane>
       <MenuBar AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <menus>
+            <Menu mnemonicParsing="false" text="Powiadomienia">
+              <items>
+                <MenuItem mnemonicParsing="false" onAction="#goNotifications" text="Pokaż powiadomienia" />
+              </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Zadania">
+              <items>
+                <MenuItem mnemonicParsing="false" onAction="#goUserTasks" text="Pokaż zadania" />
+              </items>
+            </Menu>
             <Menu mnemonicParsing="false" text="Kontakty">
               <items>
                   <MenuItem mnemonicParsing="false" onAction="#goContacts" text="Moje kontakty" />
@@ -126,6 +166,7 @@
               <items>
                   <MenuItem mnemonicParsing="false" onAction="#goUserGroups" text="Moje grupy" />
                   <MenuItem mnemonicParsing="false" onAction="#goSearchGroups" text="Szukaj grup" />
+                  <MenuItem mnemonicParsing="false" onAction="#goInvitations" text="Zaproszenia" />
                 <MenuItem mnemonicParsing="false" onAction="#goGroupEdit" text="Utwórz grupę" />
               </items>
             </Menu>
@@ -144,6 +185,8 @@
           </Menu>
         </menus>
       </MenuBar>
-      <AnchorPane fx:id="subAp" layoutX="251.0" layoutY="339.0" prefHeight="529.0" prefWidth="1051.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="130.0" />
+      <AnchorPane fx:id="subAp" layoutX="251.0" layoutY="339.0" prefHeight="529.0" prefWidth="1051.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="130.0">
+          <fx:include fx:id="notification" source="Notification.fxml" />
+      </AnchorPane>
    </children>
 </AnchorPane>

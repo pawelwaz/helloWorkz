@@ -8,6 +8,7 @@ import javafx.scene.control.TextField;
 import javax.persistence.*;
 import org.jasypt.util.password.StrongPasswordEncryptor;
 import org.pawelwaz.helloworkz.entity.HelloUser;
+import org.pawelwaz.helloworkz.entity.Notification;
 import static org.pawelwaz.helloworkz.util.FieldType.*;
 import org.pawelwaz.helloworkz.util.FormField;
 import org.pawelwaz.helloworkz.util.HelloForm;
@@ -46,9 +47,19 @@ public class RegisterController extends HelloUI {
             if(check.isEmpty()) {
                 StrongPasswordEncryptor encryptor = new StrongPasswordEncryptor();
                 HelloUser newUser = new HelloUser(login.getText(), encryptor.encryptPassword(password.getText()));
+                newUser.setName("");
+                newUser.setSurname("");
+                newUser.setEmail("");
+                newUser.setOrganisation("");
+                newUser.setPhone("");
+                newUser.setJob("");
                 newUser.setDefaultAvatar();
                 em.getTransaction().begin();
                 em.persist(newUser);
+                em.getTransaction().commit();
+                Notification n = new Notification(newUser.getId(), "Witaj w programie HelloWorkz! W menu 'Konto' możesz uzupełnić dane swojego konta, aby inni użytkownicy mogli łatwiej Cię znaleźć. Życzymy udanej pracy!");
+                em.getTransaction().begin();
+                em.persist(n);
                 em.getTransaction().commit();
                 em.close();
                 this.showInfo("Konto zostało utworzone. Zaloguj się, aby móc korzystać z aplikacji");

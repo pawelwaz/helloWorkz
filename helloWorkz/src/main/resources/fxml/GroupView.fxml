@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane id="AnchorPane" fx:id="ap" prefHeight="400.0" prefWidth="872.0" stylesheets="@../styles/Styles.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.pawelwaz.helloworkz.controller.GroupViewController">
+<AnchorPane id="AnchorPane" fx:id="ap" prefHeight="400.0" prefWidth="872.0" stylesheets="@../styles/Styles.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.pawelwaz.helloworkz.controller.GroupViewController">
    <children>
       <VBox fx:id="vb" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -14,12 +19,61 @@
             <Label fx:id="memberTitle" styleClass="blueLabel" stylesheets="@../styles/Styles.css" text="Twoje stanowisko: " />
             <Label fx:id="memberDesc" styleClass="description" stylesheets="@../styles/Styles.css" text="Opis stanowiska: " />
             <Label fx:id="editHeader" onMouseClicked="#editGroup" styleClass="blueLabelSm" stylesheets="@../styles/Styles.css" text="Edytuj grupę" underline="true" />
-            <Label fx:id="membersHeader" onMouseClicked="#showHideMembers" styleClass="blueLabelSm" stylesheets="@../styles/Styles.css" text="Pokaż członków grupy" underline="true">
-               <VBox.margin>
-                  <Insets top="5.0" />
-               </VBox.margin>
-            </Label>
          </children>
       </VBox>
+      <TabPane layoutX="35.0" layoutY="119.0" prefHeight="294.0" prefWidth="872.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="105.0">
+        <tabs>
+          <Tab text="Członkowie grupy">
+               <content>
+                  <ScrollPane fitToWidth="true" hbarPolicy="NEVER">
+                    <content>
+                      <AnchorPane fx:id="membersAP" minHeight="0.0" minWidth="0.0" />
+                    </content>
+                  </ScrollPane>
+               </content>
+          </Tab>
+            <Tab text="Dyskusje">
+               <content>
+                  <ScrollPane fitToWidth="true" hbarPolicy="NEVER">
+                    <content>
+                      <AnchorPane minHeight="0.0" minWidth="0.0">
+                           <children>
+                              <VBox fx:id="discussionsVB" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                           </children>
+                        </AnchorPane>
+                    </content>
+                  </ScrollPane>
+               </content>
+            </Tab>
+            <Tab text="Zadania">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="332.0" prefWidth="872.0">
+                     <children>
+                        <TableView fx:id="taskTable" layoutX="87.0" layoutY="33.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="150.0" AnchorPane.topAnchor="0.0">
+                          <columns>
+                            <TableColumn prefWidth="75.0" text="C1" />
+                            <TableColumn prefWidth="75.0" text="C2" />
+                          </columns>
+                        </TableView>
+                        <Button fx:id="addTaskButton" layoutX="741.0" layoutY="14.0" mnemonicParsing="false" onAction="#addTask" prefHeight="25.0" prefWidth="115.0" text="Dodaj zadanie" AnchorPane.rightAnchor="19.0" AnchorPane.topAnchor="14.0" />
+                        <Button fx:id="taskDetailsButton" disable="true" layoutX="747.0" layoutY="50.0" mnemonicParsing="false" onAction="#showTaskDetails" prefHeight="25.0" prefWidth="115.0" text="Pokaż szczegóły" AnchorPane.rightAnchor="19.0" AnchorPane.topAnchor="50.0" />
+                        <Button fx:id="taskEditButton" disable="true" layoutX="773.0" layoutY="83.0" mnemonicParsing="false" onAction="#editTask" prefWidth="115.0" text="Edytuj" AnchorPane.rightAnchor="19.0" AnchorPane.topAnchor="83.0" />
+                        <Button fx:id="taskCompleteButton" disable="true" layoutX="746.0" layoutY="121.0" mnemonicParsing="false" onAction="#completeTask" prefWidth="115.0" text="Zamknij zadanie" AnchorPane.rightAnchor="19.0" AnchorPane.topAnchor="121.0" />
+                        <Button fx:id="taskRemoveButton" disable="true" layoutX="776.0" layoutY="157.0" mnemonicParsing="false" onAction="#removeTask" prefWidth="115.0" text="Usuń" AnchorPane.rightAnchor="19.0" AnchorPane.topAnchor="157.0" />
+                     </children>
+                  </AnchorPane>
+              </content>
+            </Tab>
+          <Tab fx:id="requestTab" text="Prośby o dołączenie">
+               <content>
+                  <ScrollPane fitToWidth="true" hbarPolicy="NEVER">
+                    <content>
+                      <AnchorPane fx:id="requestsAP" minHeight="0.0" minWidth="0.0" />
+                    </content>
+                  </ScrollPane>
+               </content>
+          </Tab>
+        </tabs>
+      </TabPane>
    </children>
 </AnchorPane>

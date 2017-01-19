@@ -149,6 +149,18 @@ public class MainViewController extends HelloUI {
         }
     }
     
+    @FXML public void goInvitations() {
+        this.openSub("Invitations");
+    }
+    
+    @FXML public void goUserTasks() {
+        this.openSub("UserTasks");
+    }
+    
+    @FXML public void goNotifications() {
+        this.openSub("Notification");
+    }
+    
     @FXML public void goMessages() {
         this.openSub("Messages");
     }
@@ -215,6 +227,18 @@ public class MainViewController extends HelloUI {
             file = new File("classes/img/removeContact.png");
             bufferedImage = ImageIO.read(file);
             MainViewController.removeContactButton = SwingFXUtils.toFXImage(bufferedImage, null);
+            file = new File("classes/img/accept.png");
+            bufferedImage = ImageIO.read(file);
+            MainViewController.acceptButton = SwingFXUtils.toFXImage(bufferedImage, null);
+            file = new File("classes/img/decline.png");
+            bufferedImage = ImageIO.read(file);
+            MainViewController.declineButton = SwingFXUtils.toFXImage(bufferedImage, null);
+            file = new File("classes/img/settings.png");
+            bufferedImage = ImageIO.read(file);
+            MainViewController.settingsButton = SwingFXUtils.toFXImage(bufferedImage, null);
+            file = new File("classes/img/search.png");
+            bufferedImage = ImageIO.read(file);
+            MainViewController.viewButton = SwingFXUtils.toFXImage(bufferedImage, null);
         }
         catch(Exception ex) {
             MainViewController.showError("Brak części plików aplikacji. Zostanie ona zamknięta");

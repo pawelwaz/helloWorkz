@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane id="AnchorPane" fx:id="ap" prefHeight="176.0" prefWidth="369.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.111" fx:controller="org.pawelwaz.helloworkz.controller.DiscussionAddController">
+   <children>
+      <Label layoutX="88.0" layoutY="14.0" styleClass="blueLabel" stylesheets="@../styles/Styles.css" text="Tworzenie nowej dyskusji" />
+      <Label layoutX="171.0" layoutY="51.0" text="tytuł:" />
+      <TextField fx:id="title" layoutX="38.0" layoutY="76.0" prefHeight="25.0" prefWidth="293.0" />
+      <Button layoutX="124.0" layoutY="120.0" mnemonicParsing="false" onAction="#addDiscussion" text="zapisz" />
+      <Button layoutX="197.0" layoutY="120.0" mnemonicParsing="false" onAction="#cancel" text="anuluj" />
+   </children>
+</AnchorPane>

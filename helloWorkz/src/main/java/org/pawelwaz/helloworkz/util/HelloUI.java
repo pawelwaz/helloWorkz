@@ -32,6 +32,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.WindowEvent;
 import javax.imageio.ImageIO;
+import org.pawelwaz.helloworkz.entity.Discussion;
 import org.pawelwaz.helloworkz.entity.HelloUser;
 
 /**
@@ -44,6 +45,10 @@ public class HelloUI implements Initializable {
     protected static WritableImage messageButton;
     protected static WritableImage addContactButton;
     protected static WritableImage removeContactButton;
+    protected static WritableImage declineButton;
+    protected static WritableImage acceptButton;
+    protected static WritableImage settingsButton;
+    protected static WritableImage viewButton;
     
     
     public void goToPopup(String fxml, String title) {
@@ -108,16 +113,16 @@ public class HelloUI implements Initializable {
         if(user.getPhone() != null || user.getEmail() != null) {
             Label phoneEmail = new Label("");
             if(color != null) phoneEmail.setStyle("-fx-text-fill: " + color);
-            if(user.getPhone() != null) phoneEmail.setText("tel. " + user.getPhone() + " ");
-            if(user.getEmail() != null) phoneEmail.setText(phoneEmail.getText() + "e-mail: " + user.getEmail());
+            if(user.getPhone().length() > 0) phoneEmail.setText("tel. " + user.getPhone() + " ");
+            if(user.getEmail().length() > 0) phoneEmail.setText(phoneEmail.getText() + "e-mail: " + user.getEmail());
             phoneEmail.getStyleClass().add("description");
             desc.getChildren().add(phoneEmail);
         }
         if(user.getOrganisation() != null || user.getJob() != null) {
             Label orgJob = new Label("");
             if(color != null) orgJob.setStyle("-fx-text-fill: " + color);
-            if(user.getOrganisation() != null) orgJob.setText("organizacja: " + user.getOrganisation() + " ");
-            if(user.getJob() != null) orgJob.setText(orgJob.getText() + "stanowisko: " + user.getJob());
+            if(user.getOrganisation().length() > 0) orgJob.setText("organizacja: " + user.getOrganisation() + " ");
+            if(user.getJob().length() > 0) orgJob.setText(orgJob.getText() + "stanowisko: " + user.getJob());
             orgJob.getStyleClass().add("description");
             desc.getChildren().add(orgJob);
         }
@@ -148,6 +153,20 @@ public class HelloUI implements Initializable {
         return result;
     }
     
+    protected AnchorPane insertDiscussionButton(String styleClass, Discussion disc) {
+        DiscussionButton img = new DiscussionButton(HelloUI.viewButton, this, disc);
+        img.setCursor(Cursor.HAND);
+        Tooltip.install(img, new Tooltip("otwórz dyskusję"));
+        img.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                ((DiscussionButton)(event.getSource())).openDiscussionWindow();
+            }
+        });
+        AnchorPane result = this.wrapNode(img, styleClass, 5.0, 5.0, 0.0, 5.0);
+        return result;
+    }
+    
     protected AnchorPane insertContactButton(String styleClass, HelloUser user, boolean add, boolean swap) {
         ContactButton img = new ContactButton(user, add, swap);
         img.setCursor(Cursor.HAND);
@@ -162,6 +181,14 @@ public class HelloUI implements Initializable {
         });
         AnchorPane result = this.wrapNode(img, styleClass, 15.0, 15.0, 0.0, 5.0);
         return result;
+    }
+    
+    public static String prepareNotificationStripe(String content, String received, String color) {
+        StringBuilder result = new StringBuilder("<tr style = \"background-color: " + color + "; margin: 0px;\">");
+        result.append("<td style='font-size: 12px; padding: 15px;'><b>" + content + "</b></td>");
+        result.append("<td style='font-size: 12px; padding: 15px; width: 100px;'>" + received + "</td>");
+        result.append("</tr>");
+        return result.toString();
     }
     
     public static String prepareMessageStripe(HelloUser user, String content, String time, String color, URI avatar) {

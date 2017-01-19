@@ -80,3 +80,68 @@ create table membershiprequest (
     foreign key(hellouser) references hellouser(id),
     primary key(id)
 );
+
+create table discussion (
+    id int unsigned not null auto_increment,
+    title text,
+    lastpost datetime,
+    hellouser int unsigned not null,
+    workgroup int unsigned not null,
+    posts int,
+    foreign key(hellouser) references hellouser(id),
+    foreign key(workgroup) references workgroup(id),
+    primary key(id)
+);
+
+create table post (
+    id int unsigned not null auto_increment,
+    content text,
+    created datetime,
+    hellouser int unsigned not null,
+    discussion int unsigned not null,
+    foreign key(hellouser) references hellouser(id),
+    foreign key(discussion) references discussion(id),
+    primary key(id)
+);
+
+create table task (
+    id int unsigned not null auto_increment,
+    content text,
+    creator int unsigned not null,
+    workgroup int unsigned not null,
+    status int,
+    deadline text,
+    annotation text,
+    foreign key(creator) references hellouser(id),
+    foreign key(workgroup) references workgroup(id),
+    primary key(id)
+);
+
+create table taskuser (
+    id int unsigned not null auto_increment,
+    hellouser int unsigned not null,
+    task int unsigned not null,
+    foreign key(hellouser) references hellouser(id),
+    foreign key(task) references task(id),
+    primary key(id)
+);
+
+create table notification (
+    id int unsigned not null auto_increment,
+    content text,
+    received text,
+    hellouser int unsigned not null,
+    foreign key(hellouser) references hellouser(id),
+    primary key(id)
+);
+
+create table invitation (
+    id int unsigned not null auto_increment,
+    hellouser int unsigned not null,
+    sender int unsigned not null,
+    workgroup int unsigned not null,
+    foreign key(hellouser) references hellouser(id),
+    foreign key(sender) references hellouser(id),
+    foreign key(workgroup) references workgroup(id),
+    primary key(id)
+);

@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import org.pawelwaz.helloworkz.controller.DiscussionWindowController;
 import org.pawelwaz.helloworkz.controller.MainViewController;
 import org.pawelwaz.helloworkz.controller.MessageWindowController;
 import org.pawelwaz.helloworkz.entity.HelloUser;
@@ -19,13 +20,17 @@ public class HelloSession {
     private static HelloUser user;
     private static URI htmlAvatar;
     private static List<MessageWindowController> mesgWindows = new ArrayList();
+    private static List<DiscussionWindowController> discWindows = new ArrayList();
     private static List<Long> mesgWindowsIds = new ArrayList();
+    private static List<Long> discWindowsIds = new ArrayList();
     private static MainViewController mainController = null;
     private static HelloUI subController = null;
     private static List<Long> userContacts;
     private static List<HelloUser> userContactPersons;
     private static Long groupId = null;
     private static Long groupView = null;
+    private static Long membershipId = null;
+    private static Long taskEdit = null;
     
     public static void setUser(HelloUser user) {
         HelloSession.user = new HelloUser();
@@ -136,6 +141,62 @@ public class HelloSession {
      */
     public static void setGroupView(Long aGroupView) {
         groupView = aGroupView;
+    }
+
+    /**
+     * @return the membershipId
+     */
+    public static Long getMembershipId() {
+        return membershipId;
+    }
+
+    /**
+     * @param aMembershipId the membershipId to set
+     */
+    public static void setMembershipId(Long aMembershipId) {
+        membershipId = aMembershipId;
+    }
+
+    /**
+     * @return the discWindows
+     */
+    public static List<DiscussionWindowController> getDiscWindows() {
+        return discWindows;
+    }
+
+    /**
+     * @param aDiscWindows the discWindows to set
+     */
+    public static void setDiscWindows(List<DiscussionWindowController> aDiscWindows) {
+        discWindows = aDiscWindows;
+    }
+
+    /**
+     * @return the discWindowsIds
+     */
+    public static List<Long> getDiscWindowsIds() {
+        return discWindowsIds;
+    }
+
+    /**
+     * @param aDiscWindowsIds the discWindowsIds to set
+     */
+    public static void setDiscWindowsIds(List<Long> aDiscWindowsIds) {
+        discWindowsIds = aDiscWindowsIds;
+    }
+
+    /**
+     * @return the taskEdit
+     */
+    public static Long getTaskEdit() {
+        return taskEdit;
+    }
+
+    /**
+     * @param aTaskEdit the taskEdit to set
+     */
+    public static void setTaskEdit(Long aTaskEdit) {
+        taskEdit = aTaskEdit;
     }
     
 }

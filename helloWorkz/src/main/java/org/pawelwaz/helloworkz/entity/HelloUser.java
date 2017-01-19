@@ -34,17 +34,40 @@ public class HelloUser implements Serializable {
     
     public HelloUser() {
         super();
+        this.name = "";
+        this.surname = "";
+        this.email = "";
+        this.organisation = "";
+        this.phone = "";
+        this.job = "";
     }
     
     public HelloUser(Long id, String login, String password) {
         this.id = id;
         this.login = login;
         this.password = password;
+        this.name = "";
+        this.surname = "";
+        this.email = "";
+        this.organisation = "";
+        this.phone = "";
+        this.job = "";
     }
     
     public HelloUser(String login, String password) {
         this.login = login;
         this.password = password;
+        this.name = "";
+        this.surname = "";
+        this.email = "";
+        this.organisation = "";
+        this.phone = "";
+        this.job = "";
+    }
+    
+    @Override
+    public String toString() {
+        return this.login;
     }
     
     public void prepareAvatar() {

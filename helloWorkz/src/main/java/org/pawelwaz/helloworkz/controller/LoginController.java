@@ -66,10 +66,14 @@ public class LoginController extends HelloUI {
                                 Platform.exit();
                             }
                         });
-                        stage.show(); 
+                        stage.show();
                         Stage thisWindow = (Stage) ap.getScene().getWindow();
                         thisWindow.close();
                         return;
+                    }
+                    else {
+                        this.showError("Błędne dane logowania");
+                        em.close();
                     }
                 }
                 else {

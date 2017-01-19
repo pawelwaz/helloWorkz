@@ -18,7 +18,9 @@ import javafx.scene.layout.VBox;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import org.pawelwaz.helloworkz.entity.Group;
+import org.pawelwaz.helloworkz.entity.Membership;
 import org.pawelwaz.helloworkz.entity.MembershipRequest;
+import org.pawelwaz.helloworkz.entity.Notification;
 import org.pawelwaz.helloworkz.util.HelloSession;
 import org.pawelwaz.helloworkz.util.JpaUtil;
 
@@ -65,7 +67,7 @@ public class SearchGroupsController extends HelloUI {
                 descLabel.getStyleClass().add("description");
                 groupDesc.getChildren().add(descLabel);
                 Label groupOption = this.prepareOption(g, requestGroups, memberships);
-                results.add(HelloUI.wrapNode(groupDesc, styleClass, 0.0), 0, i);
+                results.add(HelloUI.wrapNode(groupDesc, styleClass, 10.0), 0, i);
                 results.add(HelloUI.insertEmptyCell(styleClass), 1, i);
                 results.add(HelloUI.wrapNode(groupOption, styleClass, 0.0), 2, i);
                 i++;
@@ -129,7 +131,16 @@ public class SearchGroupsController extends HelloUI {
         if(result == true) {
             EntityManager em = JpaUtil.getFactory().createEntityManager();
             MembershipRequest request = new MembershipRequest(groupId, HelloSession.getUser().getId());
+            Query q = em.createQuery("select m from Membership m where m.users = 1 and m.workgroup = " + groupId);
+            List<Membership> memberships = q.getResultList();
+            q = em.createQuery("select g from Group g where g.id = " + groupId);
+            List<Group> gResult = q.getResultList();
+            Group g = gResult.get(0);
             em.getTransaction().begin();
+            for(Membership m : memberships) {
+                 Notification n = new Notification(m.getHellouser(), "Użytkownik " + HelloSession.getUser().getLogin() + " wysłał prośbę o dołączenie do grupy " + g.getGroup_name());
+                 em.persist(n);
+            }
             em.persist(request);
             em.getTransaction().commit();
             em.close();
