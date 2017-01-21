@@ -4,6 +4,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.net.URI;
 import java.net.URL;
+import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
@@ -32,8 +33,11 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.WindowEvent;
 import javax.imageio.ImageIO;
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import org.pawelwaz.helloworkz.entity.Discussion;
 import org.pawelwaz.helloworkz.entity.HelloUser;
+import org.pawelwaz.helloworkz.entity.Membership;
 
 /**
  *
@@ -49,7 +53,7 @@ public class HelloUI implements Initializable {
     protected static WritableImage acceptButton;
     protected static WritableImage settingsButton;
     protected static WritableImage viewButton;
-    
+    protected static WritableImage invitationButton;
     
     public void goToPopup(String fxml, String title) {
         try {
@@ -67,6 +71,33 @@ public class HelloUI implements Initializable {
             this.showError("Wystąpił błąd działania programu i nastąpi jego zamknięcie. Treść błędu: " + e.getMessage());
             System.exit(1);
         }
+    }
+    
+    public static void inviteUser(Long id) {
+        EntityManager em = JpaUtil.getFactory().createEntityManager();
+        Query q = em.createQuery("select m from Membership m where m.active = 1 and m.users = 1 and m.hellouser = " + HelloSession.getUser().getId());
+        List<Membership> result = q.getResultList();
+        if(result.isEmpty()) HelloUI.showInfo("Nie posiadasz w żadnej grupie członkostwa uprawniającego do zapraszania nowych użytkowników");
+        else {
+            HelloSession.setInviteId(id);
+            HelloSession.getMainController().openPopup("InviteUser", "Wysyłanie zaproszenia do grupy");
+            HelloSession.setInviteId(null);
+        }
+        em.close();
+    }
+    
+    public static AnchorPane insertInvitationButton(String styleClass, final Long id) {
+        ImageView btn = new ImageView();
+        btn.setImage(HelloUI.invitationButton);
+        btn.setCursor(Cursor.HAND);
+        Tooltip.install(btn, new Tooltip("Zaproś do grupy"));
+        btn.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                HelloUI.inviteUser(id);
+            }
+        });
+        return HelloUI.wrapNode(btn, styleClass,  15.0, 15.0, 0.0, 5.0);
     }
     
     public static AnchorPane insertEmptyCell(String styleClass) {
@@ -184,6 +215,14 @@ public class HelloUI implements Initializable {
     }
     
     public static String prepareNotificationStripe(String content, String received, String color) {
+        StringBuilder result = new StringBuilder("<tr style = \"background-color: " + color + "; margin: 0px;\">");
+        result.append("<td style='font-size: 12px; padding: 15px;'>" + content + "</td>");
+        result.append("<td style='font-size: 12px; padding: 15px; width: 100px;'>" + received + "</td>");
+        result.append("</tr>");
+        return result.toString();
+    }
+    
+    public static String prepareNotificationStripeBold(String content, String received, String color) {
         StringBuilder result = new StringBuilder("<tr style = \"background-color: " + color + "; margin: 0px;\">");
         result.append("<td style='font-size: 12px; padding: 15px;'><b>" + content + "</b></td>");
         result.append("<td style='font-size: 12px; padding: 15px; width: 100px;'>" + received + "</td>");

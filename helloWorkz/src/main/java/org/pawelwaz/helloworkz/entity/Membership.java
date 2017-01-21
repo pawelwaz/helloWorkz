@@ -22,6 +22,7 @@ public class Membership implements Serializable {
     private int discussions;
     private String title;
     private String description;
+    private int active;
     
     @OneToOne
     @JoinColumn(name = "workgroup")
@@ -43,6 +44,7 @@ public class Membership implements Serializable {
         this.users = users;
         this.tasks = tasks;
         this.discussions = discussions;
+        this.active = 1;
     }
 
     /**
@@ -197,5 +199,19 @@ public class Membership implements Serializable {
      */
     public void setDiscussions(int discussions) {
         this.discussions = discussions;
+    }
+
+    /**
+     * @return the active
+     */
+    public int getActive() {
+        return active;
+    }
+
+    /**
+     * @param active the active to set
+     */
+    public void setActive(int active) {
+        this.active = active;
     }
 }

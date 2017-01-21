@@ -54,6 +54,7 @@ create table workgroup (
     id int unsigned not null auto_increment,
     group_name text,
     description text,
+    tasknumber int default 0,
     primary key(id)
 );
 
@@ -65,6 +66,7 @@ create table membership (
     description text,
     managment int default 0,
     users int default 0,
+    active int default 1,
     tasks int default 0,
     discussions int default 0,
     foreign key(workgroup) references workgroup(id),
@@ -111,6 +113,10 @@ create table task (
     workgroup int unsigned not null,
     status int,
     deadline text,
+    deadlinehour text,
+    created text,
+    number int,
+    closed text,
     annotation text,
     foreign key(creator) references hellouser(id),
     foreign key(workgroup) references workgroup(id),
@@ -121,6 +127,9 @@ create table taskuser (
     id int unsigned not null auto_increment,
     hellouser int unsigned not null,
     task int unsigned not null,
+    not1 int default 0,
+    not2 int default 0,
+    not3 int default 0,
     foreign key(hellouser) references hellouser(id),
     foreign key(task) references task(id),
     primary key(id)

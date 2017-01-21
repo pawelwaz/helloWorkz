@@ -6,6 +6,7 @@
 package org.pawelwaz.helloworkz.util;
 
 import java.util.List;
+import org.pawelwaz.helloworkz.entity.Group;
 import org.pawelwaz.helloworkz.entity.Task;
 import org.pawelwaz.helloworkz.entity.TaskUser;
 
@@ -18,8 +19,13 @@ public class TaskDescriptor {
     private String creator;
     private String status;
     private String annotation;
+    private String number;
+    private String created;
+    private String closed;
     private int statusCode;
     private boolean editable = false;
+    private Group workgroup;
+    private String workgroupName;
     
     public TaskDescriptor(Task t) {
         this.id = t.getId();
@@ -30,11 +36,17 @@ public class TaskDescriptor {
         this.annotation = t.getAnnotation();
         this.status = this.parseStatus(t.getStatus());
         this.statusCode = t.getStatus();
+        this.created = t.getCreated();
+        this.closed = t.getClosed();
+        this.number = new Integer(t.getNumber()).toString();
+        this.workgroup = t.getWorkgroupJoin();
+        this.workgroupName = this.workgroup.getGroup_name();
     }
     
     private String parseStatus(int s) {
         switch(s) {
             case 1: return "zamknięte";
+            case 2: return "zamknięte (po terminie)";
             default: return "oczekujące";
         }
     }
@@ -45,7 +57,7 @@ public class TaskDescriptor {
             if(tu.getHellouser().equals(HelloSession.getUser().getId())) this.editable = true;
             result += tu.getWorker().getLogin() + ", ";
         }
-        result = result.substring(0, result.length() - 2);
+        if(result.length() > 0) result = result.substring(0, result.length() - 2);
         return result;
     }
 
@@ -173,6 +185,76 @@ public class TaskDescriptor {
      */
     public void setStatusCode(int statusCode) {
         this.statusCode = statusCode;
+    }
+
+    /**
+     * @return the number
+     */
+    public String getNumber() {
+        return number;
+    }
+
+    /**
+     * @param number the number to set
+     */
+    public void setNumber(String number) {
+        this.number = number;
+    }
+
+    /**
+     * @return the created
+     */
+    public String getCreated() {
+        return created;
+    }
+
+    /**
+     * @param created the created to set
+     */
+    public void setCreated(String created) {
+        this.created = created;
+    }
+
+    /**
+     * @return the closed
+     */
+    public String getClosed() {
+        return closed;
+    }
+
+    /**
+     * @param closed the closed to set
+     */
+    public void setClosed(String closed) {
+        this.closed = closed;
+    }
+
+    /**
+     * @return the workgroup
+     */
+    public Group getWorkgroup() {
+        return workgroup;
+    }
+
+    /**
+     * @param workgroup the workgroup to set
+     */
+    public void setWorkgroup(Group workgroup) {
+        this.workgroup = workgroup;
+    }
+
+    /**
+     * @return the workgroupName
+     */
+    public String getWorkgroupName() {
+        return workgroupName;
+    }
+
+    /**
+     * @param workgroupName the workgroupName to set
+     */
+    public void setWorkgroupName(String workgroupName) {
+        this.workgroupName = workgroupName;
     }
     
 }

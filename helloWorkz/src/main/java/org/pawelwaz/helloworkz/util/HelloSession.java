@@ -31,6 +31,9 @@ public class HelloSession {
     private static Long groupView = null;
     private static Long membershipId = null;
     private static Long taskEdit = null;
+    private static boolean notificationActive = false;
+    private static Long inviteId = null;
+    
     
     public static void setUser(HelloUser user) {
         HelloSession.user = new HelloUser();
@@ -197,6 +200,34 @@ public class HelloSession {
      */
     public static void setTaskEdit(Long aTaskEdit) {
         taskEdit = aTaskEdit;
+    }
+
+    /**
+     * @return the notificationActive
+     */
+    public static boolean isNotificationActive() {
+        return notificationActive;
+    }
+
+    /**
+     * @param aNotificationActive the notificationActive to set
+     */
+    public static void setNotificationActive(boolean aNotificationActive) {
+        notificationActive = aNotificationActive;
+    }
+
+    /**
+     * @return the inviteId
+     */
+    public static Long getInviteId() {
+        return inviteId;
+    }
+
+    /**
+     * @param aInviteId the inviteId to set
+     */
+    public static void setInviteId(Long aInviteId) {
+        inviteId = aInviteId;
     }
     
 }

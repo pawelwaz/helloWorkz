@@ -81,11 +81,13 @@ public class SearchContactsController extends HelloUI {
         if(user.getId().equals(HelloSession.getUser().getId())) {
             grid.add(HelloUI.insertEmptyCell(styleClass), 2, i);
             grid.add(HelloUI.insertEmptyCell(styleClass), 3, i);
+            grid.add(HelloUI.insertEmptyCell(styleClass), 4, i);
         }
         else {
             if(HelloSession.getUserContacts().contains(user.getId())) grid.add(this.insertContactButton(styleClass, user, false, true), 2, i);
             else grid.add(this.insertContactButton(styleClass, user, true, true), 2, i);
             grid.add(this.insertMessageButton(styleClass, user), 3, i);
+            grid.add(HelloUI.insertInvitationButton(styleClass, user.getId()), 4, i);
         }
     }
     

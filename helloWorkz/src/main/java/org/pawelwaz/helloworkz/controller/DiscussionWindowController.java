@@ -63,7 +63,7 @@ public class DiscussionWindowController extends HelloUI {
         EntityManager em = JpaUtil.getFactory().createEntityManager();
         Query q = em.createQuery("select p from Post p join p.sender s where p.discussion = " + this.disc.getId());
         List<Post> results = q.getResultList();
-        SimpleDateFormat df = new SimpleDateFormat("yyyy.MM.dd hh:mm");
+        SimpleDateFormat df = new SimpleDateFormat("yyyy.MM.dd HH:mm");
         for(Post p : results) {
             String color = "#BFCCCE";
             if(this.msgNumber % 2 == 1) color = "#CAD5D7";
@@ -94,7 +94,7 @@ public class DiscussionWindowController extends HelloUI {
             p.setHellouser(HelloSession.getUser().getId());
             String color = "#BFCCCE";
             if(this.msgNumber % 2 == 1) color = "#CAD5D7";
-            SimpleDateFormat df = new SimpleDateFormat("yyyy.MM.dd hh:mm");
+            SimpleDateFormat df = new SimpleDateFormat("yyyy.MM.dd HH:mm");
             this.htmlContent += HelloUI.prepareMessageStripe(HelloSession.getUser(), p.getContent(), df.format(p.getCreated()), color, HelloSession.getHtmlAvatar());
             EntityManager em = JpaUtil.getFactory().createEntityManager();
             em.getTransaction().begin();
@@ -122,7 +122,7 @@ public class DiscussionWindowController extends HelloUI {
         Query q = em.createQuery("select p from Post p join p.sender s where p.discussion = " + this.disc.getId() + " and p.id > " + this.maxId);
         List<Post> posts = q.getResultList();
         if(!posts.isEmpty()) {
-            SimpleDateFormat df = new SimpleDateFormat("yyyy.MM.dd hh:mm");
+            SimpleDateFormat df = new SimpleDateFormat("yyyy.MM.dd HH:mm");
             for(Post p : posts) {
                 String color = "#BFCCCE";
                 if(this.msgNumber % 2 == 1) color = "#CAD5D7";

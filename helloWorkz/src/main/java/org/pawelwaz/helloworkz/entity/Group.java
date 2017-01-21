@@ -14,10 +14,17 @@ public class Group implements Serializable {
     private Long id;
     private String group_name;
     private String description;
+    private int tasknumber;
 
     public Group(String group_name, String description) {
         this.group_name = group_name;
         this.description = description;
+        this.tasknumber = 0;
+    }
+    
+    @Override
+    public String toString() {
+        return this.group_name;
     }
     
     /**
@@ -60,5 +67,19 @@ public class Group implements Serializable {
      */
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    /**
+     * @return the tasknumber
+     */
+    public int getTasknumber() {
+        return tasknumber;
+    }
+
+    /**
+     * @param tasknumber the tasknumber to set
+     */
+    public void setTasknumber(int tasknumber) {
+        this.tasknumber = tasknumber;
     }
 }

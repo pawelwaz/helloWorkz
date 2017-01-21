@@ -39,7 +39,7 @@ public class DiscussionAddController extends HelloUI {
             Query q = em.createQuery("select g from Group g where g.id = " + HelloSession.getGroupView());
             List<Group> gResult = q.getResultList();
             Group g = gResult.get(0);
-            q = em.createQuery("select m from Membership m where m.workgroup = " + g.getId() + " and m.hellouser <> " + HelloSession.getUser().getId());
+            q = em.createQuery("select m from Membership m where m.active = 1 and m.workgroup = " + g.getId() + " and m.hellouser <> " + HelloSession.getUser().getId());
             List<Membership> memberships = q.getResultList();
             Discussion dis = new Discussion();
             dis.setHellouser(HelloSession.getUser().getId());

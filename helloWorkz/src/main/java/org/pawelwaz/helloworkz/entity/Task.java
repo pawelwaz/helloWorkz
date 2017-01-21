@@ -6,6 +6,7 @@
 package org.pawelwaz.helloworkz.entity;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Entity;
@@ -16,6 +17,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import org.pawelwaz.helloworkz.util.HelloTime;
+import org.pawelwaz.helloworkz.util.HelloUI;
 
 @Entity
 @Table(name = "task")
@@ -30,15 +33,22 @@ public class Task implements Serializable {
     private String content;
     private String annotation;
     private int status;
+    private int number;
+    private String created;
+    private String closed;
     
     @OneToOne
     @JoinColumn(name="creator")
     private HelloUser creatorJoin;
     
+    @OneToOne
+    @JoinColumn(name="workgroup")
+    private Group workgroupJoin;
+    
     @OneToMany(mappedBy = "taskJoin")
     private List<TaskUser> taskusers;
     
-    public Task(Long creator, Long workgroup, String deadline, String deadlinehour, String content, String annotation, int status) {
+    public Task(Long creator, Long workgroup, String deadline, String deadlinehour, String content, String annotation, int status, int number) {
         this.content = content;
         this.creator = creator;
         this.workgroup = workgroup;
@@ -46,6 +56,38 @@ public class Task implements Serializable {
         this.deadlinehour = deadlinehour;
         this.annotation = annotation;
         this.status = status;
+        this.number = number;
+        this.closed = null;
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        this.created = df.format(new Date());
+    }
+    
+    public boolean isAfterDeadline() {
+        String dead = this.deadline + " " + this.deadlinehour;
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        String now = df.format(new Date());
+        if(dead.compareTo(now) > 0) return false;
+        else return true;
+    }
+    
+    public boolean isOnDeadline() {
+        String dead = this.deadline;
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        String now = df.format(new Date());
+        if(dead.compareTo(now) == 0) return true;
+        else return false;
+    }
+    
+    public boolean isDayBeforeDeadline() {
+        Integer dayBefore = Integer.parseInt(this.deadline.substring(8, 10));
+        dayBefore--;
+        String dayBeforeStr = dayBefore.toString();
+        if(dayBeforeStr.length() == 1) dayBeforeStr = "0" + dayBeforeStr;
+        String dead = this.deadline.substring(0, 8) + dayBeforeStr;
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        String now = df.format(new Date());
+        if(dead.compareTo(now) == 0) return true;
+        else return false;
     }
 
     /**
@@ -186,6 +228,62 @@ public class Task implements Serializable {
      */
     public void setCreatorJoin(HelloUser creatorJoin) {
         this.creatorJoin = creatorJoin;
+    }
+
+    /**
+     * @return the number
+     */
+    public int getNumber() {
+        return number;
+    }
+
+    /**
+     * @param number the number to set
+     */
+    public void setNumber(int number) {
+        this.number = number;
+    }
+
+    /**
+     * @return the created
+     */
+    public String getCreated() {
+        return created;
+    }
+
+    /**
+     * @param created the created to set
+     */
+    public void setCreated(String created) {
+        this.created = created;
+    }
+
+    /**
+     * @return the closed
+     */
+    public String getClosed() {
+        return closed;
+    }
+
+    /**
+     * @param closed the closed to set
+     */
+    public void setClosed(String closed) {
+        this.closed = closed;
+    }
+
+    /**
+     * @return the workgroupJoin
+     */
+    public Group getWorkgroupJoin() {
+        return workgroupJoin;
+    }
+
+    /**
+     * @param workgroupJoin the workgroupJoin to set
+     */
+    public void setWorkgroupJoin(Group workgroupJoin) {
+        this.workgroupJoin = workgroupJoin;
     }
     
 }

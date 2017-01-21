@@ -37,6 +37,7 @@ import javax.persistence.Query;
 import org.pawelwaz.helloworkz.entity.Discussion;
 import org.pawelwaz.helloworkz.entity.Group;
 import org.pawelwaz.helloworkz.entity.HelloUser;
+import org.pawelwaz.helloworkz.entity.Invitation;
 import org.pawelwaz.helloworkz.entity.Membership;
 import org.pawelwaz.helloworkz.entity.MembershipRequest;
 import org.pawelwaz.helloworkz.entity.Notification;
@@ -107,7 +108,19 @@ public class GroupViewController extends HelloUI {
             q = em.createQuery("select t from Task t where t.id = " + td.getId());
             List<Task> result = q.getResultList();
             Task t = result.get(0);
+            q = em.createQuery("select g from Group g where g.id = " + HelloSession.getGroupView());
+            List<Group> gResult = q.getResultList();
+            Group g = gResult.get(0);
+            String nContent = "Użytkownik " + HelloSession.getUser().getLogin() + " usunął w grupie " + g.getGroup_name() + " zadanie nr " + t.getNumber();
+            q = em.createQuery("select m from Membership m where m.active = 1 and m.workgroup = " + g.getId());
+            List<Membership> memberships = q.getResultList();
             em.getTransaction().begin();
+            for(Membership m : memberships) {
+                if(!m.getHellouser().equals(HelloSession.getUser().getId())) {
+                    Notification n = new Notification(m.getHellouser(), nContent);
+                    em.persist(n);
+                }
+            }
             em.remove(t);
             em.getTransaction().commit();
             em.close();
@@ -124,11 +137,14 @@ public class GroupViewController extends HelloUI {
     
     @FXML private void showTaskDetails() {
         TaskDescriptor td = this.taskTable.getSelectionModel().getSelectedItem();
-        String info = "Opis zadania:\n" + td.getContent() + "\n\n";
+        String info = "Zadanie nr " + td.getNumber() + "\n\n";
+        info += "Opis zadania:\n" + td.getContent() + "\n\n";
         info += "Termin realizacji: " + td.getDeadline() + "\n\n";
         info += "Przydzielone osoby: " + td.getWorkers() + "\n\n";
-        info += "Przydzielone przez: " + td.getCreator() + "\n\n";
-        info += "Status: " + td.getStatus() + "\n\n";
+        info += "Przydzielone przez: " + td.getCreator() + " w dniu " + td.getCreated() + "\n\n";
+        info += "Status: " + td.getStatus();
+        if(td.getStatusCode() == 1) info += " (zamknięto " + td.getClosed() + ")";
+        info += "\n\n";
         info += "Komentarz: ";
         if(td.getAnnotation() == null) info += "brak";
         else info += td.getAnnotation();
@@ -156,7 +172,6 @@ public class GroupViewController extends HelloUI {
     
     private void prepareTable() {
         TableColumn contentCol = new TableColumn("Opis zadania");
-        contentCol.setMinWidth(400);
         contentCol.setCellValueFactory(new PropertyValueFactory<TaskDescriptor, String>("content"));
         TableColumn deadlineCol = new TableColumn("Termin");
         deadlineCol.setCellValueFactory(new PropertyValueFactory<TaskDescriptor, String>("deadline"));
@@ -166,8 +181,14 @@ public class GroupViewController extends HelloUI {
         creatorCol.setCellValueFactory(new PropertyValueFactory<TaskDescriptor, String>("creator"));
         TableColumn statusCol = new TableColumn("Status");
         statusCol.setCellValueFactory(new PropertyValueFactory<TaskDescriptor, String>("status"));
+        TableColumn numberCol = new TableColumn("Nr");
+        numberCol.setCellValueFactory(new PropertyValueFactory<TaskDescriptor, String>("number"));
+        TableColumn createdCol = new TableColumn("Dodano");
+        createdCol.setCellValueFactory(new PropertyValueFactory<TaskDescriptor, String>("created"));
+        TableColumn closedCol = new TableColumn("Zamknięto");
+        closedCol.setCellValueFactory(new PropertyValueFactory<TaskDescriptor, String>("closed"));
         this.taskTable.getColumns().clear();
-        this.taskTable.getColumns().addAll(contentCol, deadlineCol, workersCol, creatorCol, statusCol);
+        this.taskTable.getColumns().addAll(numberCol, contentCol, deadlineCol, workersCol, creatorCol, statusCol, createdCol, closedCol);
         this.taskTable.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
@@ -230,7 +251,7 @@ public class GroupViewController extends HelloUI {
             discussionsGrid.add(HelloUI.insertEmptyCell(styleClass), 3, i);
             discussionsGrid.add(HelloUI.insertEmptyCell(styleClass), 4, i);
             for(Discussion dis : results) {
-                SimpleDateFormat df = new SimpleDateFormat("yyyy.MM.dd hh:mm");
+                SimpleDateFormat df = new SimpleDateFormat("yyyy.MM.dd HH:mm");
                 i++;
                 styleClass = "stripeOdd";
                 if(i % 2 == 0) styleClass = "stripeEven";
@@ -266,7 +287,7 @@ public class GroupViewController extends HelloUI {
     
     public void getMembers() {
         EntityManager em = JpaUtil.getFactory().createEntityManager();
-        Query query = em.createQuery("select m from Membership m join m.memberUser u where m.workgroup = " + this.group.getId());
+        Query query = em.createQuery("select m from Membership m join m.memberUser u where m.active = 1 and m.workgroup = " + this.group.getId());
         List<Membership> memberships = query.getResultList();
         this.membersGrid = new GridPane();
         int i = 0;
@@ -333,9 +354,15 @@ public class GroupViewController extends HelloUI {
                 if(i % 2 == 0) styleClass = "stripeEven";
                 this.requestGrid.add(HelloUI.wrapNode(HelloUI.prepareUserDescription(r.getRequestUser(), styleClass), styleClass, 0.0), 0, i);
                 this.requestGrid.add(HelloUI.insertEmptyCell(styleClass), 1, i);
-                this.requestGrid.add(this.insertMessageButton(styleClass, r.getRequestUser()), 2, i);
-                this.requestGrid.add(this.insertAcceptButton(styleClass, r.getId()), 3, i);
-                this.requestGrid.add(this.insertDeclineButton(styleClass, r.getId()), 4, i);
+                if(this.membership.getUsers() == 1) {
+                    this.requestGrid.add(this.insertAcceptButton(styleClass, r.getId()), 2, i);
+                    this.requestGrid.add(this.insertDeclineButton(styleClass, r.getId()), 3, i);
+                }
+                else {
+                    this.requestGrid.add(HelloUI.insertEmptyCell(styleClass), 2, i);
+                    this.requestGrid.add(HelloUI.insertEmptyCell(styleClass), 3, i);
+                }
+                this.requestGrid.add(this.insertMessageButton(styleClass, r.getRequestUser()), 4, i);
                 i++;
             }
             ColumnConstraints cc = new ColumnConstraints();
@@ -393,11 +420,17 @@ public class GroupViewController extends HelloUI {
             q = em.createQuery("select g from Group g where g.id = " + r.getWorkgroup());
             List<Group> resultGroup = q.getResultList();
             Group g = resultGroup.get(0);
+            q = em.createQuery("select i from Invitation i where i.hellouser = " + r.getHellouser() + " and i.workgroup = " + g.getId());
+            List<Invitation> invitationResult = q.getResultList();
             Notification n = new Notification(r.getHellouser(), "Twoja prośba o dołączenie do grupy " + g.getGroup_name() + " została zaakceptowana przez użytkownika " + HelloSession.getUser().getLogin());
             em.getTransaction().begin();
             em.persist(n);
             em.persist(mem);
             em.remove(r);
+            if(!invitationResult.isEmpty()) {
+                Invitation in = invitationResult.get(0);
+                em.remove(in);
+            }
             em.getTransaction().commit();
             em.close();
             this.getRequests();
@@ -416,6 +449,7 @@ public class GroupViewController extends HelloUI {
                 HelloSession.getMainController().openPopup("Membership", "Edycja członkostwa w grupie");
                 HelloSession.setMembershipId(id);
                 getMembers();
+                getTasks();
             }
         });
         Tooltip.install(btn, new Tooltip("edytuj członkostwo"));

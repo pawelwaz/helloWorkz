@@ -17,6 +17,7 @@ import org.pawelwaz.helloworkz.util.HelloSession;
 import org.pawelwaz.helloworkz.util.HelloUI;
 import org.pawelwaz.helloworkz.util.JpaUtil;
 import javafx.scene.control.Label;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseEvent;
@@ -25,6 +26,9 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javax.imageio.ImageIO;
+import org.pawelwaz.helloworkz.entity.Group;
+import org.pawelwaz.helloworkz.entity.Notification;
+import org.pawelwaz.helloworkz.entity.TaskUser;
 
 /**
  *
@@ -45,8 +49,13 @@ public class UserGroupsController extends HelloUI {
         catch(Exception e) {
             HelloUI.showError("Wystąpił błąd podczas ładowania plików programu");
         }
+        this.getGroups();
+    }
+    
+    public void getGroups() {
+        this.vb.getChildren().clear();
         EntityManager em = JpaUtil.getFactory().createEntityManager();
-        Query query = em.createQuery("select m from Membership m join m.memberGroup g where m.hellouser = " + HelloSession.getUser().getId());
+        Query query = em.createQuery("select m from Membership m join m.memberGroup g where m.active = 1 and m.hellouser = " + HelloSession.getUser().getId());
         List<Membership> userMemberships = query.getResultList();
         if(userMemberships.isEmpty()) {
             Label noResults = new Label("Obecnie nie posiadasz członkostwa w żadnej grupie");
@@ -76,6 +85,51 @@ public class UserGroupsController extends HelloUI {
         grid.add(HelloUI.wrapNode(this.prepareGroupDescription(mbm), styleClass, 0.0), 0, i);
         grid.add(HelloUI.insertEmptyCell(styleClass), 1, i);
         grid.add(this.insertViewButton(styleClass, mbm.getMemberGroup().getId()), 2, i);
+        grid.add(this.insertLeaveButton(styleClass, mbm.getMemberGroup().getId()), 3, i);
+    }
+    
+    private void leaveGroup(Long id) {
+        if(HelloUI.showConfirmation("Czy na pewno chcesz opuścić tę grupę?")) {
+            EntityManager em = JpaUtil.getFactory().createEntityManager();
+            Query q = em.createQuery("select m from Membership m where m.active = 1 and m.workgroup = " + id + " and m.hellouser = " + HelloSession.getUser().getId());
+            List<Membership> result = q.getResultList();
+            Membership m = result.get(0);
+            q = em.createQuery("select tu from TaskUser tu join tu.taskJoin tj where tj.status = 0 and tu.hellouser = " + HelloSession.getUser().getId());
+            List<TaskUser> userTasks = q.getResultList();
+            q = em.createQuery("select g from Group g where g.id = " + id);
+            List<Group> gResult = q.getResultList();
+            Group g = gResult.get(0);
+            em.getTransaction().begin();
+            m.setActive(0);
+            em.persist(m);
+            em.getTransaction().commit();
+            q = em.createQuery("select m from Membership m where m.active = 1 and m.workgroup = " + id);
+            List<Membership> memberships = q.getResultList();
+            em.getTransaction().begin();
+            for(TaskUser tu : userTasks) em.remove(tu);
+            for(Membership mem : memberships) {
+                Notification n = new Notification(mem.getHellouser(), "Użytkownik " + HelloSession.getUser().getLogin() + " opuścił grupę " + g.getGroup_name());
+                em.persist(n);
+            }
+            em.getTransaction().commit();
+            em.close();
+            this.getGroups();
+        }
+    }
+    
+    private AnchorPane insertLeaveButton(String styleClass, final Long groupId) {
+        final Long gid = groupId;
+        ImageView result = new ImageView();
+        result.setImage(HelloUI.declineButton);
+        result.setCursor(Cursor.HAND);
+        Tooltip.install(result, new Tooltip("Odejdź z grupy"));
+        result.setOnMouseClicked(new EventHandler<MouseEvent> () {
+            @Override
+            public void handle(MouseEvent event) {
+                leaveGroup(groupId);
+            }
+        });
+        return this.wrapNode(result, styleClass, 15.0, 15.0, 0.0, 5.0);
     }
     
     private AnchorPane insertViewButton(String styleClass, Long groupId) {
@@ -83,6 +137,7 @@ public class UserGroupsController extends HelloUI {
         ImageView result = new ImageView();
         result.setImage(viewIcon);
         result.setCursor(Cursor.HAND);
+        Tooltip.install(result, new Tooltip("Pokaż grupę"));
         result.setOnMouseClicked(new EventHandler<MouseEvent> () {
             @Override
             public void handle(MouseEvent event) {

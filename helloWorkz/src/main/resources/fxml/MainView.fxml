@@ -52,7 +52,7 @@
                               <Cursor fx:constant="HAND" />
                            </cursor>
                         </ImageView>
-                        <Label onMouseClicked="#goNotifications" styleClass="whiteLabel" stylesheets="@../styles/Styles.css" text="Powiadomienia">
+                        <Label fx:id="notificationLabel" onMouseClicked="#goNotifications" styleClass="whiteLabel" stylesheets="@../styles/Styles.css" text="Powiadomienia">
                            <cursor>
                               <Cursor fx:constant="HAND" />
                            </cursor></Label>
@@ -186,7 +186,6 @@
         </menus>
       </MenuBar>
       <AnchorPane fx:id="subAp" layoutX="251.0" layoutY="339.0" prefHeight="529.0" prefWidth="1051.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="130.0">
-          <fx:include fx:id="notification" source="Notification.fxml" />
       </AnchorPane>
    </children>
 </AnchorPane>

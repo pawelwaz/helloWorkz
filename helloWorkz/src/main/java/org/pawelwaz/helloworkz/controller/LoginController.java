@@ -55,6 +55,7 @@ public class LoginController extends HelloUI {
                         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/MainView.fxml"));
                         Parent root = loader.load();
                         HelloSession.setMainController((MainViewController) loader.getController());
+                        HelloSession.getMainController().goNotifications();
                         HelloSession.loadContacts();
                         Scene scene = new Scene(root);
                         Stage stage = new Stage();

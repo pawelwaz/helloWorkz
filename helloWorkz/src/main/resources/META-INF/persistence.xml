@@ -13,6 +13,7 @@
     <class>org.pawelwaz.helloworkz.entity.Task</class>
     <class>org.pawelwaz.helloworkz.entity.TaskUser</class>
     <class>org.pawelwaz.helloworkz.entity.Notification</class>
+    <class>org.pawelwaz.helloworkz.entity.Invitation</class>
     <properties>
       <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://127.0.0.1:3306/hello?useUnicode=yes&amp;characterEncoding=UTF-8"/>

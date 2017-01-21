@@ -65,6 +65,7 @@ public class ContactsController extends HelloUI {
         grid.add(HelloUI.insertEmptyCell(styleClass), 1, i);
         grid.add(this.insertContactButton(styleClass, user, false, false), 2, i);
         grid.add(this.insertMessageButton(styleClass, user), 3, i);
+        grid.add(HelloUI.insertInvitationButton(styleClass, user.getId()), 4, i);
     }
     
     @Override

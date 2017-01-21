@@ -23,6 +23,9 @@ public class TaskUser implements Serializable {
     private Long id;
     private Long hellouser;
     private Long task;
+    private int not1;
+    private int not2;
+    private int not3;
     
     @ManyToOne
     @JoinColumn(name="task")
@@ -105,6 +108,48 @@ public class TaskUser implements Serializable {
      */
     public void setTaskJoin(Task taskJoin) {
         this.taskJoin = taskJoin;
+    }
+
+    /**
+     * @return the not1
+     */
+    public int getNot1() {
+        return not1;
+    }
+
+    /**
+     * @param not1 the not1 to set
+     */
+    public void setNot1(int not1) {
+        this.not1 = not1;
+    }
+
+    /**
+     * @return the not2
+     */
+    public int getNot2() {
+        return not2;
+    }
+
+    /**
+     * @param not2 the not2 to set
+     */
+    public void setNot2(int not2) {
+        this.not2 = not2;
+    }
+
+    /**
+     * @return the not3
+     */
+    public int getNot3() {
+        return not3;
+    }
+
+    /**
+     * @param not3 the not3 to set
+     */
+    public void setNot3(int not3) {
+        this.not3 = not3;
     }
     
 }

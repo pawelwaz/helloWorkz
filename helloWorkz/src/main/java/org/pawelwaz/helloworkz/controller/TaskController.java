@@ -20,8 +20,10 @@ import javafx.scene.control.TextField;
 import javafx.util.StringConverter;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import org.pawelwaz.helloworkz.entity.Group;
 import org.pawelwaz.helloworkz.entity.HelloUser;
 import org.pawelwaz.helloworkz.entity.Membership;
+import org.pawelwaz.helloworkz.entity.Notification;
 import org.pawelwaz.helloworkz.entity.Task;
 import org.pawelwaz.helloworkz.entity.TaskUser;
 import org.pawelwaz.helloworkz.util.HelloSession;
@@ -80,18 +82,49 @@ public class TaskController extends HelloUI {
         em.close();
     }
     
+    @FXML private void sendNots(boolean edited, int taskNumber) {
+        EntityManager em = JpaUtil.getFactory().createEntityManager();
+        Query q = em.createQuery("select m from Membership m where m.active = 1 and m.workgroup = " + HelloSession.getGroupView());
+        List<Membership> result = q.getResultList();
+        q = em.createQuery("select g from Group g where g.id = " + HelloSession.getGroupView());
+        List<Group> gResult = q.getResultList();
+        Group g = gResult.get(0);
+        String content = "Użytkownik " + HelloSession.getUser().getLogin();
+        if(edited) content += " edytował";
+        else content += " utworzył nowe";
+        content += " zadanie o numerze " + taskNumber + " w grupie " + g.getGroup_name();
+        content += ". Osoby przydzielone do zadania: ";
+        for(HelloUser u : (List<HelloUser>) this.workers2.getItems()) content += u.getLogin() + ", ";
+        content = content.substring(0, content.length() - 2);
+        em.getTransaction().begin();
+        for(Membership m : result) {
+            if(!m.getHellouser().equals(HelloSession.getUser().getId())) {
+                Notification n = new Notification(m.getHellouser(), content);
+                em.persist(n);
+            }
+        }
+        em.getTransaction().commit();
+        em.close();
+    }
+    
     @FXML private void taskAction() {
         if(this.content.getText().length() == 0) HelloUI.showError("opis zadania nie może być pusty");
         else if(this.hour.getText().length() == 0) HelloUI.showError("godzina realizacji nie może być pusta");
         else if(this.workers2.getItems().isEmpty()) HelloUI.showError("musisz przydzielić pracowników do tego zadania");
         else if(this.picker.getValue() == null) HelloUI.showError("musisz wybrać termin realizacji");
         else if(HelloSession.getTaskEdit() == null) {
-            Task t = new Task(HelloSession.getUser().getId(), HelloSession.getGroupView(), this.picker.getValue().toString(), this.hour.getText(), this.content.getText(), null, 0);
             EntityManager em = JpaUtil.getFactory().createEntityManager();
+            Query q = em.createQuery("select g from Group g where g.id = " + HelloSession.getGroupView());
+            List<Group> result = q.getResultList();
+            Group g = result.get(0);
+            Task t = new Task(HelloSession.getUser().getId(), HelloSession.getGroupView(), this.picker.getValue().toString(), this.hour.getText(), this.content.getText(), null, 0, g.getTasknumber() + 1);
             em.getTransaction().begin();
+            g.setTasknumber(g.getTasknumber() + 1);
+            em.persist(g);
             em.persist(t);
             em.getTransaction().commit();
             em.close();
+            this.sendNots(false, t.getNumber());
             this.addTaskUsers(t.getId(), this.workers2.getItems());
             this.closeWindow();
         }
@@ -110,6 +143,7 @@ public class TaskController extends HelloUI {
             this.removeTaskUsers(t.getId());
             this.addTaskUsers(t.getId(), this.workers2.getItems());
             em.close();
+            this.sendNots(true, t.getNumber());
             this.closeWindow();
         }
     }
@@ -127,7 +161,7 @@ public class TaskController extends HelloUI {
     
     private void populateList() {
         EntityManager em = JpaUtil.getFactory().createEntityManager();
-        Query q = em.createQuery("select u from Membership m join m.memberUser u where m.workgroup = " + HelloSession.getGroupView());
+        Query q = em.createQuery("select u from Membership m join m.memberUser u where m.active = 1 and m.workgroup = " + HelloSession.getGroupView());
         List<HelloUser> results = q.getResultList();
         for(HelloUser user : results) {
             if(!this.compareUsers(this.workers2.getItems(), user)) this.workers1.getItems().add(user);

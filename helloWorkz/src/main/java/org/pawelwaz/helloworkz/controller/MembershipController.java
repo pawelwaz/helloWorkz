@@ -15,9 +15,12 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import org.pawelwaz.helloworkz.entity.Group;
 import org.pawelwaz.helloworkz.entity.HelloUser;
 import org.pawelwaz.helloworkz.util.HelloUI;
 import org.pawelwaz.helloworkz.entity.Membership;
+import org.pawelwaz.helloworkz.entity.Notification;
+import org.pawelwaz.helloworkz.entity.TaskUser;
 import org.pawelwaz.helloworkz.util.HelloSession;
 import org.pawelwaz.helloworkz.util.JpaUtil;
 
@@ -67,11 +70,20 @@ public class MembershipController extends HelloUI {
     @FXML private void removeMembership() {
         if(HelloUI.showConfirmation("Czy na pewno usunąć tego użytkownika z grupy?")) {
             EntityManager em = JpaUtil.getFactory().createEntityManager();
-            Query q = em.createQuery("select m from Membership m where m.id = " + this.mem.getId());
+            Query q = em.createQuery("select m from Membership m where m.active = 1 and m.id = " + this.mem.getId());
             List<Membership> result = q.getResultList();
             Membership m = result.get(0);
+            q = em.createQuery("select tu from TaskUser tu join tu.taskJoin tj where tj.status = 0 and tu.hellouser = " + this.mem.getHellouser());
+            List<TaskUser> userTasks = q.getResultList();
+            q = em.createQuery("select g from Group g where g.id = " + HelloSession.getGroupView());
+            List<Group> gResult = q.getResultList();
+            Group g = gResult.get(0);
+            Notification n = new Notification(this.mem.getHellouser(), "Użytkownik " + HelloSession.getUser().getLogin() + " usunął twoje członkostwo w grupie " + g.getGroup_name());
             em.getTransaction().begin();
-            em.remove(m);
+            for(TaskUser tu : userTasks) em.remove(tu);
+            m.setActive(0);
+            em.persist(m);
+            em.persist(n);
             em.getTransaction().commit();
             em.close();
             this.closeWindow();

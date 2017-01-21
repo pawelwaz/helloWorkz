@@ -48,7 +48,7 @@ public class SearchGroupsController extends HelloUI {
         else {
             Query q = em.createQuery("select r.workgroup from MembershipRequest r where r.hellouser = " + HelloSession.getUser().getId());
             List<Long> requestGroups = q.getResultList();
-            q = em.createQuery("select m.workgroup from Membership m where m.hellouser = " + HelloSession.getUser().getId());
+            q = em.createQuery("select m.workgroup from Membership m where m.active = 1 and m.hellouser = " + HelloSession.getUser().getId());
             List<Long> memberships = q.getResultList();
             this.resultCount.setText("ilość znalezionych grup: " + groups.size());
             GridPane results = new GridPane();
